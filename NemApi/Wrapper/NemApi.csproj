@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\MSBuild.ILMerge.Task.1.0.5\build\MSBuild.ILMerge.Task.props" Condition="Exists('..\packages\MSBuild.ILMerge.Task.1.0.5\build\MSBuild.ILMerge.Task.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E8CEBD89-B6D1-4A95-B830-BC04F07E66E5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NemApi</RootNamespace>
+    <AssemblyName>NemApi</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RegisterForComInterop>false</RegisterForComInterop>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Base32Encoder, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\Base32Encoder.dll</HintPath>
+    </Reference>
+    <Reference Include="ChaosCastle, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Desktop\NemApiLibraries\ChaosCastle.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Async\AsyncConnector.cs" />
+    <Compile Include="Constants\Constants.cs" />
+    <Compile Include="CryptographicFunctions\AddressEncoding.cs" />
+    <Compile Include="CryptographicFunctions\Ed25519BlockCipher.cs" />
+    <Compile Include="IndependantRequests\BlockRequests.cs" />
+    <Compile Include="IndependantRequests\Node.cs" />
+    <Compile Include="Model\Mosaics\MosaicProperty.cs" />
+    <Compile Include="ResponseObjects\Account\AccountStatus.cs" />
+    <Compile Include="ResponseObjects\Account\DelegatedForward.cs" />
+    <Compile Include="ResponseObjects\Account\ExistingAccountData.cs" />
+    <Compile Include="ResponseObjects\Account\Generated.cs" />
+    <Compile Include="ResponseObjects\Account\HarvestingData.cs" />
+    <Compile Include="ResponseObjects\Account\HistoricData.cs" />
+    <Compile Include="ResponseObjects\Account\Importance.cs" />
+    <Compile Include="ResponseObjects\Block\BlockObjects.cs" />
+    <Compile Include="ResponseObjects\ByteArrayAndSignature.cs" />
+    <Compile Include="ResponseObjects\Mosaic\Definition.cs" />
+    <Compile Include="ResponseObjects\Mosaic\MosaicDefinition.cs" />
+    <Compile Include="ResponseObjects\Mosaic\MosaicsOwned.cs" />
+    <Compile Include="ResponseObjects\NameSpaces\NameSpacesOwned.cs" />
+    <Compile Include="ResponseObjects\Nis\Nis.cs" />
+    <Compile Include="ResponseObjects\Node\UnlockedInfo.cs" />
+    <Compile Include="ResponseObjects\SuperNodes.cs" />
+    <Compile Include="ResponseObjects\TransactionAnnounceResponse.cs" />
+    <Compile Include="ResponseObjects\Transaction\TransactionList.cs" />
+    <Compile Include="Model\Account\AccountFactory.cs" />
+    <Compile Include="IndependantRequests\Nis.cs" />
+    <Compile Include="Model\Account\Encoded.cs" />
+    <Compile Include="Model\Account\KeyPair.cs" />
+    <Compile Include="Model\DataModels\AggregateModificationData.cs" />
+    <Compile Include="Model\DataModels\ImportanceTransferData.cs" />
+    <Compile Include="Model\DataModels\MosaicDefinitionData.cs" />
+    <Compile Include="Model\DataModels\MosaicSupplyChangeData.cs" />
+    <Compile Include="Model\DataModels\MultisigSignatureTransactionData.cs" />
+    <Compile Include="Model\DataModels\ProvisionNameSpaceData.cs" />
+    <Compile Include="Model\Mosaics\CreateMosaic.cs" />
+    <Compile Include="Model\Mosaics\MosaicDefinition.cs" />
+    <Compile Include="Model\Mosaics\MosaicLevy.cs" />
+    <Compile Include="Model\Mosaics\SupplyChange.cs" />
+    <Compile Include="Model\MultiSig\AggregateModificatioList.cs" />
+    <Compile Include="Model\MultiSig\AggregateModification.cs" />
+    <Compile Include="Model\MultiSig\MultiSigSignatureTransaction.cs" />
+    <Compile Include="Model\MultiSig\MultiSigTransaction.cs" />
+    <Compile Include="Model\Account\PrivateKey.cs" />
+    <Compile Include="Model\ProvisionNamespace\ProvisionNamespace.cs" />
+    <Compile Include="Model\Account\PublicKey.cs" />
+    <Compile Include="Model\Transfer\ImportanceTransfer.cs" />
+    <Compile Include="Model\Transfer\Message.cs" />
+    <Compile Include="Model\Transfer\Mosaics\Mosaic.cs" />
+    <Compile Include="Model\Transfer\Mosaics\MosaicList.cs" />
+    <Compile Include="Model\Transfer\Transaction.cs" />
+    <Compile Include="Model\DataModels\TransactionData.cs" />
+    <Compile Include="Model\Transfer\TransferTransaction.cs" />
+    <Compile Include="Model\Account\UnverifiableAccount.cs" />
+    <Compile Include="Model\Account\VerifiableAccount.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Serialize\Serializer.cs" />
+    <Compile Include="Utils\ByteUtils.cs" />
+    <Compile Include="Connection\Connection.cs" />
+    <Compile Include="Async\PrepareTransaction.cs" />
+    <Compile Include="CryptographicFunctions\PublicKeyConversion.cs" />
+    <Compile Include="CryptographicFunctions\Signer.cs" />
+    <Compile Include="Utils\StringUtils.cs" />
+    <Compile Include="Utils\TimeDateUtils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Base32Encoder.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ILMergeOrder.txt" />
+    <None Include="ILMerge.props" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\ChaosCastle.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Newtonsoft.Json.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ILmerge\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\MSBuild.ILMerge.Task.1.0.5\build\MSBuild.ILMerge.Task.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuild.ILMerge.Task.1.0.5\build\MSBuild.ILMerge.Task.props'))" />
+    <Error Condition="!Exists('..\packages\MSBuild.ILMerge.Task.1.0.5\build\MSBuild.ILMerge.Task.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuild.ILMerge.Task.1.0.5\build\MSBuild.ILMerge.Task.targets'))" />
+  </Target>
+  <Import Project="..\packages\MSBuild.ILMerge.Task.1.0.5\build\MSBuild.ILMerge.Task.targets" Condition="Exists('..\packages\MSBuild.ILMerge.Task.1.0.5\build\MSBuild.ILMerge.Task.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
