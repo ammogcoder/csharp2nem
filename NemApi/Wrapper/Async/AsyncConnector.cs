@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using NemApi.internals;
 using Newtonsoft.Json;
 
 namespace NemApi.Async
@@ -19,7 +20,7 @@ namespace NemApi.Async
                 Connection = connection;
             }
 
-            internal dynamic Rpa { get; set; }
+            internal ByteArrayWtihSignature Rpa { get; set; }
             private Connection Connection { get; }
 
             internal async Task Post<TPostType>(string path, TPostType value)
@@ -30,6 +31,8 @@ namespace NemApi.Async
                     new StringContent(JsonConvert.SerializeObject(value),
                         Encoding.UTF8,
                         "application/json"));
+
+                //Connection.Client.UploadStringAsync(Connection.GetUri(path).Uri, JsonConvert.SerializeObject(value));
             }
 
             internal async Task<NemAnnounceResponse.Response> Send()
