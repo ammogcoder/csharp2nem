@@ -59,7 +59,7 @@ namespace run
 
         private static void Main()
         {
-            
+
 
         }
 
@@ -70,7 +70,7 @@ namespace run
             // eg. 1000 quantity => 1 whole mosaic
             var mosaicList = new List<Mosaic>
            {
-               new Mosaic("kod_multisig", "non_business_without_levy", 100000), 
+               new Mosaic("kod_multisig", "non_business_without_levy", 100000),
                new Mosaic("kod_multisig", "non_business_without_levy_second", 100000)
            };
 
@@ -85,9 +85,9 @@ namespace run
              */
             var transferData = new TransferTransactionData
             {
-                Amount = 1000000, 
+                Amount = 1000000,
                 Message = "testing transactions",
-                Encrypted = false,  
+                Encrypted = false,
                 Recipient = Unverifiable,
                 ListOfMosaics = mosaicList,
                 MultisigAccount = Multisig.PublicKey,
@@ -96,7 +96,7 @@ namespace run
 
             var transferResponse = await Cosig2.SendTransactionAsync(transferData);
 
-           
+
             Console.WriteLine(transferResponse.Message);
             Console.ReadKey();
         }
@@ -116,7 +116,7 @@ namespace run
                 MultisigAccount = Multisig.PublicKey
             };
 
-            var  provisionResponse = await Cosig1.ProvisionNamespaceAsync(provData);
+            var provisionResponse = await Cosig1.ProvisionNamespaceAsync(provData);
 
             Console.WriteLine(provisionResponse.Message);
             Console.ReadKey();
@@ -150,13 +150,13 @@ namespace run
              * MultisigAccount: optional
              */
             var mosaicDefCreate = new MosaicCreationData
-            {        
+            {
                 NameSpaceId = "Namespace",
                 MosaicName = "mosaic",
                 InitialSupply = 9000000,
                 Description = "testing",
                 Divisibility = 3,
-                SupplyMutable = true,      
+                SupplyMutable = true,
                 Transferable = true,
                 MosaicLevy = lev,
                 MultisigAccount = Multisig.PublicKey
@@ -209,7 +209,7 @@ namespace run
             var signatureResponse = await Cosig2.SignMultisigTransaction(multiSigSignature);
 
             Console.WriteLine(signatureResponse.Message);
-            
+
         }
 
         private static async void AggregateMultisigModification()
@@ -273,7 +273,7 @@ namespace run
              * These requests should be self explanitory.
              * please refer to http://bob.nem.ninja/docs/ for further info
              */
-            var newKeyPair = await Unverifiable.GetGenerateNewAccountAsync(); 
+            var newKeyPair = await Unverifiable.GetGenerateNewAccountAsync();
 
             var result01 = await Unverifiable.GetAccountInfoAsync();
             var result02 = await Unverifiable.GetAccountStatusAsync();

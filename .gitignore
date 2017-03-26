@@ -3,3 +3,6 @@ bin/
 obj/
 TestResults/
 TestApi/
+Example/.vs
+Example/Example/bin/
+Example/Example/obj
