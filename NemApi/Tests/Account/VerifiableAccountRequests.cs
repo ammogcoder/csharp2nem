@@ -62,7 +62,7 @@ namespace Tests.Account
             var response = account.SendTransactionAsync(data).Result;
             Trace.WriteLine(response.Message);
             Trace.WriteLine(response.Code);
-            Assert.AreEqual(response.Code, 8);
+            Assert.AreEqual(response.Code, 1);
         }
         
         [TestMethod]

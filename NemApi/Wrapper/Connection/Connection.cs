@@ -32,7 +32,7 @@ namespace NemApi
         }
 
         //internal WebClient Client = new WebClient(); // .NET 3.0 compatible
-        internal UriBuilder Uri { get; set; }
+        public UriBuilder Uri { get; set; }
         private List<string> PreTrustedNodes { get; set; }
         public bool ShouldFindNewHostIfRequestFails { get; set; }
         private byte NetworkVersion { get; set; }
