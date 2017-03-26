@@ -35,7 +35,7 @@ namespace NemApi
             
             var a = AccountInfoFromAddress(Address.Encoded).Result;
 
-            if (a.Account.PublicKey != null)
+            if (a.Account?.PublicKey != null)
             {
                 PublicKey = new PublicKey(a.Account.PublicKey);
 
