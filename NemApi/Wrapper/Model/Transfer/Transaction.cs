@@ -6,11 +6,20 @@ namespace NemApi
 {
     internal class Transaction
     {
+        int RoundUp(int toRound)
+        {
+            return (60 - toRound % 60) + toRound;
+        }
+
+        int RoundDown(int toRound)
+        {
+            return toRound - toRound % 60;
+        }
         internal Transaction(Connection connection, PublicKey publicKey, int deadline)
         {
             NetworkVersion = connection.GetNetworkVersion();
             TimeStamp = TimeDateUtils.EpochTimeInMilliSeconds();
-            Deadline = deadline == 0 ? TimeStamp + 1000 : TimeStamp + deadline;
+            Deadline = RoundUp(deadline == 0 ? TimeStamp + 3600 : TimeStamp + deadline);
             PublicKey = publicKey;
 
             Serialize();

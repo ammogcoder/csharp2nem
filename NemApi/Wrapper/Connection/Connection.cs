@@ -132,7 +132,6 @@ namespace NemApi
         {
             PreTrustedNodes = new List<string>
             {
-                "192.3.61.243",
                 "bob.nem.ninja",
                 "104.128.226.60"
                

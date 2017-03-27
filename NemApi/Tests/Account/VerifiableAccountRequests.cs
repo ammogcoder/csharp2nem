@@ -33,7 +33,8 @@ namespace Tests.Account
             var data = new TransferTransactionData
             {
                 Recipient = recip,
-                Amount = 55000000000
+                Amount = 55000000000,
+                Deadline = 10000
             };
 
             var response = account.SendTransactionAsync(data).Result;
@@ -56,7 +57,8 @@ namespace Tests.Account
             {
                 MultisigAccount = account2.PublicKey,
                 Recipient = recip,
-                Amount = 100
+                Amount = 100,
+                Deadline = 10000
             };
 
             var response = account.SendTransactionAsync(data).Result;
@@ -79,7 +81,9 @@ namespace Tests.Account
                 {
                     new AggregateModification(TestConstants.ListOfPublicKeys[0], 2),
                 },    
-                RelativeChange = -1
+                RelativeChange = -1,
+                Deadline = 10000
+
             };
             
             var response = account.AggregateMultisigModificationAsync(data).Result;
@@ -105,7 +109,8 @@ namespace Tests.Account
                     new AggregateModification(TestConstants.ListOfPublicKeys[0], 2),
                     new AggregateModification(TestConstants.ListOfPublicKeys[1], 2),
                     new AggregateModification(TestConstants.ListOfPublicKeys[2], 2),
-                }
+                },
+                Deadline = 10000
             };
 
 
@@ -127,7 +132,8 @@ namespace Tests.Account
             var data = new ProvisionNameSpaceData
             {
                 Parent = "abcdeaaaa",
-                NewPart = "abcdeaaaaa"
+                NewPart = "abcdeaaaaa",
+                Deadline = 10000
             };
 
             var response = account.ProvisionNamespaceAsync(data).Result;
@@ -148,7 +154,7 @@ namespace Tests.Account
             {
                 Activate = true,
                 DelegatedAccount = TestConstants.ListOfPublicKeys[2],
-
+                Deadline = 10000
             };
 
             var response = account.ImportanceTransferAsync(data).Result;
@@ -168,7 +174,8 @@ namespace Tests.Account
             var data = new ImportanceTransferData
             {
                 Activate = false,
-                DelegatedAccount = TestConstants.ListOfPublicKeys[2]
+                DelegatedAccount = TestConstants.ListOfPublicKeys[2],
+                Deadline = 10000
             };
 
             var response = account.ImportanceTransferAsync(data).Result;
