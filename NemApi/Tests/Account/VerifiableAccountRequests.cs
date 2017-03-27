@@ -39,7 +39,7 @@ namespace Tests.Account
             var response = account.SendTransactionAsync(data).Result;
             Trace.WriteLine(response.Message);
             Trace.WriteLine(response.Code);
-            Assert.AreEqual(response.Code, 1);
+            Assert.AreEqual(1, response.Code);
         }
         
         [TestMethod]
@@ -62,7 +62,7 @@ namespace Tests.Account
             var response = account.SendTransactionAsync(data).Result;
             Trace.WriteLine(response.Message);
             Trace.WriteLine(response.Code);
-            Assert.AreEqual(response.Code, 1);
+            Assert.AreEqual(1, response.Code);
         }
         
         [TestMethod]
@@ -85,7 +85,7 @@ namespace Tests.Account
             var response = account.AggregateMultisigModificationAsync(data).Result;
             Trace.WriteLine(response.Message);
             Trace.WriteLine(response.Code);
-            Assert.AreEqual(response.Code, 1);
+            Assert.AreEqual(1, response.Code);
         }
 
         
@@ -112,7 +112,7 @@ namespace Tests.Account
             var response = account.AggregateMultisigModificationAsync(data).Result;
             Trace.WriteLine(response.Message);
             Trace.WriteLine(response.Code);
-            Assert.AreEqual(response.Code, 1);
+            Assert.AreEqual(1, response.Code);
         }
         
 
@@ -133,7 +133,7 @@ namespace Tests.Account
             var response = account.ProvisionNamespaceAsync(data).Result;
             Trace.WriteLine(response.Message);
             Trace.WriteLine(response.Code);
-            Assert.AreEqual(response.Code, 1);
+            Assert.AreEqual(1, response.Code);
         }
 
         [TestMethod]
@@ -154,7 +154,7 @@ namespace Tests.Account
             var response = account.ImportanceTransferAsync(data).Result;
             Trace.WriteLine(response.Message);
             Trace.WriteLine(response.Code);
-            Assert.AreEqual(response.Code, 1);
+            Assert.AreEqual(1, response.Code);
         }
         
         [TestMethod]
@@ -174,7 +174,7 @@ namespace Tests.Account
             var response = account.ImportanceTransferAsync(data).Result;
             Trace.WriteLine(response.Message);
             Trace.WriteLine(response.Code);
-            Assert.AreEqual(response.Code,1);
+            Assert.AreEqual(1, response.Code);
         }       
     }
 }

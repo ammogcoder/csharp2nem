@@ -54,6 +54,7 @@ namespace NemApi
             Array.Copy(stepFive, 0, stepSix, 21, 4);
 
             // step 7) return base 32 encode address byte array
+
             return new Base32Encoder().Encode(stepSix).ToUpper();
         }
     }
