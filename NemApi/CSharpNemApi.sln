@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj
 		{E8CEBD89-B6D1-4A95-B830-BC04F07E66E5} = {E8CEBD89-B6D1-4A95-B830-BC04F07E66E5}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NemApi", "Wrapper\NemApi.csproj", "{E8CEBD89-B6D1-4A95-B830-BC04F07E66E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharp2nem", "Wrapper\CSharp2nem.csproj", "{E8CEBD89-B6D1-4A95-B830-BC04F07E66E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
