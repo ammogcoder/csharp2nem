@@ -1,7 +1,10 @@
 <package>
   <metadata>
     <id>CSharp2nem</id>
-    <version>1.0.0.0</version>
+	<title>CSharp2nem</title>
+    <version>1.0.5.0</version>
+	<tags>Nem, Blockchain, Nis, Bitcoin</tags>
+	<projectUrl>https://github.com/NemProject/csharp2nem</projectUrl>
     <authors>Kailin O'Donnell</authors>
 	<licenseUrl>https://raw.githubusercontent.com/NemProject/csharp2nem/master/LICENSE.md</licenseUrl>
 	<iconUrl>https://raw.githubusercontent.com/NemProject/nem-artwork/master/Nem%20logo%2050x50.png</iconUrl>
