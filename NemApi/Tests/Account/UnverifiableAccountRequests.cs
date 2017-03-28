@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Diagnostics;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NemApi;
 namespace Tests.Account
 {
@@ -6,7 +7,7 @@ namespace Tests.Account
     public class UnverifiableAccountRequests
     {
         [TestMethod]
-        public void CanRetrieveAccountInfo()
+        public void CanSignatoryRetrieveAccountInfo()
         {
             var con = new Connection();
             con.SetTestNet();
@@ -14,8 +15,28 @@ namespace Tests.Account
             var account = new AccountFactory(con).FromPublicKey(key);
 
             var response = account.GetAccountInfoAsync().Result;
+          
+            Assert.IsNotNull(response.Account.Address);         
+            Assert.IsNotNull(response.Account.Balance);
+            Assert.IsNotNull(response.Account.HarvestedBlocks);
+            Assert.IsNotNull(response.Account.Importance);
+            Assert.IsNull(response.Account.Label);
+            Assert.IsNotNull(response.Account.PublicKey);            
+            Assert.IsNotNull(response.Meta.Status);          
+            Assert.IsNotNull(response.Meta.CosignatoryOf);           
+            Assert.IsNotNull(response.Meta.CosignatoryOf);           
+            Assert.IsNull(response.Meta.Cosignatories);
 
-            Assert.IsNotNull(response);
+            Trace.WriteLine(response.Account.Address);
+            Trace.WriteLine(response.Account.Balance);
+            Trace.WriteLine(response.Account.HarvestedBlocks);
+            Trace.WriteLine(response.Account.Importance);
+            Trace.WriteLine(response.Account.Label == null);
+            Trace.WriteLine(response.Account.PublicKey);
+            Trace.WriteLine(response.Meta.Status);
+            Trace.WriteLine(response.Meta.CosignatoryOf);
+            Trace.WriteLine(response.Meta.CosignatoryOf);
+
         }
 
         [TestMethod]
@@ -27,6 +48,32 @@ namespace Tests.Account
             var account = new AccountFactory(con).FromPublicKey(key);
 
             var response = account.GetAllTransactionsAsync().Result;
+            Assert.IsNotNull(response.data[0].transaction.amount);
+            Assert.IsNotNull(response.data[0].transaction.deadline);
+            Assert.IsNotNull(response.data[0].transaction.fee);
+            Assert.IsNotNull(response.data[0].transaction.recipient);
+            Assert.IsNotNull(response.data[0].transaction.signature);
+            Assert.IsNotNull(response.data[0].transaction.signer);
+            Assert.IsNotNull(response.data[0].transaction.timeStamp);
+            Assert.IsNotNull(response.data[0].transaction.type);
+            Assert.IsNotNull(response.data[0].transaction.version);
+
+
+
+            foreach (var t in response.data)
+            {
+                
+                if (t.transaction.message != null)
+                {
+                    Assert.IsNotNull(response.data[0].transaction.message.payload);
+                    Assert.IsNotNull(response.data[0].transaction.message.type);
+                }
+                if (t.transaction.otherTrans != null)
+                {
+                    Assert.IsNotNull(response.data[0].transaction.message.payload);
+                    Assert.IsNotNull(response.data[0].transaction.message.type);
+                }
+            }
             Assert.IsTrue(response.data.Count > 0);
         }
 
