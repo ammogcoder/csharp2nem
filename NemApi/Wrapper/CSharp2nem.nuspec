@@ -2,7 +2,7 @@
   <metadata>
     <id>CSharp2nem</id>
 	<title>CSharp2nem</title>
-    <version>1.0.19.0</version>
+    <version>1.0.23.0</version>
 	<tags>Nem, Blockchain, Nis, Bitcoin</tags>
 	<projectUrl>https://github.com/NemProject/csharp2nem</projectUrl>
     <authors>Kailin O'Donnell</authors>
@@ -11,6 +11,7 @@
     <description>
 		A fully featured C# library for performing transactions on and interacting with the NEM blockchain.
     </description>
+
 	<references>
 	  <reference file="Base32Encoder.dll" />
 	  <reference file="ChaosCastle.dll" />
@@ -19,9 +20,8 @@
 	</references>
   </metadata>
   <files>
-	<file src="lib\net40\Base32Encoder.dll" target="lib\net40" />
-	<file src="lib\net40\ChaosCastle.dll" target="lib\net40" />
-	<file src="lib\net40\Newtonsoft.Json.dll" target="lib\net40" />
-	<file src="bin\Release\NemApi.dll" target="lib\net40" />
+	<file src="lib\net40\Base32Encoder.dll" target="lib\net452" />
+	<file src="lib\net40\ChaosCastle.dll" target="lib\net452" />
+	<file src="lib\net40\Newtonsoft.Json.dll" target="lib\net452" />
   </files>
 </package>
