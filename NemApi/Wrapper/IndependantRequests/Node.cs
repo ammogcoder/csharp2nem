@@ -30,6 +30,8 @@ namespace NemApi
 
         public async Task<SuperNodes.RootObject> SuperNodeList()
         {
+            System.Net.ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+
             var uriTemp = new UriBuilder("http://199.217.113.179/nodes");
 
             return await new AsyncConnector.GetAsync<SuperNodes.RootObject>(new Connection(uriTemp)).Get("/nodes");
