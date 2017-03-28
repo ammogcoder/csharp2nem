@@ -21,7 +21,7 @@ namespace NemApi
             Connection = new Connection();
         }
 
-        private Connection Connection { get; }
+        public Connection Connection { get; set; }
 
         public async Task<NodeData> Info()
         {
@@ -32,8 +32,8 @@ namespace NemApi
         {
             System.Net.ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 
-            var uriTemp = new UriBuilder("http://199.217.113.179/nodes");
-
+            var uriTemp = new UriBuilder("http://199.217.113.179");
+            
             return await new AsyncConnector.GetAsync<SuperNodes.NodeList>(new Connection(uriTemp)).Get("/nodes");
         }
 
@@ -41,27 +41,26 @@ namespace NemApi
         {
             System.Net.ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 
-            var uriTemp = new UriBuilder("https://supernodes.nem.io/resultInfo/"+ id);
+            var uriTemp = new UriBuilder("https://supernodes.nem.io");
 
-            return await new AsyncConnector.GetAsync<SuperNodes.SuperNodeTestDetails>(new Connection(uriTemp)).Get("/nodes");
+            return await new AsyncConnector.GetAsync<SuperNodes.SuperNodeTestDetails>(new Connection(uriTemp)).Get("resultInfo/" + id);
+
         }
         public async Task<SuperNodes.Node> SuperNodeByIp(string ip)
         {
             System.Net.ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 
-            var uriTemp = new UriBuilder("http://199.217.113.179/nodes");
+            var uriTemp = new UriBuilder("http://199.217.113.179");
 
             var result = await new AsyncConnector.GetAsync<SuperNodes.NodeList>(new Connection(uriTemp)).Get("/nodes");
 
             SuperNodes.Node n = new SuperNodes.Node();
-
+            
             foreach (var node in result.Nodes)
             {
                 n = node;
-
                 if (node.Ip != ip) continue;
                 n.TestResults = await SuperNodeResultById(node.Id);
-
                 break;
             }
 

@@ -93,7 +93,7 @@ namespace NemApi.Async
             internal async Task<TReturnType> Get(string path, string query = "")
             {
                 try
-                {
+                {                   
                     var response = await Connection.Client.GetAsync(Connection.GetUri(path, query).Uri);
                    
                     return JsonConvert.DeserializeObject<TReturnType>(await response.Content.ReadAsStringAsync());
