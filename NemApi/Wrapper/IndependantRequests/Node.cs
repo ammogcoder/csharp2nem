@@ -28,16 +28,16 @@ namespace NemApi
             return await new AsyncConnector.GetAsync<NodeData>(Connection).Get("/node/info");
         }
 
-        public async Task<SuperNodes.RootObject> SuperNodeList()
+        public async Task<SuperNodes.NodeList> SuperNodeList()
         {
             System.Net.ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 
             var uriTemp = new UriBuilder("http://199.217.113.179/nodes");
 
-            return await new AsyncConnector.GetAsync<SuperNodes.RootObject>(new Connection(uriTemp)).Get("/nodes");
+            return await new AsyncConnector.GetAsync<SuperNodes.NodeList>(new Connection(uriTemp)).Get("/nodes");
         }
 
-        private static async Task<SuperNodes.SuperNodeTestDetails> SuperNodeResultById(string id)
+        public async Task<SuperNodes.SuperNodeTestDetails> SuperNodeResultById(string id)
         {
             System.Net.ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 
@@ -45,21 +45,27 @@ namespace NemApi
 
             return await new AsyncConnector.GetAsync<SuperNodes.SuperNodeTestDetails>(new Connection(uriTemp)).Get("/nodes");
         }
-        public async Task<SuperNodes.RootObject> SuperNodeResultByIp(string ip)
+        public async Task<SuperNodes.Node> SuperNodeByIp(string ip)
         {
             System.Net.ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 
             var uriTemp = new UriBuilder("http://199.217.113.179/nodes");
-            var result = await new AsyncConnector.GetAsync<SuperNodes.RootObject>(new Connection(uriTemp)).Get("/nodes");
+
+            var result = await new AsyncConnector.GetAsync<SuperNodes.NodeList>(new Connection(uriTemp)).Get("/nodes");
+
+            SuperNodes.Node n = new SuperNodes.Node();
 
             foreach (var node in result.Nodes)
             {
+                n = node;
+
                 if (node.Ip != ip) continue;
-                node.TestResults = await SuperNodeResultById(node.Id);
+                n.TestResults = await SuperNodeResultById(node.Id);
+
                 break;
             }
 
-            return result;
+            return n;
         }
 
         public async Task<NodeList> PeerList()

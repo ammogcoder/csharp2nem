@@ -43,7 +43,7 @@ namespace NemApi
             public List<NodeDetail> nodeDetails { get; set; }
         }
 
-        public class RootObject
+        public class NodeList
         {
             public List<Node> Nodes { get; set; }
         }
