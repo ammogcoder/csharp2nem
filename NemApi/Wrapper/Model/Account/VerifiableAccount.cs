@@ -12,7 +12,7 @@ namespace CSharp2nem
         internal VerifiableAccount(Connection connection, PrivateKey privateKey)
             : base(connection, new PublicKey(CryptoBytes.ToHexStringLower(PublicKeyConversion.ToPublicKey(privateKey))))
         {
-            if (!StringUtils.OnlyHexInString(privateKey.Raw) ||
+            if (!privateKey.Raw.OnlyHexInString() ||
                 privateKey.Raw.Length == 64 && privateKey.Raw.Length == 66)
                 throw new ArgumentException("invalid private key");
             if (null == connection)
@@ -33,7 +33,7 @@ namespace CSharp2nem
                 Identity =
                 {
                     Name = name,
-                    PrivateKey = StringUtils.ConvertToUnsecureString(PrivateKey.Raw)
+                    PrivateKey = PrivateKey.Raw.ConvertToUnsecureString()
                 },
                 Endpoint =
                 {

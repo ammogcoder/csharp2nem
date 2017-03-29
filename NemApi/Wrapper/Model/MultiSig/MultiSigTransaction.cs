@@ -34,7 +34,7 @@ namespace CSharp2nem
 
             Serialize();
 
-            MultiSigBytes = ByteUtils.TruncateByteArray(Serializer.GetBytes(), StructureLength.MultiSigHeader);
+            MultiSigBytes = Serializer.GetBytes().TruncateByteArray(StructureLength.MultiSigHeader);
 
             MultiSigBytes[7] = NetworkVersion;           
         }

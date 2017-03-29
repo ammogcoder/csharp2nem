@@ -7,7 +7,7 @@ using Org.BouncyCastle.Crypto.Digests;
 
 namespace CSharp2nem
 {
-    public class AddressEncoding
+    public static class AddressEncoding
     {
         /*
         * Converts a provided public key to an encoded address
@@ -17,9 +17,9 @@ namespace CSharp2nem
         * @Returns: EncodedAddress
         */
 
-        public static string ToEncoded(byte network, PublicKey publicKey)
+        public static string ToEncoded(this byte network, PublicKey publicKey)
         {
-            if (!StringUtils.OnlyHexInString(publicKey.Raw) || publicKey.Raw.Length != 64 && publicKey.Raw.Length != 66)
+            if (!publicKey.Raw.OnlyHexInString() || publicKey.Raw.Length != 64 && publicKey.Raw.Length != 66)
                 throw new ArgumentException("invalid public key");
 
             // step 1) sha-3(256) public key

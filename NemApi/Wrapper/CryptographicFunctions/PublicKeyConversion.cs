@@ -30,11 +30,11 @@ namespace CSharp2nem
 
         public static byte[] ToPublicKey(PrivateKey privateKey)
         {
-            if (!StringUtils.OnlyHexInString(privateKey.Raw) ||
+            if (!privateKey.Raw.OnlyHexInString() ||
                 privateKey.Raw.Length == 64 && privateKey.Raw.Length == 66)
                 throw new ArgumentException("invalid private key");
 
-            var privateKeyArray = CryptoBytes.FromHexString(StringUtils.ConvertToUnsecureString(privateKey.Raw));
+            var privateKeyArray = CryptoBytes.FromHexString(privateKey.Raw.ConvertToUnsecureString());
 
             Array.Reverse(privateKeyArray);
 

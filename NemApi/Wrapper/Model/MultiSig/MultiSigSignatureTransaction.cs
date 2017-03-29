@@ -32,7 +32,7 @@ namespace CSharp2nem
             SignatureBytes = new byte[GetCommonTransactionBytes().Length + StructureLength.MultisigSignature];
 
             Array.Copy(GetCommonTransactionBytes(), SignatureBytes, GetCommonTransactionBytes().Length);
-            Array.Copy(ByteUtils.TruncateByteArray(Serializer.GetBytes(), StructureLength.MultisigSignature), 0, SignatureBytes, GetCommonTransactionBytes().Length, StructureLength.MultisigSignature);
+            Array.Copy(Serializer.GetBytes().TruncateByteArray(StructureLength.MultisigSignature), 0, SignatureBytes, GetCommonTransactionBytes().Length, StructureLength.MultisigSignature);
         }
 
         internal byte[] GetBytes()

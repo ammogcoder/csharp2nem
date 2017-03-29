@@ -117,7 +117,7 @@ namespace CSharp2nem
                 shared,
                 salt,
                 CryptoBytes.FromHexString(publicKey.Raw),
-                CryptoBytes.FromHexString(StringUtils.ConvertToUnsecureString(privateKey.Raw)));
+                CryptoBytes.FromHexString(privateKey.Raw.ConvertToUnsecureString()));
 
 
             return shared;

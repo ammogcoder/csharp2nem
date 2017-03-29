@@ -58,7 +58,7 @@ namespace CSharp2nem
                 _serializer.WriteBytes(DefaultBytes.MaxByteValue);
             }
 
-            ProvisionNamespaceBytes = ByteUtils.TruncateByteArray(_serializer.GetBytes(), TotalBytesLength);
+            ProvisionNamespaceBytes = _serializer.GetBytes().TruncateByteArray(TotalBytesLength);
         }
 
         private void finalize()
@@ -84,7 +84,7 @@ namespace CSharp2nem
 
             var multisig = new MultiSigTransaction(Con, SenderPublicKey, Data.Deadline, TotalBytesLength);
 
-            ProvisionNamespaceBytes = ByteUtils.ConcatonatatBytes(multisig.GetBytes(), ProvisionNamespaceBytes);
+            ProvisionNamespaceBytes = multisig.GetBytes().ConcatonatetBytes(ProvisionNamespaceBytes);
         }
 
         internal byte[] GetBytes()

@@ -17,7 +17,7 @@ namespace CSharp2nem
             try
             {
                 var sk = new byte[64];
-                Array.Copy(CryptoBytes.FromHexString(StringUtils.ConvertToUnsecureString(privateKey.Raw)), sk, 32);
+                Array.Copy(CryptoBytes.FromHexString(privateKey.Raw.ConvertToUnsecureString()), sk, 32);
                 Array.Copy(
                     GetKeyBytes(
                         new PublicKey(CryptoBytes.ToHexStringLower(PublicKeyConversion.ToPublicKey(privateKey))).Raw), 0,

@@ -19,7 +19,7 @@ namespace CSharp2nem
 
             Serialize();
 
-            Bytes = ByteUtils.TruncateByteArray(_serializer.GetBytes(), Length);
+            Bytes = _serializer.GetBytes().TruncateByteArray(Length);
 
             finalize();
             AppendMultisig();
@@ -83,7 +83,7 @@ namespace CSharp2nem
 
             var multisig = new MultiSigTransaction(Con, Signer, MosaicDefinition.Model.Deadline, Length);
 
-            MosaicCreationBytes = ByteUtils.ConcatonatatBytes(multisig.GetBytes(), MosaicCreationBytes);
+            MosaicCreationBytes = multisig.GetBytes().ConcatonatetBytes(MosaicCreationBytes);
         }
 
         internal byte[] GetBytes()

@@ -48,7 +48,7 @@ namespace CSharp2nem
 
         internal byte[] GetCommonTransactionBytes()
         {
-            return ByteUtils.TruncateByteArray(Serializer1.GetBytes(), StructureLength.TransactionCommon);
+            return Serializer1.GetBytes().TruncateByteArray(StructureLength.TransactionCommon);
         }
 
         private void Serialize()

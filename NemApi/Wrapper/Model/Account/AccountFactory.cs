@@ -38,35 +38,35 @@ namespace CSharp2nem
 
         public VerifiableAccount FromPrivateKey(string key)
         {
-            if (!StringUtils.OnlyHexInString(key) || key.Length != 64 && key.Length != 66)
+            if (!key.OnlyHexInString() || key.Length != 64 && key.Length != 66)
                 throw new ArgumentException("invalid private key");
             return new VerifiableAccount(Connection, new PrivateKey(key));
         }
 
         public UnverifiableAccount FromPublicKey(string publicKey)
         {
-            if (!StringUtils.OnlyHexInString(publicKey) || publicKey.Length != 64 && publicKey.Length != 66)
+            if (!publicKey.OnlyHexInString() || publicKey.Length != 64 && publicKey.Length != 66)
                 throw new ArgumentException("invalid public key");
             return new UnverifiableAccount(Connection, new PublicKey(publicKey));
         }
 
         public VerifiableAccount FromPrivateKey(PrivateKey key)
         {
-            if (!StringUtils.OnlyHexInString(key.Raw) || key.Raw.Length != 64 && key.Raw.Length != 66)
+            if (!key.Raw.OnlyHexInString() || key.Raw.Length != 64 && key.Raw.Length != 66)
                 throw new ArgumentException("invalid private key");
             return new VerifiableAccount(Connection, key);
         }
 
         public UnverifiableAccount FromPublicKey(PublicKey publicKey)
         {
-            if (!StringUtils.OnlyHexInString(publicKey.Raw) || publicKey.Raw.Length != 64 && publicKey.Raw.Length != 66)
+            if (!publicKey.Raw.OnlyHexInString() || publicKey.Raw.Length != 64 && publicKey.Raw.Length != 66)
                 throw new ArgumentException("invalid public key");
             return new UnverifiableAccount(Connection, publicKey);
         }
 
         public UnverifiableAccount FromEncodedAddress(string encodedAddress)
         {
-            return new UnverifiableAccount(Connection, new Address(StringUtils.GetResultsWithoutHyphen(encodedAddress)));
+            return new UnverifiableAccount(Connection, new Address(encodedAddress.GetResultsWithoutHyphen()));
         }
 
         public UnverifiableAccount FromEncodedAddress(Address encodedAddress)

@@ -16,7 +16,7 @@ namespace CSharp2nem
     {
         public UnverifiableAccount(Connection connection, PublicKey publicKey)
         {
-            if (!StringUtils.OnlyHexInString(publicKey.Raw) || publicKey.Raw.Length != 64)
+            if (!publicKey.Raw.OnlyHexInString() || publicKey.Raw.Length != 64)
                 throw new ArgumentException("invalid public key");
 
             Connection = connection;

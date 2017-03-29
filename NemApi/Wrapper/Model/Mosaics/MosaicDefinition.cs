@@ -22,7 +22,7 @@ namespace CSharp2nem
             SetProperties(data.Divisibility, data.InitialSupply, data.SupplyMutable, data.Transferable);
             Serialize();
 
-            DefinitionBytes = ByteUtils.TruncateByteArray(Serializer.GetBytes(), Length);
+            DefinitionBytes = Serializer.GetBytes().TruncateByteArray(Length);
         }
 
         internal byte[] NamespaceId { get; set; }

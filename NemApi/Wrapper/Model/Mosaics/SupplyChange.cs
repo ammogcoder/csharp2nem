@@ -20,7 +20,7 @@ namespace CSharp2nem
 
             Serialize();
 
-            Bytes = ByteUtils.TruncateByteArray(_serializer.GetBytes(), Length);
+            Bytes = _serializer.GetBytes().TruncateByteArray(Length);
 
             finalize();
             AppendMultisig(con);
@@ -72,7 +72,7 @@ namespace CSharp2nem
 
             var multisig = new MultiSigTransaction(con, PublicKey, Data.Deadline, Length);
 
-            SupplyChangeBytes = ByteUtils.ConcatonatatBytes(multisig.GetBytes(), SupplyChangeBytes);
+            SupplyChangeBytes = multisig.GetBytes().ConcatonatetBytes(SupplyChangeBytes);
         }
 
         internal byte[] GetBytes()

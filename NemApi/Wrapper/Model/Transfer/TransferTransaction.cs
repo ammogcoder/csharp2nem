@@ -26,7 +26,7 @@ namespace CSharp2nem
             SerializeTrasnferPart();
            
 
-            TransferBytes = ByteUtils.TruncateByteArray(_serializer.GetBytes(), MessageLength + MosaicLength);
+            TransferBytes = _serializer.GetBytes().TruncateByteArray(MessageLength + MosaicLength);
 
             finalize();
             AppendMultisig();
@@ -186,7 +186,7 @@ namespace CSharp2nem
             var multisig = new MultiSigTransaction(Con, SenderPublicKey, Data.Deadline, TransferMessageMosaicBytes.Length);
 
             // store multig bytes to be concatonated later (in verifiable account)
-            TransferMessageMosaicBytes = ByteUtils.ConcatonatatBytes(multisig.GetBytes(), TransferMessageMosaicBytes);
+            TransferMessageMosaicBytes = multisig.GetBytes().ConcatonatetBytes(TransferMessageMosaicBytes);
         }
     }
 }

@@ -47,7 +47,7 @@ namespace CSharp2nem
             var tempBytes = new byte[GetCommonTransactionBytes().Length + TotalBytesLength];
 
             Array.Copy(GetCommonTransactionBytes(), tempBytes, GetCommonTransactionBytes().Length);
-            Array.Copy(ByteUtils.TruncateByteArray(Serializer.GetBytes(), TotalBytesLength), 0, tempBytes,
+            Array.Copy(Serializer.GetBytes().TruncateByteArray(TotalBytesLength), 0, tempBytes,
                 GetCommonTransactionBytes().Length, TotalBytesLength);
 
             TotalBytesLength = tempBytes.Length;
@@ -89,7 +89,7 @@ namespace CSharp2nem
         {
             var multisig = new MultiSigTransaction(con, PublicKey, Data.Deadline, TotalBytesLength);
 
-            ModificationBytes = ByteUtils.ConcatonatatBytes(multisig.GetBytes(), ModificationBytes);
+            ModificationBytes = multisig.GetBytes().ConcatonatetBytes(ModificationBytes);
         }
     }
 }

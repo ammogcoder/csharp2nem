@@ -9,7 +9,7 @@ namespace CSharp2nem
 {
     public static class StringUtils
     {
-        public static string ConvertToUnsecureString(SecureString securePassword)
+        public static string ConvertToUnsecureString(this SecureString securePassword)
         {
             if (securePassword == null)
                 throw new ArgumentNullException(nameof(securePassword));
@@ -38,21 +38,21 @@ namespace CSharp2nem
             return result;
         }
 
-        internal static bool OnlyHexInString(SecureString data)
+        internal static bool OnlyHexInString(this SecureString data)
         {
             if (null == data)
                 throw new ArgumentNullException(nameof(data));
             return Regex.IsMatch(ConvertToUnsecureString(data), @"\A\b[0-9a-fA-F]+\b\Z");
         }
 
-        internal static bool OnlyHexInString(string data)
+        internal static bool OnlyHexInString(this string data)
         {
             if (null == data)
                 throw new ArgumentNullException(nameof(data));
             return Regex.IsMatch(data, @"\A\b[0-9a-fA-F]+\b\Z");
         }
 
-        public static string GetResultsWithHyphen(string input)
+        public static string GetResultsWithHyphen(this string input)
         {
             var output = "";
             var start = 0;
@@ -66,7 +66,7 @@ namespace CSharp2nem
             return output.Trim('-');
         }
 
-        public static string GetResultsWithoutHyphen(string input)
+        public static string GetResultsWithoutHyphen(this string input)
         {
             return input.Replace("-", "");
         }

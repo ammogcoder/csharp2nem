@@ -8,8 +8,8 @@ namespace CSharp2nem
     {
         public PrivateKey(SecureString key)
         {
-            Raw = StringUtils.ConvertToUnsecureString(key).Length == 66
-                ? StringUtils.ConvertToUnsecureString(key).Substring(2, key.Length - 2).ToSecureString()
+            Raw = key.ConvertToUnsecureString().Length == 66
+                ? key.ConvertToUnsecureString().Substring(2, key.Length - 2).ToSecureString()
                 : key;
         }
 

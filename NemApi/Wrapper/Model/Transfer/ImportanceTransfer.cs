@@ -10,7 +10,7 @@ namespace CSharp2nem
         internal ImportanceTransfer(Connection con, PublicKey sender, ImportanceTransferData data)
             : base(con, data.MultisigAccount ?? sender, data.Deadline)
         {
-            if (!StringUtils.OnlyHexInString(data.DelegatedAccount.Raw) || data.DelegatedAccount.Raw.Length != 64)
+            if (!data.DelegatedAccount.Raw.OnlyHexInString() || data.DelegatedAccount.Raw.Length != 64)
                 throw new ArgumentNullException(nameof(con));
 
             Data = data;
@@ -19,7 +19,7 @@ namespace CSharp2nem
             TransferMode = data.Activate ? DefaultBytes.Activate : DefaultBytes.Deactivate;
 
             Serialize();
-            TransferBytes = ByteUtils.TruncateByteArray(Serializer.GetBytes(), StructureLength.ImportnaceTransfer);
+            TransferBytes = Serializer.GetBytes().TruncateByteArray(StructureLength.ImportnaceTransfer);
 
             finalize();
             AppendMultisig(con);
@@ -68,7 +68,7 @@ namespace CSharp2nem
 
             var multisig = new MultiSigTransaction(con, PublicKey, Data.Deadline, Length);
 
-            ImportanceBytes = ByteUtils.ConcatonatatBytes(multisig.GetBytes(), ImportanceBytes);
+            ImportanceBytes = multisig.GetBytes().ConcatonatetBytes(ImportanceBytes);
         }
     }
 }

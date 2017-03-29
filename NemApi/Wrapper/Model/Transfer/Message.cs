@@ -88,7 +88,7 @@ namespace CSharp2nem
                 Serializer.WriteInt(Encrypted ? 2 : 1);
                 Serializer.WriteInt(MessageBytes.Length);
                 Serializer.WriteBytes(MessageBytes);
-                MessageBytes = ByteUtils.TruncateByteArray(Serializer.GetBytes(), PayloadLengthInBytes + 12);
+                MessageBytes = Serializer.GetBytes().TruncateByteArray(PayloadLengthInBytes + 12);
                 Length = StructureLength.MessageStructure + PayloadLengthInBytes;
             }
             else

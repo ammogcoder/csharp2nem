@@ -20,7 +20,7 @@ namespace CSharp2nem
 
             Serialize();
 
-            Bytes = ByteUtils.TruncateByteArray(Serializer.GetBytes(), Length);
+            Bytes = Serializer.GetBytes().TruncateByteArray(Length);
             CalculateMosaicTransferFee();
         }
 

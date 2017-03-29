@@ -6,7 +6,7 @@ namespace CSharp2nem
 {
     internal static class ByteUtils
     {
-        internal static byte[] TruncateByteArray(byte[] bytes, int len)
+        internal static byte[] TruncateByteArray(this byte[] bytes, int len)
         {
             var truncBytes = new byte[len];
 
@@ -15,7 +15,7 @@ namespace CSharp2nem
             return truncBytes;
         }
 
-        internal static byte[] ConcatonatatBytes(byte[] a, byte[] b)
+        internal static byte[] ConcatonatetBytes(this byte[] a, byte[] b)
         {
             var combined = new byte[a.Length + b.Length];
 

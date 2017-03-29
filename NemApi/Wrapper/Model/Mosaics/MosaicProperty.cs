@@ -18,7 +18,7 @@ namespace CSharp2nem
             Serializer.WriteInt(PropertyValueLength);
             Serializer.WriteString(propertyValue);
 
-            PropertyBytes = ByteUtils.TruncateByteArray(Serializer.GetBytes(), PropertyLength + 4);
+            PropertyBytes = Serializer.GetBytes().TruncateByteArray(PropertyLength + 4);
         }
 
         internal int PropertyLength { get; set; }

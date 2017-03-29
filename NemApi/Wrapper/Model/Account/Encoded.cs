@@ -6,7 +6,7 @@ namespace CSharp2nem
     {
         public Address(string key)
         {
-            Encoded = StringUtils.GetResultsWithoutHyphen(key);
+            Encoded = key.GetResultsWithoutHyphen();
         }
 
         public string Encoded { get; private set; }

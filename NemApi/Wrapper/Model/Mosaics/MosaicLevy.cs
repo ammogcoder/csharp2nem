@@ -64,7 +64,7 @@ namespace CSharp2nem
             // fee amount
             Serializer.WriteLong(Mosaic.Quantity);
 
-            LevyBytes = ByteUtils.TruncateByteArray(Serializer.GetBytes(), Length);
+            LevyBytes = Serializer.GetBytes().TruncateByteArray(Length);
         }
 
         internal byte[] GetBytes()
