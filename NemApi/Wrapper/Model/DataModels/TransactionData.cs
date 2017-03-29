@@ -13,5 +13,6 @@ namespace NemApi
         public string Message { get; set; }
         public bool Encrypted { get; set; }
         public int Deadline { get; set; }
+        public bool FeeDeductedFromAmount { get; set; }
     }
 }

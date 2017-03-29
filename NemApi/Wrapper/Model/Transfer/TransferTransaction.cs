@@ -24,7 +24,7 @@ namespace NemApi
             SenderPrivateKey = senderPrivateKey;
 
             SerializeTrasnferPart();
-            SerializeAttachments();
+           
 
             TransferBytes = ByteUtils.TruncateByteArray(_serializer.GetBytes(), MessageLength + MosaicLength);
 
@@ -44,17 +44,7 @@ namespace NemApi
         private byte[] TransferMessageMosaicBytes { get; set; }
         private byte[] TransferBytes { get; set; }
 
-        private void SerializeAttachments()
-        {
-            if (Data.Message != null)
-                SerializeMessagePart();
-            else _serializer.WriteInt(ByteLength.Zero);
-
-            if (Data.ListOfMosaics != null)
-                SerializeMosaicPart();              
-            else _serializer.WriteInt(ByteLength.Zero);
-    
-        }
+        
 
         internal byte[] GetTransferBytes()
         {
@@ -74,37 +64,128 @@ namespace NemApi
 
         private void SerializeTrasnferPart()
         {
+            // declare and serialize message if not null
+            Message serializedMessage = null;
+            if (Data.Message != null)
+                serializedMessage = SerializeMessagePart();
+            
+            // declare and serialize mosaics if not null
+            MosaicList serializedMosaicList = null;
+            if (Data.ListOfMosaics != null)
+                serializedMosaicList = SerializeMosaicPart();
+           
+            // get the fee for transfer amount
+            var transferFee = Math.Max(1, Math.Min((long)Math.Ceiling((decimal)Data.Amount / 10000000000), 25)) * 1000000;
+
+            // get the fee for message part, 0 if its null
+            var messageFee = serializedMessage?.GetFee() ?? 0;
+
+            // get the fee for mosaic part, 0 if null
+            var mosaicFee = serializedMosaicList?.GetFee() ?? 0;
+
+            // if fee is to be deducted from amount, calculate accordingly
+            if (Data.FeeDeductedFromAmount)
+            {
+                // minus total fees from original amount.
+                long newAmount;
+
+                long newFee;
+
+                do
+                {
+                    newAmount = Data.Amount - (messageFee + mosaicFee + transferFee);
+
+                    // calculate new fee based on new fee deducted amount
+                    newFee = Math.Max(1, Math.Min((long)Math.Ceiling((decimal)newAmount / 10000000000), 25)) * 1000000;
+
+                    // check that the fee hasnt been reduced due to a lower amount
+                    if (newAmount + newFee != Data.Amount)
+                    {
+
+                        // increase amount to compensate if it has
+                        newAmount += 1000000;
+                    }
+                    // check that 
+                } while (newAmount + newFee != Data.Amount);
+
+                // reset the amount to new fee adjusted amount
+                Data.Amount = newAmount;
+
+                // add new transfer fee to total amount
+                Fee += newFee + messageFee + mosaicFee;
+            }
+            else
+            {
+                // if fee is not to be deducted, add individual fees to total fee without adjustment
+                Fee += transferFee + messageFee + mosaicFee;
+            }
+
+            // write the transfer bytes
+            WriteTransferBytes();
+
+            // write message bytes if they are not null.
+            if (serializedMessage != null)
+                WriteMessageBytes(serializedMessage);
+            else _serializer.WriteInt(ByteLength.Zero);
+
+            // write mosaic bytes if they are not null.
+            if (serializedMosaicList != null)
+                WriteMosaicBytes(serializedMosaicList);
+            else _serializer.WriteInt(ByteLength.Zero);
+
+        }
+
+        private void WriteTransferBytes()
+        {
+            // write address length to byte array
             _serializer.WriteInt(ByteLength.AddressLength);
+
+            // write recipient address to byte array
             _serializer.WriteString(Data.Recipient.Address.Encoded);
+
+            // write amount to byte array
             _serializer.WriteLong(Data.Amount);
+        }
+        
 
-            Fee += Math.Max(1, Math.Min((long) Math.Ceiling((decimal) Data.Amount / 10000000000), 25)) * 1000000;
+        private Message SerializeMessagePart()
+        {
+            return new Message(Con, SenderPrivateKey, Data.Recipient, Data.Message, Data.Encrypted);
         }
 
-        private void SerializeMessagePart()
+        private void WriteMessageBytes(Message serializeMessage)
         {
-            var serializeMessage = new Message(Con, SenderPrivateKey, Data.Recipient, Data.Message, Data.Encrypted);
+            // write message bytes to byte array
             _serializer.WriteBytes(serializeMessage.GetMessageBytes());
-            MessageLength += serializeMessage.Length;
 
-            Fee += serializeMessage.GetFee();
+            // store message bytes length
+            MessageLength += serializeMessage.Length;
         }
 
-        private void SerializeMosaicPart()
-        {
-            var mosaicList = new MosaicList(Data.ListOfMosaics, Con, SenderPublicKey);
-            _serializer.WriteBytes(mosaicList.GetMosaicListBytes());
-            MosaicLength = mosaicList.GetMosaicListBytes().Length;
+        
 
-            Fee += mosaicList.GetFee();
+        private MosaicList SerializeMosaicPart()
+        {
+            return new MosaicList(Data.ListOfMosaics, Con, SenderPublicKey);
+
+        }
+        private void WriteMosaicBytes(MosaicList mosaicList)
+        {
+            // write mosaic bytes to byte array
+            _serializer.WriteBytes(mosaicList.GetMosaicListBytes());
+
+            // store mosaic bytes length
+            MosaicLength = mosaicList.GetMosaicListBytes().Length;
         }
 
         private void AppendMultisig()
         {
             if (Data.MultisigAccount == null) return;
 
+            // create multisig object and serialize
             var multisig = new MultiSigTransaction(Con, SenderPublicKey, Data.Deadline, TransferMessageMosaicBytes.Length);
 
+            // store multig bytes to be concatonated later (in verifiable account)
             TransferMessageMosaicBytes = ByteUtils.ConcatonatatBytes(multisig.GetBytes(), TransferMessageMosaicBytes);
         }
     }
