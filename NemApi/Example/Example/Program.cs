@@ -45,11 +45,11 @@ namespace run
             DelegatedAccount = new AccountFactory(Con).FromPublicKey(
                 "<public key here>");
 
-            Multisig = new AccountFactory(Con).FromPrivateKey(
-                "<private key here>");
-
             Unverifiable = new AccountFactory(Con).FromPublicKey(
                 "<public key here>");
+
+            Multisig = new AccountFactory(Con).FromEncodedAddress(
+               "<Address here>");
 
             UnverifiableEncoded = new AccountFactory(Con).FromEncodedAddress(
                 "<encoded address here>");
