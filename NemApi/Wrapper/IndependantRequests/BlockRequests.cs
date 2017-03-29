@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using NemApi.Async;
+using CSharp2nem.Async;
 
 // ReSharper disable once CheckNamespace
 
-namespace NemApi
+namespace CSharp2nem
 {
     public class Block
     {

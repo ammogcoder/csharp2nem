@@ -3,7 +3,7 @@ using System.Text;
 
 // ReSharper disable once CheckNamespace
 
-namespace NemApi
+namespace CSharp2nem
 {
     internal class SupplyChange : Transaction
     {

@@ -1,6 +1,6 @@
 ﻿// ReSharper disable once CheckNamespace
 
-namespace NemApi.internals
+namespace CSharp2nem.internals
 {
     /*
     * Stores stores the transaction byte array and signature data to be prepared amd sent to nis.

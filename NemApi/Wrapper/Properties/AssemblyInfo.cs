@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("CSharpNemApi")]
-[assembly: AssemblyDescription("A C Sharp wrapper for the Nem API")]
+[assembly: AssemblyTitle("CSharp2Nem")]
+[assembly: AssemblyDescription("A C# Sharp wrapper for the Nem API")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CSharpNemApi")]
+[assembly: AssemblyCompany("Kailin O'Donnell")]
+[assembly: AssemblyProduct("CSharp2Nem")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -36,6 +36,6 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.30.0")]
+[assembly: AssemblyFileVersion("1.0.30.0")]
 [assembly: InternalsVisibleTo("Tests")]

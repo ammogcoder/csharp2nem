@@ -6,7 +6,7 @@ using Chaos.NaCl;
 
 // ReSharper disable once CheckNamespace
 
-namespace NemApi
+namespace CSharp2nem
 {
     internal class Signature
     {

@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 // ReSharper disable once CheckNamespace
 
-namespace NemApi
+namespace CSharp2nem
 {
     public static class StringUtils
     {

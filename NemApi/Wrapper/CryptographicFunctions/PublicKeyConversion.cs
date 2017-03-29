@@ -3,7 +3,7 @@ using Chaos.NaCl;
 
 // ReSharper disable once CheckNamespace
 
-namespace NemApi
+namespace CSharp2nem
 {
     /*
     * Converts a private key to public key.

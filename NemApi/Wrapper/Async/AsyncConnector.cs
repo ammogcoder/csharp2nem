@@ -3,10 +3,10 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using NemApi.internals;
+using CSharp2nem.internals;
 using Newtonsoft.Json;
 
-namespace NemApi.Async
+namespace CSharp2nem.Async
 {
     internal class AsyncConnector
     {

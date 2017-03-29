@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Diagnostics;
-using NemApi;
+using CSharp2nem;
 
 /*
 / Note: when running these tests, run on testnet and 

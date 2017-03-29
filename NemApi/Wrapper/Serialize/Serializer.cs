@@ -3,7 +3,7 @@ using System.Text;
 
 // ReSharper disable once CheckNamespace
 
-namespace NemApi
+namespace CSharp2nem
 {
     /*
     * Serializer contains a number of methods which convert verious data to bytes,

@@ -14,14 +14,16 @@
 
 	<references>
 	  <reference file="Base32Encoder.dll" />
-	  <reference file="ChaosCastle.dll" />
+	  <reference file="Chaos.Chaos.dll" />
+	  <reference file="BouncyCastle.Crypto.dll" />
 	  <reference file="Newtonsoft.Json.dll" />
 	  <reference file="NemApi.dll" />
 	</references>
   </metadata>
   <files>
 	<file src="lib\net40\Base32Encoder.dll" target="lib\net452" />
-	<file src="lib\net40\ChaosCastle.dll" target="lib\net452" />
+	<file src="lib\net40\BouncyCastle.Crypto.dll" target="lib\net452" />
+	<file src="lib\net40\Chaos.NaCl.dll" target="lib\net452" />
 	<file src="lib\net40\Newtonsoft.Json.dll" target="lib\net452" />
   </files>
 </package>

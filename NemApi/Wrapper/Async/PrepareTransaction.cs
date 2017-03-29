@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Chaos.NaCl;
-using NemApi.internals;
+using CSharp2nem.internals;
 
-namespace NemApi.Async
+namespace CSharp2nem.Async
 {
     internal class Prepare
     {

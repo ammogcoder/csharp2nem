@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 // ReSharper disable once CheckNamespace
 
-namespace NemApi
+namespace CSharp2nem
 {
     /*
     * A list of mosaics which can be serilized.

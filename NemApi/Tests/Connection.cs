@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Net.NetworkInformation;
-using NemApi;
+using CSharp2nem;
 
 namespace Tests
 {

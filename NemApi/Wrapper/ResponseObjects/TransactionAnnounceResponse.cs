@@ -1,6 +1,6 @@
 ﻿// ReSharper disable once CheckNamespace
 
-namespace NemApi
+namespace CSharp2nem
 {
     /*
     * Stores the transaction announce response

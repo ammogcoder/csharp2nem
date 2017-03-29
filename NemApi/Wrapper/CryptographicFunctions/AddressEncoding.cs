@@ -5,7 +5,7 @@ using Org.BouncyCastle.Crypto.Digests;
 
 // ReSharper disable once CheckNamespace
 
-namespace NemApi
+namespace CSharp2nem
 {
     public class AddressEncoding
     {

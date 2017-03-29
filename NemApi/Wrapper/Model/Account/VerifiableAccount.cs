@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Chaos.NaCl;
-using NemApi.Async;
+using CSharp2nem.Async;
 
 // ReSharper disable once CheckNamespace
 
-namespace NemApi
+namespace CSharp2nem
 {
     public class VerifiableAccount : UnverifiableAccount
     {

@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace NemApi
+namespace CSharp2nem
 {
     internal class MosaicProperty
     {

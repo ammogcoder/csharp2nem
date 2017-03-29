@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using NemApi;
+using CSharp2nem;
 namespace Tests
 {
     public class TestConstants

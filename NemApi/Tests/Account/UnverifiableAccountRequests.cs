@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NemApi;
+using CSharp2nem;
 namespace Tests.Account
 {
     [TestClass]

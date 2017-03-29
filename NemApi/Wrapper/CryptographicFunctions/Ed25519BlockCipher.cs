@@ -9,7 +9,7 @@ using Org.BouncyCastle.Security;
 
 // ReSharper disable once CheckNamespace
 
-namespace NemApi
+namespace CSharp2nem
 {
     public class Ed25519BlockCipher
     {

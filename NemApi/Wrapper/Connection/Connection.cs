@@ -4,7 +4,7 @@ using System.Net.Http;
 
 // ReSharper disable once CheckNamespace
 
-namespace NemApi
+namespace CSharp2nem
 {
     public class Connection
     {
