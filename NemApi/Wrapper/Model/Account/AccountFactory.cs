@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security;
 using System.Security.Cryptography;
 using Chaos.NaCl;
 
@@ -23,15 +24,15 @@ namespace CSharp2nem
 
         public VerifiableAccount FromNewPrivateKey()
         {
-            string sk;
+            SecureString sk;
             using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
             {
                 var tokenData = new byte[32];
                 rng.GetBytes(tokenData);
-                sk = CryptoBytes.ToHexStringLower(tokenData);
+                sk = CryptoBytes.ToHexStringLower(tokenData).ToSecureString();
             }
 
-            return FromPrivateKey(sk);
+            return FromPrivateKey(new PrivateKey(sk));
         }
 
 
