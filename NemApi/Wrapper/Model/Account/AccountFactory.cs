@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Security.Cryptography;
+using Chaos.NaCl;
 
 // ReSharper disable once CheckNamespace
 
@@ -18,6 +20,20 @@ namespace CSharp2nem
         }
 
         private Connection Connection { get; }
+
+        public VerifiableAccount FromNewPrivateKey()
+        {
+            string sk;
+            using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
+            {
+                var tokenData = new byte[32];
+                rng.GetBytes(tokenData);
+                sk = CryptoBytes.ToHexStringLower(tokenData);
+            }
+
+            return FromPrivateKey(sk);
+        }
+
 
         public VerifiableAccount FromPrivateKey(string key)
         {
