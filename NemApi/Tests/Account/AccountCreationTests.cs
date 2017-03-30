@@ -6,6 +6,21 @@ namespace Tests.Account
     [TestClass]
     public class AccountTest
     {
+
+       // [TestMethod]
+       // public void CanCreateVerifiableAccountFromData()
+       // {
+       //     var con = new Connection();
+       //     con.SetTestNet();
+       //
+       //     var key = new PrivateKey(TestConstants.PrivKey);
+       //
+       //     var account = new AccountFactory().FromsNewDataPrivateKey("dsfsdgdfgdgdfgdfgdfg");
+       //     Assert.AreEqual(TestConstants.Address, account.Address.Encoded);
+       //     Assert.AreEqual(TestConstants.PubKey, account.PublicKey.Raw);
+       //     Assert.AreEqual(TestConstants.PrivKey, account.PrivateKey.Raw.ConvertToUnsecureString());
+       // }
+
         [TestMethod]
         public void CanCreateVerifiableAccount()
         {
@@ -17,7 +32,7 @@ namespace Tests.Account
             var account = new VerifiableAccount(con, key);
             Assert.AreEqual(TestConstants.Address, account.Address.Encoded);
             Assert.AreEqual(TestConstants.PubKey, account.PublicKey.Raw);
-            Assert.AreEqual(TestConstants.PrivKey, StringUtils.ConvertToUnsecureString( account.PrivateKey.Raw));
+            Assert.AreEqual(TestConstants.PrivKey, account.PrivateKey.Raw.ConvertToUnsecureString());
         }
 
         [TestMethod]
@@ -64,13 +79,13 @@ namespace Tests.Account
 
             Assert.AreEqual(TestConstants.Address, account.Address.Encoded);
             Assert.AreEqual(TestConstants.PubKey, account.PublicKey.Raw);
-            Assert.AreEqual(TestConstants.PrivKey, StringUtils.ConvertToUnsecureString(account.PrivateKey.Raw));
+            Assert.AreEqual(TestConstants.PrivKey, account.PrivateKey.Raw.ConvertToUnsecureString());
 
             var account2 = new AccountFactory(con).FromPrivateKey(TestConstants.PrivKey);
 
             Assert.AreEqual(TestConstants.Address, account2.Address.Encoded);
             Assert.AreEqual(TestConstants.PubKey, account2.PublicKey.Raw);
-            Assert.AreEqual(TestConstants.PrivKey, StringUtils.ConvertToUnsecureString(account2.PrivateKey.Raw));
+            Assert.AreEqual(TestConstants.PrivKey, account2.PrivateKey.Raw.ConvertToUnsecureString());
         }
     }
 }

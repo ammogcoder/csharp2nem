@@ -15,7 +15,7 @@ namespace Tests
 
             var secureKey = privateKey.ToSecureString();
 
-            var result = StringUtils.ConvertToUnsecureString(secureKey);
+            var result = secureKey.ConvertToUnsecureString();
 
             Assert.AreEqual(expected, result);
         }
@@ -24,7 +24,7 @@ namespace Tests
         public void CanConvertAddressToPrettyAddress()
         {
             var address = "NAUARLU4RMH2CW2UFWAIDAD73C5JYYSZ7ISSDYME";
-            var result = StringUtils.GetResultsWithHyphen(address);
+            var result = address.GetResultsWithHyphen();
             var expected = "NAUARL-U4RMH2-CW2UFW-AIDAD7-3C5JYY-SZ7ISS-DYME";
             Assert.AreEqual(expected, result);
         }
@@ -33,7 +33,7 @@ namespace Tests
         public void CanConvertPrettyAddressToAddress()
         {
             var address = "NAUARL-U4RMH2-CW2UFW-AIDAD7-3C5JYY-SZ7ISS-DYME";
-            var result = StringUtils.GetResultsWithoutHyphen(address);
+            var result = address.GetResultsWithoutHyphen();
             var expected = "NAUARLU4RMH2CW2UFWAIDAD73C5JYYSZ7ISSDYME";
             Assert.AreEqual(expected, result);
         }

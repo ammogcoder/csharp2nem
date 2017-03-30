@@ -63,11 +63,13 @@ namespace CSharp2nem.Async
                     var newStream = http.GetRequestStream();
                     newStream.Write(bytes, 0, bytes.Length);
                     newStream.Close();
-
+                   
+                    
                     var task = await Task.Factory.FromAsync(
-                        http.BeginGetResponse,
-                        asyncResult => http.EndGetResponse(asyncResult),
-                        null);
+                            http.BeginGetResponse,
+                            asyncResult => http.EndGetResponse(asyncResult),
+                            null);
+                   
 
                     return JsonConvert.DeserializeObject<NemAnnounceResponse.Response>(new StreamReader(task.GetResponseStream()).ReadToEnd());
 

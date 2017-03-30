@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Security;
 using System.Security.Cryptography;
+using System.Text;
 using Chaos.NaCl;
+using Org.BouncyCastle.Crypto.Digests;
 
 // ReSharper disable once CheckNamespace
 
@@ -21,6 +23,40 @@ namespace CSharp2nem
         }
 
         private Connection Connection { get; }
+
+        public VerifiableAccount FromsNewDataPrivateKey(string data)
+        {
+            SecureString sk;
+            using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
+            {
+                var digestSha3 = new KeccakDigest(256);
+                var dataBytes = Encoding.Default.GetBytes(data);
+                var pkBytes = new byte[32];
+
+                digestSha3.BlockUpdate(dataBytes, 0, 32);
+                digestSha3.DoFinal(pkBytes, 0);
+                sk = CryptoBytes.ToHexStringLower(pkBytes).ToSecureString();
+            }
+
+            return FromPrivateKey(new PrivateKey(sk));
+        }
+
+        public VerifiableAccount FromsNewDataPrivateKey(SecureString data)
+        {
+            SecureString sk;
+            using (RandomNumberGenerator rng = new RNGCryptoServiceProvider())
+            {
+                var digestSha3 = new KeccakDigest(256);
+                var dataBytes = Encoding.Default.GetBytes(data.ConvertToUnsecureString());
+                var pkBytes = new byte[32];
+
+                digestSha3.BlockUpdate(dataBytes, 0, 32);
+                digestSha3.DoFinal(pkBytes, 0);
+                sk = CryptoBytes.ToHexStringLower(pkBytes).ToSecureString();
+            }
+
+            return FromPrivateKey(new PrivateKey(sk));
+        }
 
         public VerifiableAccount FromNewPrivateKey()
         {
