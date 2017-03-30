@@ -84,7 +84,7 @@ namespace CSharp2nem
 
         public async Task<UnlockedInfo> UnlockedInfo()
         {
-            return await new AsyncConnector.GetAsync<UnlockedInfo>(Connection).Get("account/unlocked/info");
+            return await new AsyncConnector.PostAsync(Connection).Post("account/unlocked/info");
         }
 
         public async Task<NodeList> ReachablePeerList()
