@@ -20,7 +20,7 @@ namespace CSharp2nem
                 Array.Copy(CryptoBytes.FromHexString(privateKey.Raw.ConvertToUnsecureString()), sk, 32);
                 Array.Copy(
                     GetKeyBytes(
-                        new PublicKey(CryptoBytes.ToHexStringLower(PublicKeyConversion.ToPublicKey(privateKey))).Raw), 0,
+                        new PublicKey(CryptoBytes.ToHexStringLower(privateKey.ToPublicKey())).Raw), 0,
                     sk, 32, 32);
                 Ed25519.crypto_sign2(sig, data, sk, 32);
                 CryptoBytes.Wipe(sk);

@@ -39,8 +39,7 @@ namespace CSharp2nem
         {
             TotalBytesLength += StructureLength.ProvisionNameSpace + LengthOfNewPart;
             _serializer.WriteInt(ByteLength.AddressLength);
-            _serializer.WriteString(AddressEncoding.ToEncoded(Con.GetNetworkVersion(),
-                new PublicKey(DefaultValues.MainNetRentalFeeSinkPublicKey)));
+            _serializer.WriteString(Con.GetNetworkVersion().ToEncoded(new PublicKey(DefaultValues.MainNetRentalFeeSinkPublicKey)));
 
             _serializer.WriteLong(Data.Parent == DefaultValues.EmptyString ? Fee.Rental : Fee.SubSpaceRental);
             _serializer.WriteInt(LengthOfNewPart);

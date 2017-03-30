@@ -24,51 +24,52 @@ namespace CSharp2nem.Async
             internal ByteArrayWtihSignature Rpa { get; set; }
             private Connection Connection { get; }
 
-            internal async Task Post<TPostType>(string path, TPostType value)
+            internal void Post<TPostType>(string path, TPostType value)
             {
 
-                await Connection.Client.PostAsync(
-                    Connection.GetUri(path).Uri,
-                    new StringContent(JsonConvert.SerializeObject(value),
-                        Encoding.UTF8,
-                        "application/json"));
-
-                //Connection.Client.UploadStringAsync(Connection.GetUri(path).Uri, JsonConvert.SerializeObject(value));
+                //await Connection.Client.PostAsync(
+                //    Connection.GetUri(path).Uri,
+                //    new StringContent(JsonConvert.SerializeObject(value),
+                //        Encoding.UTF8,
+                //        "application/json"));
+                //
+                 Connection.Client.UploadStringAsync(Connection.GetUri(path).Uri, JsonConvert.SerializeObject(value));
             }
 
             internal async Task<NemAnnounceResponse.Response> Send()
             {
                 try
                 {
-                    var response = await Connection.Client.PostAsync(
-                        Connection.GetUri("/transaction/announce").Uri,
-                        new StringContent(JsonConvert.SerializeObject(Rpa).ToString(),
-                            Encoding.UTF8,
-                            "application/json"));
-                    
-                    return
-                        JsonConvert.DeserializeObject<NemAnnounceResponse.Response>(
-                            await response.Content.ReadAsStringAsync());
+                   // var response = await Connection.Client.PostAsync(
+                   //     Connection.GetUri("/transaction/announce").Uri,
+                   //     new StringContent(JsonConvert.SerializeObject(Rpa).ToString(),
+                   //         Encoding.UTF8,
+                   //         "application/json"));
+                   // 
+                   // return
+                   //     JsonConvert.DeserializeObject<NemAnnounceResponse.Response>(
+                   //         await response.Content.ReadAsStringAsync());
 
                     #region .NET 3.0 compatible
 
-                    //var http = (HttpWebRequest)WebRequest.Create(Connection.GetUri("/transaction/announce").Uri);
-                    //http.Accept = "application/json";
-                    //http.ContentType = "application/json";
-                    //http.Method = "POST";
-                    //
-                    //var parsedContent = JsonConvert.SerializeObject(Rpa);
-                    //var encoding = new ASCIIEncoding();
-                    //var bytes = encoding.GetBytes(parsedContent);
-                    //var newStream = http.GetRequestStream();
-                    //newStream.Write(bytes, 0, bytes.Length);
-                    //newStream.Close();
-                    //
-                    //var response = http.GetResponse();
-                    //var stream = response.GetResponseStream();
-                    //var sr = new StreamReader(stream);
-                    //
-                    //return JsonConvert.DeserializeObject<NemAnnounceResponse.Response>(sr.ReadToEnd());
+                    var http = (HttpWebRequest)WebRequest.Create(Connection.GetUri("/transaction/announce").Uri);
+                    http.Accept = "application/json";
+                    http.ContentType = "application/json";
+                    http.Method = "POST";
+                    
+                    var parsedContent = JsonConvert.SerializeObject(Rpa);
+                    var encoding = new ASCIIEncoding();
+                    var bytes = encoding.GetBytes(parsedContent);
+                    var newStream = http.GetRequestStream();
+                    newStream.Write(bytes, 0, bytes.Length);
+                    newStream.Close();
+
+                    var task = await Task.Factory.FromAsync(
+                        http.BeginGetResponse,
+                        asyncResult => http.EndGetResponse(asyncResult),
+                        null);
+
+                    return JsonConvert.DeserializeObject<NemAnnounceResponse.Response>(new StreamReader(task.GetResponseStream()).ReadToEnd());
 
                     #endregion
                 }
@@ -95,17 +96,20 @@ namespace CSharp2nem.Async
             {
                 try
                 {                   
-                    var response = await Connection.Client.GetAsync(Connection.GetUri(path, query).Uri);
-                    
-                    return JsonConvert.DeserializeObject<TReturnType>(await response.Content.ReadAsStringAsync());
+                    //var response = await Connection.Client.GetAsync(Connection.GetUri(path, query).Uri);
+                    //
+                    //return JsonConvert.DeserializeObject<TReturnType>(await response.Content.ReadAsStringAsync());
 
                     #region .NET 3.0 compatible
 
-                    //WebRequest req = System.Net.WebRequest.Create(Connection.GetUri(path, query).Uri);
-                    //WebResponse resp = req.GetResponse();
-                    //StreamReader sr = new StreamReader(resp.GetResponseStream());
-                    //
-                    //return JsonConvert.DeserializeObject<TReturnType>(sr.ReadToEnd().Trim());
+                    var http = WebRequest.Create(Connection.GetUri(path, query).Uri);
+
+                    var task = await Task.Factory.FromAsync(
+                        http.BeginGetResponse,
+                        asyncResult => http.EndGetResponse(asyncResult),
+                        null);           
+                    
+                    return JsonConvert.DeserializeObject<TReturnType>(new StreamReader(task.GetResponseStream()).ReadToEnd().Trim());
 
                     #endregion
                 }
@@ -121,37 +125,36 @@ namespace CSharp2nem.Async
             {
                 try
                 {
-                    var response = await Connection.Client.PostAsync(
-                        Connection.GetUri(path).Uri,
-                        new StringContent(
-                            JsonConvert.SerializeObject(value), 
-                            Encoding.UTF8, 
-                            "application/json"));
-                    
-                    return JsonConvert.DeserializeObject<TReturnType>(await response.Content.ReadAsStringAsync());
+                    //var response = await Connection.Client.PostAsync(
+                    //    Connection.GetUri(path).Uri,
+                    //    new StringContent(
+                    //        JsonConvert.SerializeObject(value), 
+                    //        Encoding.UTF8, 
+                    //        "application/json"));
+                    //
+                    //return JsonConvert.DeserializeObject<TReturnType>(await response.Content.ReadAsStringAsync());
 
                     #region .NET 3.0 compatible
 
-                   // var http = (HttpWebRequest)WebRequest.Create(Connection.GetUri(path).Uri);
-                   // http.Accept = "application/json";
-                   // http.ContentType = "application/json";
-                   // http.Method = "POST";
-                   // 
-                   // var parsedContent = JsonConvert.SerializeObject(value);
-                   // var encoding = new ASCIIEncoding();
-                   // var bytes = encoding.GetBytes(parsedContent);
-                   // 
-                   // var newStream = http.GetRequestStream();
-                   // newStream.Write(bytes, 0, bytes.Length);
-                   // newStream.Close();
-                   // 
-                   // var response = http.GetResponse();
-                   // 
-                   // var stream = response.GetResponseStream();
-                   // 
-                   // var sr = new StreamReader(stream);
-                   // 
-                   // return JsonConvert.DeserializeObject<TReturnType>(sr.ReadToEnd());
+                    var http = (HttpWebRequest)WebRequest.Create(Connection.GetUri(path).Uri);
+                    http.Accept = "application/json";
+                    http.ContentType = "application/json";
+                    http.Method = "POST";
+
+                    var parsedContent = JsonConvert.SerializeObject(value);
+                    var encoding = new ASCIIEncoding();
+                    var bytes = encoding.GetBytes(parsedContent);
+
+                    var newStream = http.GetRequestStream();
+                    newStream.Write(bytes, 0, bytes.Length);
+                    newStream.Close();
+
+                    var task = await Task.Factory.FromAsync(
+                        http.BeginGetResponse,
+                        asyncResult => http.EndGetResponse(asyncResult),
+                        null);
+
+                    return JsonConvert.DeserializeObject<TReturnType>(new StreamReader(task.GetResponseStream()).ReadToEnd());
 
                     #endregion
                 }

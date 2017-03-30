@@ -14,7 +14,7 @@ namespace Tests.BlockChainRequests
 
             var blockRequests = new Block(con);
 
-            var response = blockRequests.Last().Result;
+            var response =  blockRequests.Last().Result;
             Trace.Write(response.Height);
             Assert.IsNotNull(response);
         }
@@ -38,7 +38,7 @@ namespace Tests.BlockChainRequests
 
             var blockRequests = new Block(con);
 
-            var response = blockRequests.ChainHeight();
+            var response =  blockRequests.ChainHeight().Result;
 
             Assert.IsNotNull(response);
         }
@@ -50,7 +50,7 @@ namespace Tests.BlockChainRequests
 
             var blockRequests = new Block(con);
 
-            var response = blockRequests.ChainPart(400000);
+            var response =  blockRequests.ChainPart(400000).Result;
 
             Assert.IsNotNull(response);
         }
@@ -62,7 +62,7 @@ namespace Tests.BlockChainRequests
 
             var blockRequests = new Block(con);
 
-            var response = blockRequests.ChainScore();
+            var response =  blockRequests.ChainScore().Result;
 
             Assert.IsNotNull(response);
         }

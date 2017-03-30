@@ -22,7 +22,7 @@ namespace CSharp2nem
             Connection = connection;
             PublicKey = publicKey;
 
-            Address = new Address(AddressEncoding.ToEncoded(Connection.GetNetworkVersion(), PublicKey));
+            Address = new Address(Connection.GetNetworkVersion().ToEncoded(PublicKey));
         }
 
         public UnverifiableAccount(Connection connection, Address address)

@@ -70,8 +70,7 @@ namespace CSharp2nem
             _serializer.WriteInt(ByteLength.AddressLength);
 
             // fee sink address
-            _serializer.WriteString(AddressEncoding.ToEncoded(Con.GetNetworkVersion(),
-                new PublicKey(DefaultValues.MainNetCreationFeeSink)));
+            _serializer.WriteString(Con.GetNetworkVersion().ToEncoded(new PublicKey(DefaultValues.MainNetCreationFeeSink)));
 
             // creation fee
             _serializer.WriteLong(Fee.Creation);

@@ -13,7 +13,7 @@ namespace Tests.NodeRequests
 
             var nodeRequests = new Node(con);
 
-            var response = nodeRequests.ActivePeerList();
+            var response =  nodeRequests.ActivePeerList();
 
             Assert.IsNotNull(response);
         }
@@ -25,7 +25,7 @@ namespace Tests.NodeRequests
 
             var nodeRequests = new Node(con);
 
-            var response = nodeRequests.ExtendedNodeInfo();
+            var response =  nodeRequests.ExtendedNodeInfo();
 
             Assert.IsNotNull(response);
         }
@@ -37,7 +37,7 @@ namespace Tests.NodeRequests
 
             var nodeRequests = new Node(con);
 
-            var response = nodeRequests.Info();
+            var response =  nodeRequests.Info();
 
             Assert.IsNotNull(response);
         }
@@ -49,7 +49,7 @@ namespace Tests.NodeRequests
 
             var nodeRequests = new Node(con);
 
-            var response = nodeRequests.MaxHeight();
+            var response =  nodeRequests.MaxHeight();
 
             Assert.IsNotNull(response);
         }
@@ -61,7 +61,7 @@ namespace Tests.NodeRequests
 
             var nodeRequests = new Node(con);
 
-            var response = nodeRequests.PeerList();
+            var response =  nodeRequests.PeerList();
 
             Assert.IsNotNull(response);
         }
@@ -73,7 +73,7 @@ namespace Tests.NodeRequests
 
             var nodeRequests = new Node(con);
 
-            var response = nodeRequests.ReachablePeerList();
+            var response =  nodeRequests.ReachablePeerList();
 
             Assert.IsNotNull(response);
         }
@@ -85,7 +85,7 @@ namespace Tests.NodeRequests
 
             var nodeRequests = new Node(con);
 
-            var response = nodeRequests.SuperNodeList();
+            var response =  nodeRequests.SuperNodeList();
 
             Assert.IsNotNull(response);
         }
@@ -97,7 +97,7 @@ namespace Tests.NodeRequests
 
             var nodeRequests = new Node(con);
 
-            var response = nodeRequests.UnlockedInfo();
+            var response =  nodeRequests.UnlockedInfo();
 
             Assert.IsNotNull(response);
         }

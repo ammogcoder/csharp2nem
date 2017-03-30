@@ -10,7 +10,7 @@ namespace CSharp2nem
     public class VerifiableAccount : UnverifiableAccount
     {
         internal VerifiableAccount(Connection connection, PrivateKey privateKey)
-            : base(connection, new PublicKey(CryptoBytes.ToHexStringLower(PublicKeyConversion.ToPublicKey(privateKey))))
+            : base(connection, new PublicKey(CryptoBytes.ToHexStringLower(privateKey.ToPublicKey())))
         {
             if (!privateKey.Raw.OnlyHexInString() ||
                 privateKey.Raw.Length == 64 && privateKey.Raw.Length == 66)
@@ -43,7 +43,7 @@ namespace CSharp2nem
                 }
             };
 
-            await new AsyncConnector.PostAsync(Connection).Post(path, nodeData);
+             new AsyncConnector.PostAsync(Connection).Post(path, nodeData);
         }
 
         public async Task<NemAnnounceResponse.Response> SendTransactionAsync(TransferTransactionData transactionData)

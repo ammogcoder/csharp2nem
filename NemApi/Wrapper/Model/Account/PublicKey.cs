@@ -13,7 +13,7 @@ namespace CSharp2nem
 
         public PublicKey(PrivateKey key)
         {
-            Raw = CryptoBytes.ToHexStringLower(PublicKeyConversion.ToPublicKey(key));
+            Raw = CryptoBytes.ToHexStringLower(key.ToPublicKey());
         }
 
         public string Raw { get; private set; }

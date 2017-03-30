@@ -54,7 +54,7 @@ namespace CSharp2nem
 
             var result = await new AsyncConnector.GetAsync<SuperNodes.NodeList>(new Connection(uriTemp)).Get("/nodes");
 
-            SuperNodes.Node n = new SuperNodes.Node();
+            var n = new SuperNodes.Node();
             
             foreach (var node in result.Nodes)
             {

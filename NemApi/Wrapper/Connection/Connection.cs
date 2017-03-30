@@ -9,7 +9,7 @@ namespace CSharp2nem
 {
     public class Connection
     {
-        internal HttpClient Client = new HttpClient();
+        //internal HttpClient Client = new HttpClient();
 
         public Connection(UriBuilder uri, byte networkVersion = 0x68)
         {
@@ -32,7 +32,7 @@ namespace CSharp2nem
             SetNewHost();
         }
 
-        //internal WebClient Client = new WebClient(); // .NET 3.0 compatible
+        internal WebClient Client = new WebClient(); // .NET 3.0 compatible
         public UriBuilder Uri { get; set; }
         private List<string> PreTrustedNodes { get; set; }
         public bool ShouldFindNewHostIfRequestFails { get; set; }

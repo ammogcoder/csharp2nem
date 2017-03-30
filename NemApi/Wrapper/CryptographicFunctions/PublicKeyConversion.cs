@@ -18,7 +18,7 @@ namespace CSharp2nem
     *         library, specifically in the Ed25519 class. 
     */
 
-    public class PublicKeyConversion
+    public static class PublicKeyConversion
     {
         /*
         * Converts a provided private key to a public key
@@ -28,7 +28,7 @@ namespace CSharp2nem
         * @Returns: PublicKey
         */
 
-        public static byte[] ToPublicKey(PrivateKey privateKey)
+        public static byte[] ToPublicKey(this PrivateKey privateKey)
         {
             if (!privateKey.Raw.OnlyHexInString() ||
                 privateKey.Raw.Length == 64 && privateKey.Raw.Length == 66)

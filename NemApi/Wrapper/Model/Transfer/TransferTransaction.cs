@@ -145,8 +145,7 @@ namespace CSharp2nem
 
             // write amount to byte array
             _serializer.WriteLong(Data.Amount);
-        }
-        
+        }      
 
         private Message SerializeMessagePart()
         {
@@ -161,8 +160,6 @@ namespace CSharp2nem
             // store message bytes length
             MessageLength += serializeMessage.Length;
         }
-
-        
 
         private MosaicList SerializeMosaicPart()
         {
