@@ -12,7 +12,7 @@ namespace Tests.BlockChainRequests
         {
             var con = new Connection();
 
-            var blockRequests = new Block(con);
+            var blockRequests = new BlockClient(con);
 
             var response =  blockRequests.Last().Result;
             Trace.Write(response.Height);
@@ -24,7 +24,7 @@ namespace Tests.BlockChainRequests
         {
             var con = new Connection();
 
-            var blockRequests = new Block(con);
+            var blockRequests = new BlockClient(con);
 
             var response =  blockRequests.ByHeight(400000).Result;
             Debug.Write(response.Height);
@@ -36,7 +36,7 @@ namespace Tests.BlockChainRequests
         {
             var con = new Connection();
 
-            var blockRequests = new Block(con);
+            var blockRequests = new BlockClient(con);
 
             var response =  blockRequests.ChainHeight().Result;
 
@@ -48,7 +48,7 @@ namespace Tests.BlockChainRequests
         {
             var con = new Connection();
 
-            var blockRequests = new Block(con);
+            var blockRequests = new BlockClient(con);
 
             var response =  blockRequests.ChainPart(400000).Result;
 
@@ -60,7 +60,7 @@ namespace Tests.BlockChainRequests
         {
             var con = new Connection();
 
-            var blockRequests = new Block(con);
+            var blockRequests = new BlockClient(con);
 
             var response =  blockRequests.ChainScore().Result;
 

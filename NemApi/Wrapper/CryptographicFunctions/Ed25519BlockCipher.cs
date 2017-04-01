@@ -11,8 +11,21 @@ using Org.BouncyCastle.Security;
 
 namespace CSharp2nem
 {
+    /*
+     * Encrypts and decreypts messages
+     * 
+     * note: the encryption works wrapper to wrapper
+     * but is incompatible currenty with Nano wallet and NCC
+     * 
+     */
     public class Ed25519BlockCipher
     {
+        /*
+         * Constructs the blockcipher used to encrypt/decrypt data
+         * 
+         * @verifiableAccount { VerifiableAccount } The account with private key used to encrypt the data
+         * @unverifiableAccount { UnverifiableAccount } The account with public key used to encrypt the data
+         */
         public Ed25519BlockCipher(VerifiableAccount verifiableAccount, UnverifiableAccount unverifiableAccount)
         {
             UnverifiableAccount = unverifiableAccount;
@@ -25,6 +38,12 @@ namespace CSharp2nem
         private SecureRandom Random { get; }
 
 
+        /*
+         * Encrypts data using the provided sender 
+         * private key, and the recipients public key
+         * 
+         * @input { byte[] } The data to be encrypted
+         */
         public byte[] Encrypt(byte[] input)
         {
             // Setup salt.
@@ -53,7 +72,11 @@ namespace CSharp2nem
             Array.Copy(buf, 0, result, salt.Length + ivData.Length, buf.Length);
             return result;
         }
-
+        /*
+        * Decrypts data with recipiet public key 
+        * 
+        * @input { byte[] } The data to be decrypted
+        */
         public byte[] Decrypt(byte[] input)
         {
             if (input.Length < 64)
@@ -76,6 +99,11 @@ namespace CSharp2nem
             return Transform(cipher, encData);
         }
 
+        /*
+         * No idea... doesnt work.. cant seem to fix it..
+         * 
+         * 
+         */
         private static byte[] Transform(BufferedBlockCipher cipher, byte[] data)
         {
             var buf = new byte[cipher.GetOutputSize(data.Length)];
@@ -94,6 +122,11 @@ namespace CSharp2nem
             return final;
         }
 
+        /*
+         * No idea... doesnt work.. cant seem to fix it..
+         * Lets not pretend i know what this does...
+         * 
+         */
         private static BufferedBlockCipher SetupBlockCipher(byte[] sharedKey, byte[] ivData, bool forEncryption)
         {
             // Setup cipher parameters with key and IV.
@@ -109,6 +142,12 @@ namespace CSharp2nem
             return cipher;
         }
 
+        /*
+         * Still no idea... doesnt work either.. cant seem to fix it..
+         * For some reason the produced hash isnt used and 
+         * breaks even more when it is.. 0.o
+         * 
+         */
         private static byte[] GetSharedKey(PrivateKey privateKey, PublicKey publicKey, byte[] salt)
         {
             var shared = new byte[32];

@@ -4,8 +4,13 @@ namespace CSharp2nem
 {
     /*
     * Contains sets of default/constant values.
-    */
+    *
+    * 
+    
 
+    * The transaction Type to use when preparing transactions
+    * 
+    */
     internal static class TransactionType
     {
         internal const int TransferTransaction = 0x0101;
@@ -18,12 +23,26 @@ namespace CSharp2nem
         internal const int MosiacSupplyChange = 0x4002;
     }
 
+    /*
+     * The transaction version to use for transfer transactions
+     * 
+     * V1 for transactions without mosaics
+     * V2 for transfers with mosaics
+     * 
+     * note: V2 can be used for both V2 and V1 transfers
+     *       and that is what this wrapper does
+     */
     internal static class TransactionVersion
     {
         internal const int VersionOne = 0x01;
         internal const int VersionTwo = 0x02;
     }
 
+    /*
+     * The fixed byte length of transaction types with 
+     * out variable data eg. message payload.
+     * 
+     */
     internal static class StructureLength
     {
         internal const int MultisigSignature = 0x54;
@@ -43,6 +62,10 @@ namespace CSharp2nem
         internal const int MosaicLevy = 0x3c;
     }
 
+    /*
+     * Fixed byte legnth of data to reduce use of hard coded values
+     * 
+     */
     internal static class ByteLength
     {
         internal const int PublicKeyLength = 0x20;
@@ -53,6 +76,11 @@ namespace CSharp2nem
         internal const int Zero = 0x00;
     }
 
+    /*
+     * Default byte values to reduce use of hard coded values
+     * 
+     * 
+     */
     internal static class DefaultBytes
     {
         internal static byte[] MaxByteValue = {0xff, 0xff, 0xff, 0xff};
@@ -61,6 +89,12 @@ namespace CSharp2nem
         internal static byte[] Deactivate = {0x02, 0x00, 0x00, 0x00};
     }
 
+    /*
+     * Default values for transactions
+     * 
+     * mainnet fee sink is the account to which namespace rental fees are sent
+     * mainnet fee sink is the account to which namespace creation fees are sent
+     */
     internal static class DefaultValues
     {
         internal const string MainNetRentalFeeSinkPublicKey =
@@ -73,6 +107,10 @@ namespace CSharp2nem
         internal const int ZeroValuePlaceHolder = 0;
     }
 
+    /*
+     * Fixed aditional fees for transaction types
+     * 
+     */
     internal static class Fee
     {
         internal const long SubSpaceRental = 0xBEBC200;
@@ -82,6 +120,10 @@ namespace CSharp2nem
         internal const int Percentile = 0x02;
     }
 
+    /*
+     * Fixed fees for transaction types
+     * 
+     */
     internal static class TransactionFee
     {
         internal const int SupplyChange = 0x1312D00;

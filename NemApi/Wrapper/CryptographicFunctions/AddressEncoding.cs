@@ -12,9 +12,9 @@ namespace CSharp2nem
         /*
         * Converts a provided public key to an encoded address
         *
-        * @Param: publicKey, The key to convert to an encoded address
+        * @publicKey The key to convert to an encoded address
         *
-        * @Returns: EncodedAddress
+        * Returns: EncodedAddress
         */
 
         public static string ToEncoded(this byte network, PublicKey publicKey)

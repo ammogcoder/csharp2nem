@@ -11,7 +11,7 @@ namespace Tests.NodeRequests
         {
             var con = new Connection();
 
-            var nodeRequests = new Node(con);
+            var nodeRequests = new NodeClient(con);
 
             var response =  nodeRequests.ActivePeerList();
 
@@ -23,7 +23,7 @@ namespace Tests.NodeRequests
         {
             var con = new Connection();
 
-            var nodeRequests = new Node(con);
+            var nodeRequests = new NodeClient(con);
 
             var response =  nodeRequests.ExtendedNodeInfo();
 
@@ -35,7 +35,7 @@ namespace Tests.NodeRequests
         {
             var con = new Connection();
 
-            var nodeRequests = new Node(con);
+            var nodeRequests = new NodeClient(con);
 
             var response =  nodeRequests.Info();
 
@@ -47,7 +47,7 @@ namespace Tests.NodeRequests
         {
             var con = new Connection();
 
-            var nodeRequests = new Node(con);
+            var nodeRequests = new NodeClient(con);
 
             var response =  nodeRequests.MaxHeight();
 
@@ -59,7 +59,7 @@ namespace Tests.NodeRequests
         {
             var con = new Connection();
 
-            var nodeRequests = new Node(con);
+            var nodeRequests = new NodeClient(con);
 
             var response =  nodeRequests.PeerList();
 
@@ -71,7 +71,7 @@ namespace Tests.NodeRequests
         {
             var con = new Connection();
 
-            var nodeRequests = new Node(con);
+            var nodeRequests = new NodeClient(con);
 
             var response =  nodeRequests.ReachablePeerList();
 
@@ -83,7 +83,7 @@ namespace Tests.NodeRequests
         {
             var con = new Connection();
 
-            var nodeRequests = new Node(con);
+            var nodeRequests = new NodeClient(con);
 
             var response =  nodeRequests.SuperNodeList();
 
@@ -95,7 +95,7 @@ namespace Tests.NodeRequests
         {
             var con = new Connection();
 
-            var nodeRequests = new Node(con);
+            var nodeRequests = new NodeClient(con);
 
             var response =  nodeRequests.UnlockedInfo();
 

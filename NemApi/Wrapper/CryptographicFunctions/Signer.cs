@@ -8,6 +8,12 @@ using Chaos.NaCl;
 
 namespace CSharp2nem
 {
+    /*
+     * Produces a signature for a given byte array
+     * 
+     * @privateKey { PrivateKey } The private key used to sign the bytes
+     * @bytes { bytes[] } The bytes to sign
+     */
     internal class Signature
     {
         internal Signature(byte[] data, PrivateKey privateKey)
@@ -33,6 +39,13 @@ namespace CSharp2nem
 
         internal byte[] LongSignature { get; private set; }
 
+        /*
+         * Get the private key bytes
+         * 
+         * @raw { string } The raw private kye in string form
+         * 
+         * Return: The bytes of the private key
+         */
         internal byte[] GetKeyBytes(string raw)
         {
             var set = Split(raw, 2);
@@ -49,6 +62,15 @@ namespace CSharp2nem
             return bytes;
         }
 
+        /*
+         * Split a string into a set of substrings 
+         * based on a given length of substring
+         * 
+         * @str { string } The string to split
+         * @chunkSize { int } The size of chunks to be returned
+         * 
+         * Return: IEnumerable list of sub strings
+         */
         private static IEnumerable<string> Split(string str, int chunkSize)
         {
             return Enumerable.Range(0, str.Length / chunkSize)

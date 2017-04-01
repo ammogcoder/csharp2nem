@@ -11,7 +11,7 @@ namespace Tests.NisRequests
         {
             var con = new Connection();
 
-            var nisRequests = new Nis(con);
+            var nisRequests = new NisClient(con);
 
             var response = nisRequests.HeartBeat();
 
@@ -23,7 +23,7 @@ namespace Tests.NisRequests
         {
             var con = new Connection();
 
-            var nisRequests = new Nis(con);
+            var nisRequests = new NisClient(con);
 
             var response = nisRequests.NetworkTime();
 
@@ -35,7 +35,7 @@ namespace Tests.NisRequests
         {
             var con = new Connection();
 
-            var nisRequests = new Nis(con);
+            var nisRequests = new NisClient(con);
 
             var response = nisRequests.Status();
 
@@ -47,7 +47,7 @@ namespace Tests.NisRequests
         {
             var con = new Connection();
 
-            var nisRequests = new Nis(con);
+            var nisRequests = new NisClient(con);
 
             var response = nisRequests.TimeSync();
 

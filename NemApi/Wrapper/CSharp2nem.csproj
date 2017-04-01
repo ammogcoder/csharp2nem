@@ -90,7 +90,6 @@
     <Compile Include="Model\Account\AccountFactory.cs" />
     <Compile Include="IndependantRequests\Nis.cs" />
     <Compile Include="Model\Account\Encoded.cs" />
-    <Compile Include="Model\Account\KeyPair.cs" />
     <Compile Include="Model\DataModels\AggregateModificationData.cs" />
     <Compile Include="Model\DataModels\ImportanceTransferData.cs" />
     <Compile Include="Model\DataModels\MosaicDefinitionData.cs" />

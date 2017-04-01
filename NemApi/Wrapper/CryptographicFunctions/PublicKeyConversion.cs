@@ -23,9 +23,9 @@ namespace CSharp2nem
         /*
         * Converts a provided private key to a public key
         *
-        * @Param: privatrKey, The key to convert to a public key
+        * @privatrKey The key to convert to a public key
         *
-        * @Returns: PublicKey
+        * Returns: The public key produced from the private key
         */
 
         public static byte[] ToPublicKey(this PrivateKey privateKey)
