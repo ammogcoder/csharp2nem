@@ -32,10 +32,9 @@ namespace CSharp2nem.Async
                 Connection = connection;
             }
 
-            // The transaction byte array and corrosponding signature
+            // The transaction byte array and corrosponding signature object
             internal ByteArrayWtihSignature Rpa { get; set; }
 
-            // The Connection to use
             private Connection Connection { get; }
 
             /*
@@ -68,30 +67,21 @@ namespace CSharp2nem.Async
              */
             internal async Task<UnlockedInfo> Post(string path)
             {
-
-                // the content to be sent
                 var a = new StringContent(string.Empty);
 
                 try
                 {
-                    // send data to specified connection and wait for the response
                     var b = await Connection.Client.PostAsync(
-                        // get the fully qualified path
                         Connection.GetUri(path).Uri, a);
 
-                    // convert json response to c# object and return
                     return JsonConvert.DeserializeObject<UnlockedInfo>(await b.Content.ReadAsStringAsync());
                 }
                 catch (Exception e)
-                {
-                
-                    // check if a new host should be found upon request failure
+                {                
                     if (!Connection.ShouldFindNewHostIfRequestFails) throw new WebException();
 
-                    // set a new host
                     Connection.SetNewHost();
 
-                    // resend the request
                     return await Post(path);
                 }
                 //Connection.Client.UploadStringAsync(Connection.GetUri(path).Uri, JsonConvert.SerializeObject(value));
@@ -104,16 +94,12 @@ namespace CSharp2nem.Async
             {
                 try
                 {
-                    // send the transaction data and signature to the specified connection and wait for the response.
                     var response = await Connection.Client.PostAsync(
-                        // get the fully qualified path
                         Connection.GetUri("/transaction/announce").Uri,
-                        // create the content from the serialized transacion object
                         new StringContent(JsonConvert.SerializeObject(Rpa),
                             Encoding.UTF8,
                             "application/json"));
                     
-                    // return the deserialized response
                     return JsonConvert.DeserializeObject<NemAnnounceResponse.Response>(
                             await response.Content.ReadAsStringAsync());
 
@@ -144,13 +130,10 @@ namespace CSharp2nem.Async
                 }
                 catch (WebException)
                 {
-                    // check if a new host should be found upon request failure
                     if (!Connection.ShouldFindNewHostIfRequestFails) throw new WebException();
 
-                    // set new host
                     Connection.SetNewHost();
 
-                    // resend the transaction
                     return await Send();
                 }
             }

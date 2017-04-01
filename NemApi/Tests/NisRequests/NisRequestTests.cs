@@ -19,18 +19,6 @@ namespace Tests.NisRequests
         }
 
         [TestMethod]
-        public void CanRetrieveNetworkTime()
-        {
-            var con = new Connection();
-
-            var nisRequests = new NisClient(con);
-
-            var response = nisRequests.NetworkTime();
-
-            Assert.IsNotNull(response);
-        }
-
-        [TestMethod]
         public void CanRetrieveStatus()
         {
             var con = new Connection();
