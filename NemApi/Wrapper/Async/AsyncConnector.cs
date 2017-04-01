@@ -45,9 +45,9 @@ namespace CSharp2nem.Async
              * @path The API path to send the data to
              * @value The data to be sent
              */
-            internal async void Post<TPostType>(string path, TPostType value)
+            internal async Task Post<TPostType>(string path, TPostType value)
             {
-
+                
                 await Connection.Client.PostAsync(
                     Connection.GetUri(path).Uri,
                     new StringContent(JsonConvert.SerializeObject(value),
