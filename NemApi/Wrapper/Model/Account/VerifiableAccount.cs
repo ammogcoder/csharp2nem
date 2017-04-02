@@ -101,10 +101,15 @@ namespace CSharp2nem
          * "lent" to the other account until you revoke it allowing you
          * to harvest safely and securely.
          * 
+         * http://bob.nem.ninja/docs/#gathering-data-for-the-signature
+         * 
          * @data { ImportanceTransferData } The transfer data required to initiate the transfer
          * 
          * Return: The response object that provides details on the status of the transaction
          * ie. returns code 1 if successful with message success
+         * 
+         * Note: All the following transactions return code 1 or message success for a successful transaction
+         *       See http://bob.nem.ninja/docs/#appendix-B:-NIS-errors for all other error messages 
          * 
          */
         public async Task<NemAnnounceResponse.Response> ImportanceTransferAsync(ImportanceTransferData data)
@@ -120,6 +125,8 @@ namespace CSharp2nem
          * You can add or remove signatories, or increase or decrease the 
          * minimum signature requirement ie. delta
          * 
+         * http://bob.nem.ninja/docs/#gathering-data-for-the-signature
+         * 
          * @data { AggregateModificationData } The data required to initiate the transaction
          * 
          */
@@ -134,6 +141,8 @@ namespace CSharp2nem
         /*
          * Provision name space. This API allows the given account to provision a namespace
          * 
+         * http://bob.nem.ninja/docs/#gathering-data-for-the-signature
+         * 
          * @data { ProvisionNameSpaceData } The data required to provision a namespace
          * 
          */
@@ -144,6 +153,15 @@ namespace CSharp2nem
             return await new Prepare(Connection, PrivateKey).Transaction(nameSpace.GetBytes());
         }
 
+        /*
+         * Create mosaic. This API allows the given account to create a mosaic.
+         * A mosaic must reside under a namespace or sub-namespace
+         * 
+         * http://bob.nem.ninja/docs/#gathering-data-for-the-signature
+         * 
+         * @data { MosaicCreationData } The data required to provision a namespace
+         * 
+         */
         public async Task<NemAnnounceResponse.Response> CreateMosaicAsync(MosaicCreationData data)
         {
             var model = new MosaicDefinition(data, data?.MultisigAccount ?? PublicKey);
@@ -153,6 +171,16 @@ namespace CSharp2nem
             return await new Prepare(Connection, PrivateKey).Transaction(mosaic.GetBytes());
         }
 
+        /*
+         * Change supply of a mosaic. This API allows the given account to change the supply of a mosaic.
+         * A mosaic must have the property supply mutable set to true during creation for this API to 
+         * be applicable
+         * 
+         * http://bob.nem.ninja/docs/#gathering-data-for-the-signature
+         * 
+         * @data { MosaicSupplyChange } The data required to chage mosaic supply
+         * 
+         */
         public async Task<NemAnnounceResponse.Response> MosaicSupplychangeAsync(MosaicSupplyChangeData data)
         {
             var change = new SupplyChange(Connection, PublicKey, data);
@@ -160,6 +188,15 @@ namespace CSharp2nem
             return await new Prepare(Connection, PrivateKey).Transaction(change.GetBytes());
         }
 
+        /*
+         * Multisig signature transaction. This API allows a cosignatory to sign a pending transaction
+         * that requires the cosignatories signature.
+         * 
+         * http://bob.nem.ninja/docs/#gathering-data-for-the-signature
+         * 
+         * @data { MultisigSignatureTransaction } The data required to sign the pending multisig transaction
+         * 
+         */
         public async Task<NemAnnounceResponse.Response> SignMultisigTransaction(MultisigSignatureTransactionData data)
         {
             var signature = new MultisigSignature(Connection, PublicKey, data);
