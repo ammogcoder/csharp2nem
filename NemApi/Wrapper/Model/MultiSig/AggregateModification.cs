@@ -13,10 +13,10 @@ namespace CSharp2nem
         /*
         * Constructs a modification
         *
-        * @Param: PublicKey, The public key of the signatory to modify
-        * @Param: ModType, The type of modification (1 = add, 2 = remove)
+        * @publickKey { PublicKey } The public key of the signatory to modify
+        * @modeType { int } The type of modification (1 = add, 2 = remove)
+        * 
         */
-
         public AggregateModification(PublicKey publicKey, int modType)
         {
             if (publicKey == null)

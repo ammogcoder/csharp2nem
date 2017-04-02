@@ -5,6 +5,13 @@ using Chaos.NaCl;
 
 namespace CSharp2nem
 {
+    /*
+     * Prepares a list aggregate modifications and populates the base class of transaction.
+     * The base class creates the common part of the transaction
+     * 
+     * 
+     * 
+     */
     internal class AggregateModificatioList : Transaction
     {
         internal AggregateModificatioList(Connection connection, PublicKey sender, AggregateModificationData data)

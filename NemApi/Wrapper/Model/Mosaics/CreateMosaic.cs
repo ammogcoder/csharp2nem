@@ -4,6 +4,13 @@
 
 namespace CSharp2nem
 {
+    /*
+     * Creates a mosaic definition and populates the base class of transaction.
+     * The base class creates the common part of the transaction
+     * 
+     * 
+     * 
+     */
     internal class CreateMosaic : Transaction
     {
         private readonly Serializer _serializer = new Serializer();
