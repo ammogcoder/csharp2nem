@@ -1,9 +1,10 @@
 ﻿using System;
-using NemApi;
+using CSharp2nem;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 using Chaos.NaCl;
 
 namespace run
@@ -12,6 +13,10 @@ namespace run
     {
         #region class properties
         private static readonly Connection Con = new Connection();
+
+        private static VerifiableAccount NewAccount { get; }
+
+        private static VerifiableAccount NewAccount2 { get; }
 
         private static VerifiableAccount Cosig1 { get; }
 
@@ -32,6 +37,10 @@ namespace run
         static Program()
         {
             Con.SetTestNet();
+
+            NewAccount = new AccountFactory(Con).FromNewPrivateKey();
+
+            NewAccount2 = new AccountFactory().FromsNewDataPrivateKey("<any data, its hashed to produce a string the correct length>");
 
             Cosig1 = new AccountFactory(Con).FromPrivateKey(
                 "<private key here>");
@@ -273,7 +282,7 @@ namespace run
              * These requests should be self explanitory.
              * please refer to http://bob.nem.ninja/docs/ for further info
              */
-            var newKeyPair = await Unverifiable.GetGenerateNewAccountAsync();
+          
 
             var result01 = await Unverifiable.GetAccountInfoAsync();
             var result02 = await Unverifiable.GetAccountStatusAsync();
@@ -297,6 +306,21 @@ namespace run
 
             // node to which request sent must have historic data retrieval enabled.
             var result14 = await Unverifiable.HistoricData(Cosig1.Address.Encoded, 0, 100, 2);
+        }
+
+        private static async  Task BlockNisNodeRequests()
+        {
+            var blockClient = new BlockClient();
+
+            var result = await blockClient.Last();
+
+            var nisClient = new NisClient();
+
+            var result2 = await nisClient.Status();
+
+            var nodeClient = new NodeClient();
+
+            var result3 = await nodeClient.Info();
         }
     }
 }
