@@ -6,22 +6,19 @@ namespace CSharp2nem
 {
     public class HarvestingData
     {
-        public class BlockHash
-        {
-            public string Data { get; set; }
-        }
 
         public class Datum
         {
-            public int TimeStamp { get; set; }
-            public BlockHash BlockHash { get; set; }
-            public int TotalFee { get; set; }
-            public int Height { get; set; }
+            public int timeStamp { get; set; }
+            public long difficulty { get; set; }
+            public int totalFee { get; set; }
+            public int id { get; set; }
+            public int height { get; set; }
         }
 
         public class ListData
         {
-            public List<Datum> Data { get; set; }
+            public List<Datum> data { get; set; }
         }
     }
 }

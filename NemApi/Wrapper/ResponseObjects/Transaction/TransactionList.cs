@@ -10,12 +10,15 @@ namespace CSharp2nem
         {
             public string data { get; set; }
         }
-
+        public class Hash
+        {
+            public string data { get; set; }
+        }
         public class Meta
         {
             public InnerHash innerHash { get; set; }
             public int id { get; set; }
-            public string data { get; set; }
+            public Hash hash { get; set; }
             public long height { get; set; }
         }
 

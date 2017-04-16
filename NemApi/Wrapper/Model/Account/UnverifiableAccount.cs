@@ -186,7 +186,7 @@ namespace CSharp2nem
 
                 hash = lastBlock.PrevBlockHash.Data;
             }
-
+            
             const string path = "/account/harvests";
 
             var query = string.Concat("address=", Address.Encoded, "&hash=", hash);
