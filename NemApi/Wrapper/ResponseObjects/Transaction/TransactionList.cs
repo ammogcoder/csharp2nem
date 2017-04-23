@@ -16,6 +16,7 @@ namespace CSharp2nem
         }
         public class Meta
         {
+            public string data { get; set; }
             public InnerHash innerHash { get; set; }
             public int id { get; set; }
             public Hash hash { get; set; }
