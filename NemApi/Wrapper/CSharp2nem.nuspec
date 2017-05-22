@@ -2,7 +2,7 @@
   <metadata>
     <id>CSharp2nem</id>
 	<title>CSharp2nem</title>
-    <version>1.0.37.0</version>
+    <version>1.0.40.0</version>
 	<tags>Nem, Blockchain, Nis, Bitcoin</tags>
 	<projectUrl>https://github.com/NemProject/csharp2nem</projectUrl>
     <authors>Kailin O'Donnell</authors>
@@ -16,7 +16,6 @@
 	  <reference file="Base32Encoder.dll" />
 	  <reference file="Chaos.NaCl.dll" />
 	  <reference file="BouncyCastle.Crypto.dll" />
-	  <reference file="Newtonsoft.Json.dll" />
 	  <reference file="Csharp2nem.dll" />
 	</references>
   </metadata>
@@ -24,6 +23,5 @@
 	<file src="lib\net40\Base32Encoder.dll" target="lib\net452" />
 	<file src="lib\net40\BouncyCastle.Crypto.dll" target="lib\net452" />
 	<file src="lib\net40\Chaos.NaCl.dll" target="lib\net452" />
-	<file src="lib\net40\Newtonsoft.Json.dll" target="lib\net452" />
   </files>
 </package>

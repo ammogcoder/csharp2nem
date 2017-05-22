@@ -11,9 +11,9 @@ namespace CSharp2nem
         {
             public int timeStamp { get; set; }
             public long difficulty { get; set; }
-            public int totalFee { get; set; }
+            public long totalFee { get; set; }
             public int id { get; set; }
-            public int height { get; set; }
+            public long height { get; set; }
         }
 
         public class ListData
