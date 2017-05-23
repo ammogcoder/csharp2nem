@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using Chaos.NaCl;
 
 // ReSharper disable once CheckNamespace
 
@@ -44,7 +45,7 @@ namespace CSharp2nem
                 }
                 else
                 {
-                    MessageBytes = Encoding.UTF8.GetBytes(MessageString);
+                    MessageBytes = Encoding.UTF8.GetBytes(MessageString);   
                 }
 
                 PayloadLengthInBytes = MessageBytes.Length;

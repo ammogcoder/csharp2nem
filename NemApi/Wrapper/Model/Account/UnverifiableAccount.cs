@@ -85,7 +85,7 @@ namespace CSharp2nem
 
             var transactions = await new AsyncConnector.GetAsync<Transactions.All>(Connection).Get(path, query);
 
-            DecodeTransactions(transactions);
+            //DecodeTransactions(transactions);
 
             return transactions;
         }
@@ -112,7 +112,7 @@ namespace CSharp2nem
 
             var transactions = await new AsyncConnector.GetAsync<Transactions.All>(Connection).Get(path, query);
 
-            DecodeTransactions(transactions);
+            //DecodeTransactions(transactions);
 
             return transactions;
         }
@@ -139,7 +139,7 @@ namespace CSharp2nem
 
             var transactions = await new AsyncConnector.GetAsync<Transactions.All>(Connection).Get(path, query);
 
-            DecodeTransactions(transactions);
+            //DecodeTransactions(transactions);
 
             return transactions;
         }
@@ -162,7 +162,7 @@ namespace CSharp2nem
 
             var transactions = await new AsyncConnector.GetAsync<Transactions.All>(Connection).Get(path, query);
 
-            DecodeTransactions(transactions);
+            //DecodeTransactions(transactions);
 
             return transactions;
         }

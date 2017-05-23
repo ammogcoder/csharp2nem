@@ -94,7 +94,7 @@ namespace CSharp2nem
                 }
                 
             }
-            TotalFee -= 1000000;
+           TotalFee -= 1000000;
         }
 
         internal long GetFee()
@@ -129,6 +129,7 @@ namespace CSharp2nem
                 Serializer.WriteString(mosaic.MosaicName);
 
                 Serializer.WriteLong(mosaic.Quantity);
+              
             }
         }
     }
