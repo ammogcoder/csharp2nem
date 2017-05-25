@@ -130,6 +130,7 @@ namespace CSharp2nem
             public Message message { get; set; }
             public int version { get; set; }
             public string signer { get; set; }
+            public List<Mosaic> mosaics { get; set; }
             public MosaicDefinition mosaicDefinition { get; set; }
         }
 

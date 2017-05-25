@@ -122,6 +122,7 @@ namespace CSharp2nem
             {
                 // if fee is not to be deducted, add individual fees to total fee without adjustment
                 Fee += transferFee + messageFee + mosaicFee;
+               
             }
 
             // write the transfer bytes

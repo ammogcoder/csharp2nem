@@ -66,13 +66,14 @@ namespace CSharp2nem
 
         private void CalculateMessageFee()
         {
+            
             Fee += Encrypted
-                ? 6000000 + MessageString.Length / 32 + 1000000
-                : MessageString.Length / 32 + 1000000;
+                ? (6 + (MessageString.Length / 32) + 1) * 1000000
+                : ((MessageString.Length / 32) + 1) * 1000000;
         }
 
         internal long GetFee()
-        {
+        {   
             return Fee;
         }
 

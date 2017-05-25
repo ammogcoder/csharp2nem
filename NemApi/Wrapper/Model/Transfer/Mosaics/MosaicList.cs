@@ -94,12 +94,13 @@ namespace CSharp2nem
                 }
                 
             }
-           TotalFee -= 1000000;
+          // TotalFee -= 1000000;
         }
 
         internal long GetFee()
         {
-            return TotalFee;
+            
+            return Math.Max(TotalFee, 1000000);
         }
 
         /*

@@ -17,7 +17,7 @@ namespace CSharp2nem
         * Returns: EncodedAddress
         */
 
-        public static string ToEncoded(this byte network, PublicKey publicKey)
+        public static string ToEncoded(this byte network, PublicKey publicKey) // TODO: in next version, extend on public key, not network byte.
         {
             if (!publicKey.Raw.OnlyHexInString() || publicKey.Raw.Length != 64 && publicKey.Raw.Length != 66)
                 throw new ArgumentException("invalid public key");
