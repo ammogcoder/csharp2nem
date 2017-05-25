@@ -112,6 +112,7 @@ namespace CSharp2nem
         private void Serialize()
         {
             Serializer.WriteInt(ListOfMosaics.Count);
+            Length += 4;
 
             foreach (var mosaic in ListOfMosaics)
             {

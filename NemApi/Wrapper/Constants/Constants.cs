@@ -51,7 +51,7 @@ namespace CSharp2nem
         internal const int RelativeChange = 0x04;
         internal const int TransactionCommon = 0x3c;
         internal const int MultiSigHeader = 0x40;
-        internal const int TransferTransaction = 0x3c;
+        internal const int TransferTransaction = 0x38;
         internal const int ProvisionNameSpace = 0x38;
         internal const int ImportnaceTransfer = 0x28;
         internal const int TransactionHash = 0x24;
