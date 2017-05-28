@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Chaos.NaCl;
 
 // ReSharper disable once CheckNamespace
 
@@ -21,6 +22,7 @@ namespace CSharp2nem
             Serialize();
 
             Bytes = Serializer.GetBytes().TruncateByteArray(Length);
+            
             CalculateMosaicTransferFee();
         }
 

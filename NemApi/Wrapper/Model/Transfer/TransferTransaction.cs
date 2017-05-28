@@ -177,7 +177,7 @@ namespace CSharp2nem
             _serializer.WriteBytes(mosaicList.GetMosaicListBytes());
 
             // store mosaic bytes length
-            MosaicLength = mosaicList.GetMosaicListBytes().Length;
+            MosaicLength = mosaicList.GetMosaicListBytes().Length - 4;
         }
 
         private void AppendMultisig()
