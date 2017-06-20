@@ -124,7 +124,7 @@ namespace CSharp2nem
                 Fee += transferFee + messageFee + mosaicFee;
                
             }
-
+           
             // write the transfer bytes
             WriteTransferBytes();
 

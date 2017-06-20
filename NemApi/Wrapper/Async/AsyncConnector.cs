@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Chaos.NaCl;
 using CSharp2nem.internals;
 using Newtonsoft.Json;
 
@@ -76,12 +77,10 @@ namespace CSharp2nem.Async
 
                     return JsonConvert.DeserializeObject<UnlockedInfo>(await b.Content.ReadAsStringAsync());
                 }
-                catch (Exception e)
-                {                
-                    if (!Connection.ShouldFindNewHostIfRequestFails) throw new WebException();
-
+                catch (WebException e)
+                {
+                    if (!Connection.ShouldFindNewHostIfRequestFails) throw new Exception(e.Message);
                     Connection.SetNewHost();
-
                     return await Post(path);
                 }
                 //Connection.Client.UploadStringAsync(Connection.GetUri(path).Uri, JsonConvert.SerializeObject(value));
@@ -94,6 +93,7 @@ namespace CSharp2nem.Async
             {
                 try
                 {
+                   
                     var response = await Connection.Client.PostAsync(
                         Connection.GetUri("/transaction/announce").Uri,
                         new StringContent(JsonConvert.SerializeObject(Rpa),
@@ -102,38 +102,12 @@ namespace CSharp2nem.Async
                     
                     return JsonConvert.DeserializeObject<NemAnnounceResponse.Response>(
                             await response.Content.ReadAsStringAsync());
-
-                    #region .NET 3.0 compatible
-
-                   //var http = (HttpWebRequest)WebRequest.Create(Connection.GetUri("/transaction/announce").Uri);
-                   //http.Accept = "application/json";
-                   //http.ContentType = "application/json";
-                   //http.Method = "POST";
-                   //
-                   //var parsedContent = JsonConvert.SerializeObject(Rpa);
-                   //var encoding = new ASCIIEncoding();
-                   //var bytes = encoding.GetBytes(parsedContent);
-                   //var newStream = http.GetRequestStream();
-                   //newStream.Write(bytes, 0, bytes.Length);
-                   //newStream.Close();
-                   //
-                   //
-                   //var task = await Task.Factory.FromAsync(
-                   //        http.BeginGetResponse,
-                   //        asyncResult => http.EndGetResponse(asyncResult),
-                   //        null);
-                   //
-                   //
-                   //return JsonConvert.DeserializeObject<NemAnnounceResponse.Response>(new StreamReader(task.GetResponseStream()).ReadToEnd());
-
-                    #endregion
+ 
                 }
-                catch (WebException)
+                catch (WebException e)
                 {
-                    if (!Connection.ShouldFindNewHostIfRequestFails) throw new WebException();
-
+                    if (!Connection.ShouldFindNewHostIfRequestFails) throw new Exception(e.Message);
                     Connection.SetNewHost();
-
                     return await Send();
                 }
             }
@@ -173,23 +147,10 @@ namespace CSharp2nem.Async
                     var response = await Connection.Client.GetAsync(Connection.GetUri(path, query).Uri);
 
                     return JsonConvert.DeserializeObject<TReturnType>(await response.Content.ReadAsStringAsync());
-
-                    #region .NET 3.0 compatible
-
-                    //var http = WebRequest.Create(Connection.GetUri(path, query).Uri);
-                    //
-                    //var task = await Task.Factory.FromAsync(
-                    //    http.BeginGetResponse,
-                    //    asyncResult => http.EndGetResponse(asyncResult),
-                    //    null);           
-                    //
-                    //return JsonConvert.DeserializeObject<TReturnType>(new StreamReader(task.GetResponseStream()).ReadToEnd().Trim());
-
-                    #endregion
                 }
-                catch (WebException)
+                catch (WebException e)
                 {
-                    if (!Connection.ShouldFindNewHostIfRequestFails) throw;
+                    if (!Connection.ShouldFindNewHostIfRequestFails) throw new Exception(e.Message);
                     Connection.SetNewHost();
                     return await Get(path, query);
                 }
@@ -217,34 +178,10 @@ namespace CSharp2nem.Async
                             "application/json"));
                     
                     return JsonConvert.DeserializeObject<TReturnType>(await response.Content.ReadAsStringAsync());
-
-                    #region .NET 3.0 compatible
-
-                    //var http = (HttpWebRequest)WebRequest.Create(Connection.GetUri(path).Uri);
-                    //http.Accept = "application/json";
-                    //http.ContentType = "application/json";
-                    //http.Method = "POST";
-                    //
-                    //var parsedContent = JsonConvert.SerializeObject(value);
-                    //var encoding = new ASCIIEncoding();
-                    //var bytes = encoding.GetBytes(parsedContent);
-                    //
-                    //var newStream = http.GetRequestStream();
-                    //newStream.Write(bytes, 0, bytes.Length);
-                    //newStream.Close();
-                    //
-                    //var task = await Task.Factory.FromAsync(
-                    //    http.BeginGetResponse,
-                    //    asyncResult => http.EndGetResponse(asyncResult),
-                    //    null);
-                    //
-                    //return JsonConvert.DeserializeObject<TReturnType>(new StreamReader(task.GetResponseStream()).ReadToEnd());
-
-                    #endregion
                 }
-                catch (WebException)
+                catch (WebException e)
                 {
-                    if (!Connection.ShouldFindNewHostIfRequestFails) throw;
+                    if (!Connection.ShouldFindNewHostIfRequestFails) throw new Exception(e.Message);
                     Connection.SetNewHost();
                     return await Get(path, value);
                 }

@@ -35,7 +35,7 @@ namespace CSharp2nem
         {
 
             Uri = uri;
-            ShouldFindNewHostIfRequestFails = true;
+           
             NetworkVersion = networkVersion;
             SetLivenetPretrustedHostList();
         }
@@ -54,8 +54,6 @@ namespace CSharp2nem
                 Port = 7890
             };
 
-            ShouldFindNewHostIfRequestFails = true;
-
             NetworkVersion = 0x68;
 
             SetLivenetPretrustedHostList();
@@ -65,10 +63,9 @@ namespace CSharp2nem
 
         //internal WebClient Client = new WebClient(); // .NET 3.0 compatible
         public UriBuilder Uri { get; set; }
-        private List<string> PreTrustedNodes { get; set; }
-        public bool ShouldFindNewHostIfRequestFails { get; set; }
+        private List<string> PreTrustedNodes { get; set; }    
         private byte NetworkVersion { get; set; }
-
+        public bool ShouldFindNewHostIfRequestFails = true;
         /*
          * Set connection to use a testnet node
          * 
