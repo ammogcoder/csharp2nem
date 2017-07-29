@@ -1,6 +1,6 @@
-﻿// ReSharper disable once CheckNamespace
+﻿
 
-namespace CSharp2nem
+namespace CSharp2nem.Constants
 {
     /*
     * Contains sets of default/constant values.

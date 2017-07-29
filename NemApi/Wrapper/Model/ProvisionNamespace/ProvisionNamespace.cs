@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Text;
-using Chaos.NaCl;
+using CSharp2nem.Constants;
+using CSharp2nem.CryptographicFunctions;
+using CSharp2nem.Model.AccountSetup;
+using CSharp2nem.Model.DataModels;
+using CSharp2nem.Model.MultiSig;
+using CSharp2nem.Model.Transfer;
+using CSharp2nem.Serialize;
+using CSharp2nem.Utils;
 
-// ReSharper disable once CheckNamespace
-
-namespace CSharp2nem
+namespace CSharp2nem.Model.ProvisionNamespace
 {
     internal class ProvisionNamespace : Transaction
     {
         private readonly Serializer _serializer = new Serializer();
 
-        internal ProvisionNamespace(Connection connection, PublicKey sender, ProvisionNameSpaceData data)
+        internal ProvisionNamespace(Connectivity.Connection connection, PublicKey sender, ProvisionNameSpaceData data)
             : base(connection, data.MultisigAccount ?? sender, data.Deadline)
         {
             SenderPublicKey = sender;
@@ -28,7 +33,7 @@ namespace CSharp2nem
         }
 
         private ProvisionNameSpaceData Data { get; }
-        private Connection Con { get; }
+        private Connectivity.Connection Con { get; }
         private PublicKey SenderPublicKey { get; }
         private int LengthOfNewPart { get; }
         private int LengthOfParent { get; }
@@ -39,7 +44,7 @@ namespace CSharp2nem
         {
             TotalBytesLength += StructureLength.ProvisionNameSpace + LengthOfNewPart;
             _serializer.WriteInt(ByteLength.AddressLength);
-            _serializer.WriteString(Con.GetNetworkVersion().ToEncoded(new PublicKey(DefaultValues.MainNetRentalFeeSinkPublicKey)));
+            _serializer.WriteString(AddressEncoding.ToEncoded(Con.GetNetworkVersion(), new PublicKey(DefaultValues.MainNetRentalFeeSinkPublicKey)));
 
             _serializer.WriteLong(Data.Parent == DefaultValues.EmptyString ? Fee.Rental : Fee.SubSpaceRental);
             _serializer.WriteInt(LengthOfNewPart);
@@ -57,7 +62,7 @@ namespace CSharp2nem
                 _serializer.WriteBytes(DefaultBytes.MaxByteValue);
             }
 
-            ProvisionNamespaceBytes = _serializer.GetBytes().TruncateByteArray(TotalBytesLength);
+            ProvisionNamespaceBytes = ByteUtils.TruncateByteArray(_serializer.GetBytes(), TotalBytesLength);
         }
 
         private void finalize()
@@ -83,7 +88,7 @@ namespace CSharp2nem
 
             var multisig = new MultiSigTransaction(Con, SenderPublicKey, Data.Deadline, TotalBytesLength);
 
-            ProvisionNamespaceBytes = multisig.GetBytes().ConcatonatetBytes(ProvisionNamespaceBytes);
+            ProvisionNamespaceBytes = ByteUtils.ConcatonatetBytes(multisig.GetBytes(), ProvisionNamespaceBytes);
         }
 
         internal byte[] GetBytes()

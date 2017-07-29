@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 
-// ReSharper disable once CheckNamespace
-
-namespace CSharp2nem
+namespace CSharp2nem.ResponseObjects.Account
 {
     public class ExistingAccount
     {

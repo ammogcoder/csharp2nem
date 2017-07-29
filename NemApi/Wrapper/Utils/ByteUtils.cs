@@ -1,12 +1,10 @@
 ﻿using System;
 
-// ReSharper disable once CheckNamespace
-
-namespace CSharp2nem
+namespace CSharp2nem.Utils
 {
-    internal static class ByteUtils
+    public static class ByteUtils
     {
-        internal static byte[] TruncateByteArray(this byte[] bytes, int len)
+        public static byte[] TruncateByteArray(byte[] bytes, int len)
         {
             var truncBytes = new byte[len];
 
@@ -15,7 +13,7 @@ namespace CSharp2nem
             return truncBytes;
         }
 
-        internal static byte[] ConcatonatetBytes(this byte[] a, byte[] b)
+        public static byte[] ConcatonatetBytes(byte[] a, byte[] b)
         {
             var combined = new byte[a.Length + b.Length];
 

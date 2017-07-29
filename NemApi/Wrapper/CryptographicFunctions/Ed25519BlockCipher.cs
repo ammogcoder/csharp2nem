@@ -1,5 +1,9 @@
 ﻿using System;
 using Chaos.NaCl;
+using CSharp2nem.Constants;
+using CSharp2nem.Model.AccountSetup;
+using CSharp2nem.RequestClients;
+using CSharp2nem.Utils;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Engines;
 using Org.BouncyCastle.Crypto.Modes;
@@ -7,43 +11,45 @@ using Org.BouncyCastle.Crypto.Paddings;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
 
-// ReSharper disable once CheckNamespace
-
-namespace CSharp2nem
+namespace CSharp2nem.CryptographicFunctions
 {
-    /*
-     * Encrypts and decreypts messages
-     * 
-     * note: the encryption works wrapper to wrapper
-     * but is incompatible currenty with Nano wallet and NCC
-     * 
-     */
+   
+    /// <summary>
+    /// Contains a number of methods used to encrypt or decrypt data
+    /// </summary>
+    /// <remarks>
+    /// Currently broken.
+    /// </remarks>
     public class Ed25519BlockCipher
     {
-        /*
-         * Constructs the blockcipher used to encrypt/decrypt data
-         * 
-         * @verifiableAccount { VerifiableAccount } The account with private key used to encrypt the data
-         * @unverifiableAccount { UnverifiableAccount } The account with public key used to encrypt the data
-         */
-        public Ed25519BlockCipher(VerifiableAccount verifiableAccount, UnverifiableAccount unverifiableAccount)
+        /// <summary>
+        /// Constructs an instance of the <see cref="Ed25519BlockCipher"/> class.
+        /// </summary>
+        /// <param name="PrivateKeyAccountClient">The PrivateKeyAccountClient used to encrypt or decrypt data</param>
+        /// <param name="publicKey">The public key of the recipient of the encrypted data.</param>
+        public Ed25519BlockCipher(PrivateKeyAccountClient PrivateKeyAccountClient, string publicKey)
         {
-            UnverifiableAccount = unverifiableAccount;
-            VerifiableAccount = verifiableAccount;
+            PublicKey = publicKey;
+            PrivateKeyAccount = PrivateKeyAccountClient;
             Random = new SecureRandom();
         }
 
-        private VerifiableAccount VerifiableAccount { get; }
-        private UnverifiableAccount UnverifiableAccount { get; }
+        private PrivateKeyAccountClient PrivateKeyAccount { get; }
+        private string PublicKey { get; }
         private SecureRandom Random { get; }
 
 
         /*
-         * Encrypts data using the provided sender 
+         *
          * private key, and the recipients public key
          * 
          * @input { byte[] } The data to be encrypted
          */
+        /// <summary>
+        ///  Encrypts data using the private key of the PrivateKeyAccountClient and the public key of the recipient.
+        /// </summary>
+        /// <param name="input">The data to encrypt.</param>
+        /// <returns></returns>
         public byte[] Encrypt(byte[] input)
         {
             // Setup salt.
@@ -51,7 +57,7 @@ namespace CSharp2nem
             Random.NextBytes(salt);
 
             // Derive shared key.
-            var sharedKey = GetSharedKey(VerifiableAccount.PrivateKey, UnverifiableAccount.PublicKey, salt);
+            var sharedKey = GetSharedKey(PrivateKeyAccount.PrivateKey, PublicKey, salt);
 
             // Setup IV.
             var ivData = new byte[16];
@@ -72,11 +78,12 @@ namespace CSharp2nem
             Array.Copy(buf, 0, result, salt.Length + ivData.Length, buf.Length);
             return result;
         }
-        /*
-        * Decrypts data with recipiet public key 
-        * 
-        * @input { byte[] } The data to be decrypted
-        */
+
+        /// <summary>
+        /// Decrypts data with recipiet private key.
+        /// </summary>
+        /// <param name="input">The data to decrypt</param>
+        /// <returns></returns>
         public byte[] Decrypt(byte[] input)
         {
             if (input.Length < 64)
@@ -90,7 +97,7 @@ namespace CSharp2nem
             Array.ConstrainedCopy(input, 48, encData, 0, input.Length - 48);
 
             // Derive shared key.
-            var sharedKey = GetSharedKey(VerifiableAccount.PrivateKey, UnverifiableAccount.PublicKey, salt);
+            var sharedKey = GetSharedKey(PrivateKeyAccount.PrivateKey, PublicKey, salt);
 
             // Setup block cipher.
             var cipher = SetupBlockCipher(sharedKey, ivData, false);
@@ -148,15 +155,15 @@ namespace CSharp2nem
          * breaks even more when it is.. 0.o
          * 
          */
-        private static byte[] GetSharedKey(PrivateKey privateKey, PublicKey publicKey, byte[] salt)
+        private static byte[] GetSharedKey(PrivateKey privateKey, string publicKey, byte[] salt)
         {
             var shared = new byte[32];
 
             var hash = Ed25519.key_derive( // TODO: find out why hash isnt used.
                 shared,
                 salt,
-                CryptoBytes.FromHexString(publicKey.Raw),
-                CryptoBytes.FromHexString(privateKey.Raw.ConvertToUnsecureString()));
+                CryptoBytes.FromHexString(publicKey),
+                CryptoBytes.FromHexString(StringUtils.ConvertToUnsecureString(privateKey.Raw)));
 
 
             return shared;

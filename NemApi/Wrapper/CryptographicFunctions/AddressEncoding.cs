@@ -1,25 +1,41 @@
 ﻿using System;
 using System.Text;
 using Chaos.NaCl;
+using CSharp2nem.Model.AccountSetup;
+using CSharp2nem.Utils;
 using Org.BouncyCastle.Crypto.Digests;
 
-// ReSharper disable once CheckNamespace
-
-namespace CSharp2nem
+namespace CSharp2nem.CryptographicFunctions
 {
+    /// <summary>
+    /// Contains a function to convert public keys to base32 encoded addresses
+    /// </summary>
     public static class AddressEncoding
     {
-        /*
-        * Converts a provided public key to an encoded address
-        *
-        * @publicKey The key to convert to an encoded address
-        *
-        * Returns: EncodedAddress
-        */
-
-        public static string ToEncoded(this byte network, PublicKey publicKey) // TODO: in next version, extend on public key, not network byte.
+        /// <summary>
+        /// Converts a public key to a main net or test net address. Network byte determines which network version to convert to.
+        /// </summary>
+        /// <param name="network">The network byte.</param>
+        /// <param name="publicKey">The public key.</param>
+        /// <returns>The unhyphenated address string.</returns>
+        /// <exception cref="ArgumentException">invalid public key. Thrown when a public key is not a 64 char hex string.</exception>
+        /// <example> 
+        /// This sample shows how to use the <see cref="ToEncoded"/> method.
+        /// <code>
+        /// class TestClass 
+        /// {
+        ///     static void Main() 
+        ///     {         
+        ///         Connection connection = new Connection();
+        /// 
+        ///         string address = AddressEncoding.ToEncoded(connection.GetNetworkVersion(), new PublicKey("0705c2634de7e58325dabc58c4a794559be4d55d102d3aafcb189acb2e596add"));
+        ///     }
+        /// }
+        /// </code>
+        /// </example>
+        public static string ToEncoded(byte network, PublicKey publicKey) 
         {
-            if (!publicKey.Raw.OnlyHexInString() || publicKey.Raw.Length != 64 && publicKey.Raw.Length != 66)
+            if (!StringUtils.OnlyHexInString(publicKey.Raw) || publicKey.Raw.Length != 64)
                 throw new ArgumentException("invalid public key");
 
             // step 1) sha-3(256) public key

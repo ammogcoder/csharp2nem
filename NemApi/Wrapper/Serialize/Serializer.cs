@@ -1,9 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 
-// ReSharper disable once CheckNamespace
-
-namespace CSharp2nem
+namespace CSharp2nem.Serialize
 {
     /*
     * Serializer contains a number of methods which convert verious data to bytes,

@@ -1,44 +1,51 @@
 ﻿using System;
 using Chaos.NaCl;
+using CSharp2nem.Model.AccountSetup;
+using CSharp2nem.Utils;
 
-// ReSharper disable once CheckNamespace
-
-namespace CSharp2nem
+namespace CSharp2nem.CryptographicFunctions
 {
-    /*
-    * Converts a private key to public key.
-    *
-    * Note: Nem uses sha3 for public key encryption and address encoding. 
-    *       Sha3 was not available in the BouncyCastle Cryptography library
-    *       so the Chaos.NaCl implementation of Sha3 was imported into the 
-    *       BouncyCastle library for use in this wrapper.
-    *
-    * Note 2: Bouncy castles Ed25519 does not by default support 66 char (aka. negative)
-    *         private keys so this also had to be updated within the bouncycastle
-    *         library, specifically in the Ed25519 class. 
-    */
-
+    /// <summary>
+    /// Derives a public key from a given private key.
+    /// </summary>
+    /// <remarks>
+    /// Additionally supports 66 char negative private keys.
+    /// </remarks>
     public static class PublicKeyConversion
     {
-        /*
-        * Converts a provided private key to a public key
-        *
-        * @privatrKey The key to convert to a public key
-        *
-        * Returns: The public key produced from the private key
-        */
 
-        public static byte[] ToPublicKey(this PrivateKey privateKey)
+        /// <summary>
+        /// Produces a public key from a given private key.
+        /// </summary>
+        /// <param name="privateKey">The private key to derive a public key from.</param>
+        /// <remarks>
+        /// As well as 64 char private keys, 66 char negative private keys are supported also supported. This does not affect the public key produced.
+        /// </remarks>
+        /// <returns>The derived public key string</returns>
+        /// <exception cref="ArgumentException">invalid private key. Exacption bounds: Must be only hex string. Must be equal to 64 or 66 chars in length.</exception>
+        /// <example> 
+        /// This sample shows how to use the <see cref="ToPublicKey"/> method.
+        /// <code>
+        /// class TestClass 
+        /// {
+        ///     static void Main() 
+        ///     {                
+        ///         string publicKey = PublicKeyConversion.ToPublicKey(new PrivateKey("0705c2634de7e58325dabc58c4a794559be4d55d102d3aafcb189acb2e596add"));
+        ///     }
+        /// }
+        /// </code>
+        /// </example>
+        public static string ToPublicKey(PrivateKey privateKey)
         {
-            if (!privateKey.Raw.OnlyHexInString() ||
+            if (!StringUtils.OnlyHexInString(privateKey.Raw) ||
                 privateKey.Raw.Length == 64 && privateKey.Raw.Length == 66)
                 throw new ArgumentException("invalid private key");
 
-            var privateKeyArray = CryptoBytes.FromHexString(privateKey.Raw.ConvertToUnsecureString());
+            var privateKeyArray = CryptoBytes.FromHexString(StringUtils.ConvertToUnsecureString(privateKey.Raw));
 
             Array.Reverse(privateKeyArray);
 
-            return Ed25519.PublicKeyFromSeed(privateKeyArray);
+            return CryptoBytes.ToHexStringLower(Ed25519.PublicKeyFromSeed(privateKeyArray));
         }
     }
 }

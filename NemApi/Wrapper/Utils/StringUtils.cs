@@ -3,13 +3,13 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Text.RegularExpressions;
 
-// ReSharper disable once CheckNamespace
 
-namespace CSharp2nem
+
+namespace CSharp2nem.Utils
 {
     public static class StringUtils
     {
-        public static string ConvertToUnsecureString(this SecureString securePassword)
+        public static string ConvertToUnsecureString(SecureString securePassword)
         {
             if (securePassword == null)
                 throw new ArgumentNullException(nameof(securePassword));
@@ -26,10 +26,10 @@ namespace CSharp2nem
             }
         }
 
-        public static SecureString ToSecureString(this string source)
+        public static SecureString ToSecureString(string source)
         {
-            if (string.IsNullOrWhiteSpace(source))
-                return null;
+            if (source == null)
+                throw new ArgumentException("key cannot be null");
 
             var result = new SecureString();
 
@@ -38,21 +38,21 @@ namespace CSharp2nem
             return result;
         }
 
-        internal static bool OnlyHexInString(this SecureString data)
+        public static bool OnlyHexInString(SecureString data)
         {
             if (null == data)
                 throw new ArgumentNullException(nameof(data));
             return Regex.IsMatch(ConvertToUnsecureString(data), @"\A\b[0-9a-fA-F]+\b\Z");
         }
 
-        internal static bool OnlyHexInString(this string data)
+        public static bool OnlyHexInString(string data)
         {
             if (null == data)
                 throw new ArgumentNullException(nameof(data));
             return Regex.IsMatch(data, @"\A\b[0-9a-fA-F]+\b\Z");
         }
 
-        public static string GetResultsWithHyphen(this string input)
+        public static string GetResultsWithHyphen(string input)
         {
             var output = "";
             var start = 0;
@@ -66,7 +66,7 @@ namespace CSharp2nem
             return output.Trim('-');
         }
 
-        public static string GetResultsWithoutHyphen(this string input)
+        public static string GetResultsWithoutHyphen(string input)
         {
             return input.Replace("-", "");
         }

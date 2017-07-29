@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Text;
 using Chaos.NaCl;
+using CSharp2nem.Constants;
+using CSharp2nem.Model.AccountSetup;
+using CSharp2nem.Model.DataModels;
+using CSharp2nem.Model.Transfer;
+using CSharp2nem.Serialize;
+using CSharp2nem.Utils;
 
-// ReSharper disable once CheckNamespace
-
-namespace CSharp2nem
+namespace CSharp2nem.Model.MultiSig
 {
     internal class MultisigSignature : Transaction
     {
-        internal MultisigSignature(Connection connection, PublicKey senderPublicKey,
+        internal MultisigSignature(Connectivity.Connection connection, PublicKey senderPublicKey,
             MultisigSignatureTransactionData data)
             : base(connection, senderPublicKey, data.Deadline)
         {
@@ -32,7 +36,7 @@ namespace CSharp2nem
             SignatureBytes = new byte[GetCommonTransactionBytes().Length + StructureLength.MultisigSignature];
 
             Array.Copy(GetCommonTransactionBytes(), SignatureBytes, GetCommonTransactionBytes().Length);
-            Array.Copy(Serializer.GetBytes().TruncateByteArray(StructureLength.MultisigSignature), 0, SignatureBytes, GetCommonTransactionBytes().Length, StructureLength.MultisigSignature);
+            Array.Copy(ByteUtils.TruncateByteArray(Serializer.GetBytes(), StructureLength.MultisigSignature), 0, SignatureBytes, GetCommonTransactionBytes().Length, StructureLength.MultisigSignature);
         }
 
         internal byte[] GetBytes()

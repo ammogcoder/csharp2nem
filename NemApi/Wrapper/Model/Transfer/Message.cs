@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Text;
-using Chaos.NaCl;
+using CSharp2nem.Constants;
+using CSharp2nem.CryptographicFunctions;
+using CSharp2nem.Model.AccountSetup;
+using CSharp2nem.RequestClients;
+using CSharp2nem.Serialize;
+using CSharp2nem.Utils;
 
-// ReSharper disable once CheckNamespace
-
-namespace CSharp2nem
+namespace CSharp2nem.Model.Transfer
 {
     /*
     * Creates/prepares a message object to be serialized
@@ -24,24 +27,35 @@ namespace CSharp2nem
         * @Param: Encrypted, Whether the message should be encrypted or not
         */
 
-        internal Message(Connection con, PrivateKey senderKey, UnverifiableAccount recipient, string message, bool encrypted)
+        internal Message(Connectivity.Connection con, PrivateKey senderKey, string address, string message, bool encrypted)
 
         {
+           
+
             Encrypted = encrypted;
+
             MessageString = message;
 
             if (MessageString != null)
             {
                 if (Encrypted)
                 {
-                    if (recipient.PublicKey == null)
+                    var a = new AccountClient(con).BeginGetAccountInfoFromAddress(body =>
+                    {
+                        if (body.Content.Account.PublicKey == null) throw new Exception("recipient public key cannot be null for encryption");
+
+                        PublicKey = body.Content.Account.PublicKey;
+                              
+                    }, address);
+
+                    a.AsyncWaitHandle.WaitOne();
+
+                    if (PublicKey == null)
                         throw new ArgumentNullException("could not find recipient public key");
 
-                    Sender = new VerifiableAccount(con, senderKey);
+                    Sender = new PrivateKeyAccountClient(con, senderKey);
 
-                    Recipient = recipient;
-
-                    MessageBytes = new Ed25519BlockCipher(Sender, Recipient).Encrypt(Encoding.UTF8.GetBytes(MessageString));
+                    MessageBytes = new Ed25519BlockCipher(Sender, PublicKey).Encrypt(Encoding.UTF8.GetBytes(MessageString));
                 }
                 else
                 {
@@ -52,6 +66,7 @@ namespace CSharp2nem
             }
 
             Serialize();
+
             CalculateMessageFee();
         }
 
@@ -61,9 +76,8 @@ namespace CSharp2nem
         private bool Encrypted { get; }
         private int PayloadLengthInBytes { get; }
         private long Fee { get; set; }
-        private VerifiableAccount Sender { get; }
-        private UnverifiableAccount Recipient { get; }
-
+        private PrivateKeyAccountClient Sender { get; } 
+        private string PublicKey { get; set; }
         private void CalculateMessageFee()
         {
             
@@ -90,7 +104,7 @@ namespace CSharp2nem
                 Serializer.WriteInt(Encrypted ? 2 : 1);
                 Serializer.WriteInt(MessageBytes.Length);
                 Serializer.WriteBytes(MessageBytes);
-                MessageBytes = Serializer.GetBytes().TruncateByteArray(PayloadLengthInBytes + 12);
+                MessageBytes = ByteUtils.TruncateByteArray(Serializer.GetBytes(), PayloadLengthInBytes + 12);
                 Length = StructureLength.MessageStructure + PayloadLengthInBytes;
             }
             else

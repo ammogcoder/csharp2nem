@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 using Chaos.NaCl;
+using CSharp2nem.Constants;
+using CSharp2nem.Model.AccountSetup;
+using CSharp2nem.Serialize;
+using CSharp2nem.Utils;
 
-// ReSharper disable once CheckNamespace
-
-namespace CSharp2nem
+namespace CSharp2nem.Model.MultiSig
 {
     internal class MultiSigTransaction
     {
-        internal MultiSigTransaction(Connection connection, PublicKey publicKey, int deadline, int length)
+        internal MultiSigTransaction(Connectivity.Connection connection, PublicKey publicKey, int deadline, int length)
 
         {
             if (null == connection)
@@ -34,7 +33,7 @@ namespace CSharp2nem
 
             Serialize();
 
-            MultiSigBytes = Serializer.GetBytes().TruncateByteArray(StructureLength.MultiSigHeader);
+            MultiSigBytes = ByteUtils.TruncateByteArray(Serializer.GetBytes(), StructureLength.MultiSigHeader);
 
             MultiSigBytes[7] = NetworkVersion;           
         }
@@ -69,17 +68,8 @@ namespace CSharp2nem
             Serializer.WriteInt(ByteLength.PublicKeyLength);
 
             // pub key
-            var set = Split(PublicKey.Raw, 2);
-            var bytes = new byte[32];
-            var i = 0;
-
-            foreach (var s in set)
-            {
-                var x = int.Parse(s, NumberStyles.HexNumber);
-                bytes[i] = (byte) x;
-                i++;
-            }
-            Serializer.WriteBytes(bytes);
+           
+            Serializer.WriteBytes(CryptoBytes.FromHexString(PublicKey.Raw));
 
             // fee
             Serializer.WriteLong(Fee);
@@ -88,12 +78,6 @@ namespace CSharp2nem
             Serializer.WriteInt(Deadline);
 
             Serializer.WriteInt(InnerLength);
-        }
-
-        private static IEnumerable<string> Split(string str, int chunkSize)
-        {
-            return Enumerable.Range(0, str.Length / chunkSize)
-                .Select(i => str.Substring(i * chunkSize, chunkSize));
         }
     }
 }

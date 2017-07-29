@@ -1,10 +1,10 @@
 ﻿using System;
 
-// ReSharper disable once CheckNamespace
 
-namespace CSharp2nem
+
+namespace CSharp2nem.Utils
 {
-    internal static class TimeDateUtils
+    public static class TimeDateUtils
     {
         public static int EpochTimeInMilliSeconds()
         {

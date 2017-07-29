@@ -1,17 +1,22 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Chaos.NaCl;
+using CSharp2nem.Constants;
+using CSharp2nem.Model.AccountSetup;
+using CSharp2nem.Model.DataModels;
+using CSharp2nem.Serialize;
+using CSharp2nem.Utils;
 
-// ReSharper disable once CheckNamespace
-
-namespace CSharp2nem
+namespace CSharp2nem.Model.Mosaics
 {
-    public class MosaicDefinition
+    /// <summary>
+    /// 
+    /// </summary>
+    internal class MosaicDefinition
     {
         internal readonly Serializer Serializer = new Serializer();
 
-        public MosaicDefinition(MosaicCreationData data, PublicKey creator)
+        internal MosaicDefinition(MosaicCreationData data, PublicKey creator)
         {
             Creator = creator;
             Model = data;
@@ -22,7 +27,7 @@ namespace CSharp2nem
             SetProperties(data.Divisibility, data.InitialSupply, data.SupplyMutable, data.Transferable);
             Serialize();
 
-            DefinitionBytes = Serializer.GetBytes().TruncateByteArray(Length);
+            DefinitionBytes = ByteUtils.TruncateByteArray(Serializer.GetBytes(), Length);
         }
 
         internal byte[] NamespaceId { get; set; }
@@ -47,13 +52,27 @@ namespace CSharp2nem
 
         private void Serialize()
         {
+            var sumLen = 0;
+
+            foreach (var p in MosaicProperties)
+            {
+                sumLen += p.PropertyLength + 4;
+            }
+
             Length = 60 + NamespaceId.Length
                      + MosaicName.Length
                      + Description.Length
-                     + MosaicProperties.Sum(mp => mp.PropertyLength + 4);
+                     + sumLen;
 
             // mosaic definition length
-            Serializer.WriteInt(Length + (Model?.MosaicLevy?.Length - 4 ?? 0));
+            if (Model.MosaicLevy != null)
+            {
+                Serializer.WriteInt(Length + (Model.MosaicLevy.Length - 4));
+            }
+            else
+            {
+                Serializer.WriteInt(Length);
+            }
 
             // length if creator public key
             Serializer.WriteInt(ByteLength.PublicKeyLength);
@@ -87,6 +106,7 @@ namespace CSharp2nem
 
             foreach (var mp in MosaicProperties)
                 Serializer.WriteBytes(mp.GetBytes());
+
         }
 
         internal byte[] GetBytes()

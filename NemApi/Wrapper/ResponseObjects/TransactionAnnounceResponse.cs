@@ -1,6 +1,6 @@
-﻿// ReSharper disable once CheckNamespace
+﻿
 
-namespace CSharp2nem
+namespace CSharp2nem.ResponseObjects
 {
     /*
     * Stores the transaction announce response

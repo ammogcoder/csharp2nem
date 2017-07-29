@@ -1,9 +1,13 @@
 ﻿using System;
 using Chaos.NaCl;
+using CSharp2nem.Constants;
+using CSharp2nem.Model.AccountSetup;
+using CSharp2nem.Model.DataModels;
+using CSharp2nem.Model.Transfer;
+using CSharp2nem.Serialize;
+using CSharp2nem.Utils;
 
-// ReSharper disable once CheckNamespace
-
-namespace CSharp2nem
+namespace CSharp2nem.Model.MultiSig
 {
     /*
      * Prepares a list aggregate modifications and populates the base class of transaction.
@@ -14,7 +18,7 @@ namespace CSharp2nem
      */
     internal class AggregateModificatioList : Transaction
     {
-        internal AggregateModificatioList(Connection connection, PublicKey sender, AggregateModificationData data)
+        internal AggregateModificatioList(Connectivity.Connection connection, PublicKey sender, AggregateModificationData data)
             : base(connection, data.MultisigAccount ?? sender, data.Deadline) // todo : fee
         {
             Data = data;
@@ -54,7 +58,7 @@ namespace CSharp2nem
             var tempBytes = new byte[GetCommonTransactionBytes().Length + TotalBytesLength];
 
             Array.Copy(GetCommonTransactionBytes(), tempBytes, GetCommonTransactionBytes().Length);
-            Array.Copy(Serializer.GetBytes().TruncateByteArray(TotalBytesLength), 0, tempBytes,
+            Array.Copy(ByteUtils.TruncateByteArray(Serializer.GetBytes(), TotalBytesLength), 0, tempBytes,
                 GetCommonTransactionBytes().Length, TotalBytesLength);
 
             TotalBytesLength = tempBytes.Length;
@@ -92,11 +96,11 @@ namespace CSharp2nem
             }
         }
 
-        private void AppendMultisig(Connection con)
+        private void AppendMultisig(Connectivity.Connection con)
         {
             var multisig = new MultiSigTransaction(con, PublicKey, Data.Deadline, TotalBytesLength);
 
-            ModificationBytes = multisig.GetBytes().ConcatonatetBytes(ModificationBytes);
+            ModificationBytes = ByteUtils.ConcatonatetBytes(multisig.GetBytes(), ModificationBytes);
         }
     }
 }

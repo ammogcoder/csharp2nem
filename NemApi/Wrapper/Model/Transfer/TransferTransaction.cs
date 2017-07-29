@@ -1,9 +1,13 @@
 ﻿using System;
-using Chaos.NaCl;
+using CSharp2nem.Constants;
+using CSharp2nem.Model.AccountSetup;
+using CSharp2nem.Model.DataModels;
+using CSharp2nem.Model.MultiSig;
+using CSharp2nem.Model.Transfer.Mosaics;
+using CSharp2nem.Serialize;
+using CSharp2nem.Utils;
 
-// ReSharper disable once CheckNamespace
-
-namespace CSharp2nem
+namespace CSharp2nem.Model.Transfer
 {
     /*
     * Serializable transfer transaction data
@@ -11,38 +15,30 @@ namespace CSharp2nem
 
     internal class TransferTransaction : Transaction
     {
-        private readonly Serializer _serializer = new Serializer();
-
-        internal TransferTransaction(Connection connection, PublicKey senderPublicKey, PrivateKey senderPrivateKey,
-            TransferTransactionData transactionData)
-            : base(connection, transactionData.MultisigAccount ?? senderPublicKey, transactionData.Deadline)
-        {
-            SenderPublicKey = senderPublicKey;
-            MessageLength = StructureLength.TransferTransaction;
-            Data = transactionData;
-            Con = connection;
-            SenderPrivateKey = senderPrivateKey;
-
-            SerializeTrasnferPart();
-           
-
-            TransferBytes = _serializer.GetBytes().TruncateByteArray(MessageLength + MosaicLength);
-
-            finalize();
-            AppendMultisig();
-        }
-
+        private readonly Serializer _serializer = new Serializer();    
         private PrivateKey SenderPrivateKey { get; }
         private PublicKey SenderPublicKey { get; }
-        private Connection Con { get; }
+        private Connectivity.Connection Con { get; }
         private TransferTransactionData Data { get; }
-
+        private string Recipient { get; }
         private int MessageLength { get; set; }
         private int MosaicLength { get; set; }
         private long Fee { get; set; }
-
         private byte[] TransferMessageMosaicBytes { get; set; }
-        private byte[] TransferBytes { get; set; }
+
+        internal TransferTransaction(Connectivity.Connection connection, PublicKey senderPublicKey, PrivateKey senderPrivateKey,
+            TransferTransactionData transactionData)
+            : base(connection, transactionData.MultisigAccountKey ?? senderPublicKey, transactionData.Deadline)
+        {
+            SenderPublicKey = senderPublicKey;
+            SenderPrivateKey = senderPrivateKey;
+            Data = transactionData;
+            Con = connection;
+            Recipient = Data.RecipientAddress;
+            SerializeTransferPart();
+            finalize();
+            AppendMultisig();
+        }
 
         
 
@@ -54,21 +50,29 @@ namespace CSharp2nem
         private void finalize()
         {
             UpdateFee(Fee);
+
             UpdateTransactionType(TransactionType.TransferTransaction);
+
             UpdateTransactionVersion(TransactionVersion.VersionTwo);
 
-            TransferMessageMosaicBytes = new byte[GetCommonTransactionBytes().Length + MessageLength + MosaicLength];
+            TransferMessageMosaicBytes = new byte[GetCommonTransactionBytes().Length + StructureLength.TransferTransaction + MessageLength + MosaicLength];
+
             Array.Copy(GetCommonTransactionBytes(), TransferMessageMosaicBytes, GetCommonTransactionBytes().Length);
-            Array.Copy(TransferBytes, 0, TransferMessageMosaicBytes, GetCommonTransactionBytes().Length, MessageLength + MosaicLength);
+           
+            Array.Copy(ByteUtils.TruncateByteArray(_serializer.GetBytes(), StructureLength.TransferTransaction + MessageLength + MosaicLength), 
+                       0, 
+                       TransferMessageMosaicBytes,
+                       GetCommonTransactionBytes().Length, StructureLength.TransferTransaction + MessageLength + MosaicLength);
+          
         }
 
-        private void SerializeTrasnferPart()
+        private void SerializeTransferPart()
         {
             // declare and serialize message if not null
             Message serializedMessage = null;
             if (Data.Message != null)
                 serializedMessage = SerializeMessagePart();
-            
+
             // declare and serialize mosaics if not null
             MosaicList serializedMosaicList = null;
 
@@ -76,7 +80,7 @@ namespace CSharp2nem
             {
                 serializedMosaicList = SerializeMosaicPart();
             }
-          
+
             // get the fee for transfer amount
             var transferFee = Math.Max(1, Math.Min((long)Math.Ceiling((decimal)Data.Amount / 10000000000), 25)) * 1000000;
 
@@ -122,9 +126,8 @@ namespace CSharp2nem
             {
                 // if fee is not to be deducted, add individual fees to total fee without adjustment
                 Fee += transferFee + messageFee + mosaicFee;
-               
             }
-           
+
             // write the transfer bytes
             WriteTransferBytes();
 
@@ -146,15 +149,15 @@ namespace CSharp2nem
             _serializer.WriteInt(ByteLength.AddressLength);
 
             // write recipient address to byte array
-            _serializer.WriteString(Data.Recipient.Address.Encoded);
+            _serializer.WriteString(Recipient);
 
             // write amount to byte array
             _serializer.WriteLong(Data.Amount);
-        }      
+        }
 
         private Message SerializeMessagePart()
         {
-            return new Message(Con, SenderPrivateKey, Data.Recipient, Data.Message, Data.Encrypted);
+            return new Message(Con, SenderPrivateKey, Recipient, Data.Message, Data.Encrypted);
         }
 
         private void WriteMessageBytes(Message serializeMessage)
@@ -163,7 +166,7 @@ namespace CSharp2nem
             _serializer.WriteBytes(serializeMessage.GetMessageBytes());
 
             // store message bytes length
-            MessageLength += serializeMessage.Length;
+            MessageLength = serializeMessage.Length;
         }
 
         private MosaicList SerializeMosaicPart()
@@ -182,13 +185,13 @@ namespace CSharp2nem
 
         private void AppendMultisig()
         {
-            if (Data.MultisigAccount == null) return;
+            if (Data.MultisigAccountKey == null) return;
 
             // create multisig object and serialize
             var multisig = new MultiSigTransaction(Con, SenderPublicKey, Data.Deadline, TransferMessageMosaicBytes.Length);
 
-            // store multig bytes to be concatonated later (in verifiable account)
-            TransferMessageMosaicBytes = multisig.GetBytes().ConcatonatetBytes(TransferMessageMosaicBytes);
+            // store multisig bytes to be concatenated later (in verifiable account)
+            TransferMessageMosaicBytes = ByteUtils.ConcatonatetBytes(multisig.GetBytes(), TransferMessageMosaicBytes);
         }
     }
 }

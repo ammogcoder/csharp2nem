@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Text;
+using CSharp2nem.Constants;
+using CSharp2nem.Model.AccountSetup;
+using CSharp2nem.Model.DataModels;
+using CSharp2nem.Model.MultiSig;
+using CSharp2nem.Model.Transfer;
+using CSharp2nem.Serialize;
+using CSharp2nem.Utils;
 
-// ReSharper disable once CheckNamespace
-
-namespace CSharp2nem
+namespace CSharp2nem.Model.Mosaics
 {
     internal class SupplyChange : Transaction
     {
         private readonly Serializer _serializer = new Serializer();
 
-        internal SupplyChange(Connection con, PublicKey sender, MosaicSupplyChangeData data)
+        internal SupplyChange(Connectivity.Connection con, PublicKey sender, MosaicSupplyChangeData data)
             : base(con, data.MultisigAccount ?? sender, data.Deadline)
         {
             PublicKey = sender;
@@ -20,7 +25,7 @@ namespace CSharp2nem
 
             Serialize();
 
-            Bytes = _serializer.GetBytes().TruncateByteArray(Length);
+            Bytes = ByteUtils.TruncateByteArray(_serializer.GetBytes(), Length);
 
             finalize();
             AppendMultisig(con);
@@ -66,13 +71,13 @@ namespace CSharp2nem
             SupplyChangeBytes = tempBytes;
         }
 
-        private void AppendMultisig(Connection con)
+        private void AppendMultisig(Connectivity.Connection con)
         {
             if (Data.MultisigAccount == null) return;
 
             var multisig = new MultiSigTransaction(con, PublicKey, Data.Deadline, Length);
 
-            SupplyChangeBytes = multisig.GetBytes().ConcatonatetBytes(SupplyChangeBytes);
+            SupplyChangeBytes = ByteUtils.ConcatonatetBytes(multisig.GetBytes(), SupplyChangeBytes);
         }
 
         internal byte[] GetBytes()

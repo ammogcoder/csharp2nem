@@ -1,23 +1,18 @@
-﻿using System;
-using Chaos.NaCl;
+﻿using Chaos.NaCl;
+using CSharp2nem.Constants;
+using CSharp2nem.Model.AccountSetup;
+using CSharp2nem.Serialize;
+using CSharp2nem.Utils;
 
-// ReSharper disable once CheckNamespace
-
-namespace CSharp2nem
+namespace CSharp2nem.Model.Transfer
 {
     internal class Transaction
     {
-        int RoundUp(int toRound)
-        {
-            return (60 - toRound % 60) + toRound;
-        }
+        
 
-        int RoundDown(int toRound)
+        internal Transaction(Connectivity.Connection connection, PublicKey publicKey, int deadline)
         {
-            return toRound - toRound % 60;
-        }
-        internal Transaction(Connection connection, PublicKey publicKey, int deadline)
-        {
+            Serializer = new Serializer();
             NetworkVersion = connection.GetNetworkVersion();
             TimeStamp = TimeDateUtils.EpochTimeInMilliSeconds();
             Deadline = RoundUp(deadline == 0 ? TimeStamp + 3600 : TimeStamp + deadline);          
@@ -25,7 +20,7 @@ namespace CSharp2nem
             Serialize();
         }
 
-        internal Serializer Serializer { get; set; } = new Serializer();
+        private Serializer Serializer { get; } 
         private PublicKey PublicKey { get; }
         private int NetworkVersion { get; }
         private int TimeStamp { get; }
@@ -48,7 +43,7 @@ namespace CSharp2nem
 
         internal byte[] GetCommonTransactionBytes()
         {
-            return Serializer.GetBytes().TruncateByteArray(StructureLength.TransactionCommon);
+            return ByteUtils.TruncateByteArray(Serializer.GetBytes(), StructureLength.TransactionCommon);
         }
 
         private void Serialize()
@@ -74,6 +69,10 @@ namespace CSharp2nem
 
             // deadline
             Serializer.WriteInt(Deadline);
+        }
+        int RoundUp(int toRound)
+        {
+            return (60 - toRound % 60) + toRound;
         }
     }
 }

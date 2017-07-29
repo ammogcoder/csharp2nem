@@ -1,6 +1,6 @@
-﻿// ReSharper disable once CheckNamespace
+﻿
 
-namespace CSharp2nem.internals
+namespace CSharp2nem.ResponseObjects
 {
     /*
     * Stores stores the transaction byte array and signature data to be prepared amd sent to nis.

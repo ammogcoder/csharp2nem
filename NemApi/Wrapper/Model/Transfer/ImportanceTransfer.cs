@@ -1,50 +1,51 @@
 ﻿using System;
 using Chaos.NaCl;
+using CSharp2nem.Constants;
+using CSharp2nem.Model.AccountSetup;
+using CSharp2nem.Model.DataModels;
+using CSharp2nem.Model.MultiSig;
+using CSharp2nem.Serialize;
+using CSharp2nem.Utils;
 
-// ReSharper disable once CheckNamespace
-
-namespace CSharp2nem
+namespace CSharp2nem.Model.Transfer
 {
     internal class ImportanceTransfer : Transaction
     {
-        internal ImportanceTransfer(Connection con, PublicKey sender, ImportanceTransferData data)
-            : base(con, data.MultisigAccount ?? sender, data.Deadline)
+        internal ImportanceTransfer(Connectivity.Connection con, PublicKey sender, ImportanceTransferData data) : base(con, data.MultisigAccount ?? sender, data.Deadline)
         {
-            if (!data.DelegatedAccount.Raw.OnlyHexInString() || data.DelegatedAccount.Raw.Length != 64)
+            if (!StringUtils.OnlyHexInString(data.DelegatedAccount.Raw) || data.DelegatedAccount.Raw.Length != 64)
                 throw new ArgumentNullException(nameof(con));
-
-            Data = data;
-            Serializer = new Serializer();
-            PublicKey = data.DelegatedAccount;
+         
             TransferMode = data.Activate ? DefaultBytes.Activate : DefaultBytes.Deactivate;
 
-            Serialize();
-            TransferBytes = Serializer.GetBytes().TruncateByteArray(StructureLength.ImportnaceTransfer);
+            Serialize(data.DelegatedAccount);
+
+            TransferBytes = ByteUtils.TruncateByteArray(Serializer.GetBytes(), StructureLength.ImportnaceTransfer);
 
             finalize();
-            AppendMultisig(con);
+
+            AppendMultisig(con, data);
         }
 
-        private ImportanceTransferData Data { get; }
-        private PublicKey PublicKey { get; }
+        private Serializer Serializer = new Serializer();
         private byte[] TransferMode { get; }
         private byte[] TransferBytes { get; }
         private byte[] ImportanceBytes { get; set; }
-        internal int Length { get; set; }
-        private Serializer Serializer { get; }
 
         internal void finalize()
         {
             UpdateFee(TransactionFee.ImportanceTransfer);
+
             UpdateTransactionType(TransactionType.ImportanceTransfer);
+
             UpdateTransactionVersion(TransactionVersion.VersionOne);
 
             var bytes = new byte[GetCommonTransactionBytes().Length + StructureLength.ImportnaceTransfer];
 
             Array.Copy(GetCommonTransactionBytes(), bytes, GetCommonTransactionBytes().Length);
+
             Array.Copy(TransferBytes, 0, bytes, GetCommonTransactionBytes().Length, StructureLength.ImportnaceTransfer);
 
-            Length = bytes.Length;
             ImportanceBytes = bytes;
         }
 
@@ -53,7 +54,7 @@ namespace CSharp2nem
             return ImportanceBytes;
         }
 
-        private void Serialize()
+        private void Serialize(PublicKey PublicKey)
         {
             Serializer.WriteBytes(TransferMode);
 
@@ -62,13 +63,13 @@ namespace CSharp2nem
             Serializer.WriteBytes(CryptoBytes.FromHexString(PublicKey.Raw));
         }
 
-        private void AppendMultisig(Connection con)
+        private void AppendMultisig(Connectivity.Connection con, ImportanceTransferData data)
         {
-            if (Data.MultisigAccount == null) return;
+            if (data.MultisigAccount == null) return;
 
-            var multisig = new MultiSigTransaction(con, PublicKey, Data.Deadline, Length);
+            var multisig = new MultiSigTransaction(con, data.DelegatedAccount , data.Deadline, ImportanceBytes.Length);
 
-            ImportanceBytes = multisig.GetBytes().ConcatonatetBytes(ImportanceBytes);
+            ImportanceBytes = ByteUtils.ConcatonatetBytes(multisig.GetBytes(), ImportanceBytes);
         }
     }
 }
