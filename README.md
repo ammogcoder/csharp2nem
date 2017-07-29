@@ -10,7 +10,8 @@ The CSharp2nem Api wrapper library is designed to simplify development on and us
 
 ## Usage
 
-Please refer to the sample project csharp2nem/NemApi/Example/ for usage details.
+Full documentation with code examples can be found at: 
+http://89.233.183.70/Help/Documentation
 
 ## Further Information
 
