@@ -28,7 +28,7 @@ namespace CSharp2nem.ResponseObjects.Transaction
 
         public class Signature
         {
-            public long timeStamp { get; set; }
+            public int timeStamp { get; set; }
             public OtherHash otherHash { get; set; }
             public string otherAccount { get; set; }
             public string signature { get; set; }
@@ -98,7 +98,7 @@ namespace CSharp2nem.ResponseObjects.Transaction
 
         public class Transaction
         {
-            public long timeStamp { get; set; }
+            public int timeStamp { get; set; }
             public string signature { get; set; }
             public long fee { get; set; }
             public int type { get; set; }

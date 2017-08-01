@@ -23,7 +23,7 @@ namespace CSharp2nem.Model.MultiSig
 
             NetworkVersion = connection.GetNetworkVersion();
 
-            TimeStamp = TimeDateUtils.EpochTimeInMilliSeconds();
+            TimeStamp = TimeDateUtils.EpochTimeInSeconds();
 
             Deadline = deadline == 0 ? TimeStamp + 1000 : TimeStamp + deadline;
 

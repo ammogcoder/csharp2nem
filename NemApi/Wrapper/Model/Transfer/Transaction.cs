@@ -14,7 +14,7 @@ namespace CSharp2nem.Model.Transfer
         {
             Serializer = new Serializer();
             NetworkVersion = connection.GetNetworkVersion();
-            TimeStamp = TimeDateUtils.EpochTimeInMilliSeconds();
+            TimeStamp = TimeDateUtils.EpochTimeInSeconds();
             Deadline = RoundUp(deadline == 0 ? TimeStamp + 3600 : TimeStamp + deadline);          
             PublicKey = publicKey;
             Serialize();
