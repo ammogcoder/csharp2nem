@@ -104,7 +104,7 @@ namespace CSharp2nem.Model.Transfer
                     newAmount = Data.Amount - (messageFee + mosaicFee + transferFee);
 
                     // calculate new fee based on new fee deducted amount
-                    newFee = Math.Max(1, Math.Min((long)Math.Ceiling((decimal)Data.Amount / 1000000000), 25)) * 50000;
+                    newFee = Math.Max(1, Math.Min((long)Math.Ceiling((decimal)newAmount / 1000000000), 25)) * 50000;
 
                     // check that the fee hasnt been reduced due to a lower amount
                     if (newAmount + newFee != Data.Amount)
