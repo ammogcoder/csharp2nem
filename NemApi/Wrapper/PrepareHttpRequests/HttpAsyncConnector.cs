@@ -23,7 +23,8 @@ namespace CSharp2nem.PrepareHttpRequests
         internal Connection Con { get; set; }
 
         private ManualAsyncResult SetUpHttpWebRequest(ManualAsyncResult result, string requestType, int timeout)
-        {          
+        {
+          
             var http = (HttpWebRequest)WebRequest.Create(Con.GetUri(result.Path, result.Query).Uri);
             http.Accept = "application/json";
             http.ContentType = "application/json";
@@ -43,7 +44,7 @@ namespace CSharp2nem.PrepareHttpRequests
                 result.HttpWebRequest.BeginGetResponse(result.WrapHandler(ar =>
                 {                   
                     try
-                    {
+                    {         
                         var responseStream = result.HttpWebRequest.EndGetResponse(ar);
                         
                         using (var response = responseStream.GetResponseStream())
@@ -118,21 +119,25 @@ namespace CSharp2nem.PrepareHttpRequests
         internal ManualAsyncResult RequestPostAsync(Action<ResponseAccessor<string>> callback, ManualAsyncResult result)
         {      
             try
-            {           
+            {
+               
                 result.HttpWebRequest.BeginGetRequestStream(result.WrapHandler(ar =>
                 {
+                   
                     try
                     {
+                       
                         var stream = result.HttpWebRequest.EndGetRequestStream(ar);
-
+                   
                         stream.Write(result.Bytes, 0, result.Bytes.Length);
-
+                       
                         result.HttpWebRequest.BeginGetResponse(result.WrapHandler(ar2 =>
                         {
+                          
                             try
                             {
                                 var responseStream = result.HttpWebRequest.EndGetResponse(ar2);
-
+                               
                                 using (var response = responseStream.GetResponseStream())
                                 {
                                     ReadStream(callback, result, response, 0);
@@ -140,6 +145,7 @@ namespace CSharp2nem.PrepareHttpRequests
                             }
                             catch (Exception ex)
                             {
+                               
                                 callback(new ResponseAccessor<string>()
                                 {
                                     Ex = ex
@@ -151,7 +157,7 @@ namespace CSharp2nem.PrepareHttpRequests
                     catch (Exception ex)
                     {
                         result.Error = ex;
-
+                    
                         if (Con.AutoHost)
                             result.AsyncRequestRetryHandler.RetryAsyncRequest();
                     }
@@ -160,7 +166,7 @@ namespace CSharp2nem.PrepareHttpRequests
             catch (Exception ex)
             {
                 result.Error = ex;
-
+                
                 if (Con.AutoHost)
                     result.AsyncRequestRetryHandler.RetryAsyncRequest();
             }
@@ -175,8 +181,10 @@ namespace CSharp2nem.PrepareHttpRequests
 
             try
             {
+           
                 asyncResult.AsyncRequestRetryHandler.SetCallback(body =>
                 {
+
                     if (body.Ex != null)
                     {                
                         callback(new ResponseAccessor<TReturnType>

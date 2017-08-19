@@ -113,9 +113,9 @@ namespace CSharp2nem.Constants
      */
     internal static class Fee
     {
-        internal const long SubSpaceRental = 0xBEBC200;
-        internal const long Rental = 0x12A05F200;
-        internal const long Creation = 0x12A05F200;
+        internal const long SubSpaceRental = 0x989680;
+        internal const long Rental = 0x5F5E100;
+        internal const long Creation = 0x989680;
         internal const int Absolute = 0x01;
         internal const int Percentile = 0x02;
     }
@@ -126,12 +126,13 @@ namespace CSharp2nem.Constants
      */
     internal static class TransactionFee
     {
-        internal const int SupplyChange = 0x1312D00;
-        internal const int ProvisionNameSpace = 0x1312D00;
-        internal const int MosaicDefinitionCreation = 0x1312D00;
+        internal const int SupplyChange = 0x249F0;
+        internal const int ProvisionNameSpace = 0x249F0;
+        internal const int MosaicDefinitionCreation = 0x249F0;
 
-        internal const int MultisigSignature = 0x5B8D80;
-        internal const int MultisigWrapper = 0x5B8D80;
-        internal const int ImportanceTransfer = 0x5B8D80;
+        internal const int MultisigAggMod = 0x7A120;
+        internal const int MultisigSignature = 0x249F0;
+        internal const int MultisigWrapper = 0x249F0;
+        internal const int ImportanceTransfer = 0x249F0;
     }
 }

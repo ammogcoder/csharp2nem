@@ -6,6 +6,7 @@ using CSharp2nem.Model.MultiSig;
 using CSharp2nem.Model.Transfer.Mosaics;
 using CSharp2nem.Serialize;
 using CSharp2nem.Utils;
+using CSharp2nem.Connectivity;
 
 namespace CSharp2nem.Model.Transfer
 {
@@ -18,7 +19,7 @@ namespace CSharp2nem.Model.Transfer
         private readonly Serializer _serializer = new Serializer();    
         private PrivateKey SenderPrivateKey { get; }
         private PublicKey SenderPublicKey { get; }
-        private Connectivity.Connection Con { get; }
+        private Connection Con { get; }
         private TransferTransactionData Data { get; }
         private string Recipient { get; }
         private int MessageLength { get; set; }
@@ -34,7 +35,7 @@ namespace CSharp2nem.Model.Transfer
             SenderPrivateKey = senderPrivateKey;
             Data = transactionData;
             Con = connection;
-            Recipient = Data.RecipientAddress;
+            Recipient = StringUtils.GetResultsWithoutHyphen(Data.RecipientAddress);
             SerializeTransferPart();
             finalize();
             AppendMultisig();
@@ -50,7 +51,7 @@ namespace CSharp2nem.Model.Transfer
         private void finalize()
         {
             UpdateFee(Fee);
-
+           
             UpdateTransactionType(TransactionType.TransferTransaction);
 
             UpdateTransactionVersion(TransactionVersion.VersionTwo);
@@ -82,15 +83,14 @@ namespace CSharp2nem.Model.Transfer
             }
 
             // get the fee for transfer amount
-            var transferFee = Math.Max(1, Math.Min((long)Math.Ceiling((decimal)Data.Amount / 10000000000), 25)) * 1000000;
+            var transferFee = Math.Max(1, Math.Min((long)Math.Ceiling((decimal)Data.Amount / 1000000000), 25)) * 50000;
 
             // get the fee for message part, 0 if its null
             var messageFee = serializedMessage?.GetFee() ?? 0;
 
-
             // get the fee for mosaic part, 0 if null
             var mosaicFee = serializedMosaicList?.GetFee() ?? 0;
-
+           
             // if fee is to be deducted from amount, calculate accordingly
             if (Data.FeeDeductedFromAmount)
             {
@@ -100,18 +100,17 @@ namespace CSharp2nem.Model.Transfer
                 long newFee;
 
                 do
-                {
+                {               
                     newAmount = Data.Amount - (messageFee + mosaicFee + transferFee);
 
                     // calculate new fee based on new fee deducted amount
-                    newFee = Math.Max(1, Math.Min((long)Math.Ceiling((decimal)newAmount / 10000000000), 25)) * 1000000;
+                    newFee = Math.Max(1, Math.Min((long)Math.Ceiling((decimal)Data.Amount / 1000000000), 25)) * 50000;
 
                     // check that the fee hasnt been reduced due to a lower amount
                     if (newAmount + newFee != Data.Amount)
                     {
-
                         // increase amount to compensate if it has
-                        newAmount += 1000000;
+                        newAmount += 50000;
                     }
                     // check that 
                 } while (newAmount + newFee != Data.Amount);
@@ -127,7 +126,7 @@ namespace CSharp2nem.Model.Transfer
                 // if fee is not to be deducted, add individual fees to total fee without adjustment
                 Fee += transferFee + messageFee + mosaicFee;
             }
-
+           
             // write the transfer bytes
             WriteTransferBytes();
 

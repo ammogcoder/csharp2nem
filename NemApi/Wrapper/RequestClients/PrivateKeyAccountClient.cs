@@ -189,16 +189,18 @@ namespace CSharp2nem.RequestClients
         /// </example>
         public ManualAsyncResult BeginSendTransaction(Action<ResponseAccessor<NemAnnounceResponse.Response>> callback, TransferTransactionData transactionData)
         {
+
+            
             var transfer = new TransferTransaction(Connection, PublicKey, PrivateKey, transactionData);
-
+            
             var bytesAndSig = new Prepare(Connection, PrivateKey).Transaction(transfer.GetTransferBytes());
-
+          
             var asyncResult = new ManualAsyncResult
             {
                 Path = "/transaction/announce",
                 Bytes = encoding.GetBytes(JsonConvert.SerializeObject(bytesAndSig))
             };
-
+          
             return new HttpAsyncConnector(Connection).PreparePostRequestAsync(callback, asyncResult);       
         }
 

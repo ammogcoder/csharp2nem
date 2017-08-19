@@ -58,6 +58,7 @@ namespace CSharp2nem.Model.Transfer.Mosaics
                     // loop through mosaics found under namespace
                     foreach (var mosaicDefinition in body.Content.Data)
                     {
+                        int fractionOfWhole = 20;
                         // skip if mosaic to send doesnt match mosaic found
                         if (mosaicDefinition.Mosaic.Id.Name != mosaicToBeSent.MosaicName) continue;
 
@@ -69,7 +70,7 @@ namespace CSharp2nem.Model.Transfer.Mosaics
                         // check for business mosaic
                         if (s <= 10000 && d == 0)
                         {
-                            TotalFee += 1000000;
+                            TotalFee += 1000000 / fractionOfWhole;
                         }
                         // compute regular mosaic fee
                         else
@@ -78,9 +79,7 @@ namespace CSharp2nem.Model.Transfer.Mosaics
                             var xemEquivalent = 8999999999 * (q / Math.Pow(10, d)) / (s * 10 ^ d) * 1000000;
 
                             // apply xem transfer fee formula 
-                            var xemFee =
-                                Math.Max(1, Math.Min((long) Math.Ceiling((decimal) xemEquivalent / 1000000000), 25)) *
-                                1000000;
+                            var xemFee = Math.Max(1, Math.Min((long)Math.Ceiling((decimal)xemEquivalent / 1000000000), 25)) * 1000000;
 
                             // Adjust fee based on supply
                             const long maxMosaicQuantity = 9000000000000000;
@@ -89,28 +88,25 @@ namespace CSharp2nem.Model.Transfer.Mosaics
                             var totalMosaicQuantity = s * Math.Pow(10, d);
 
                             // get supply related adjustment
-                            var supplyRelatedAdjustment =
-                                Math.Floor(0.8 * Math.Log(maxMosaicQuantity / totalMosaicQuantity)) * 1000000;
+                            var supplyRelatedAdjustment = Math.Floor(0.8 * Math.Log(maxMosaicQuantity / totalMosaicQuantity)) * 1000000;
 
                             // get final individual mosaic fee
-                            var individualMosaicfee = (long) Math.Max(1, xemFee - supplyRelatedAdjustment);
+                            var individualMosaicfee = (long)Math.Max(1, xemFee - supplyRelatedAdjustment);
 
                             // add individual fee to total fee for all mosaics to be sent 
-                            TotalFee += individualMosaicfee;
+                            TotalFee += individualMosaicfee / fractionOfWhole;  
                         }
                         break;
                     }
-
-
-                }, mosaicToBeSent.NameSpaceId);
+                }, mosaicToBeSent.NameSpaceId).AsyncWaitHandle.WaitOne();
             }
         
         }
 
         internal long GetFee()
         {
-            
-            return Math.Max(TotalFee, 1000000);
+            // admittedly pure and utter hackery. no shame..
+            return TotalFee > 50000 ? Math.Max(TotalFee, 100000) - 50000 : 0;
         }
 
         /*

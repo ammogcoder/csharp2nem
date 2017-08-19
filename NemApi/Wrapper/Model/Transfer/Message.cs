@@ -33,7 +33,7 @@ namespace CSharp2nem.Model.Transfer
            
 
             Encrypted = encrypted;
-
+            
             MessageString = message;
 
             if (MessageString != null)
@@ -81,9 +81,8 @@ namespace CSharp2nem.Model.Transfer
         private void CalculateMessageFee()
         {
             
-            Fee += Encrypted
-                ? (6 + (MessageString.Length / 32) + 1) * 1000000
-                : ((MessageString.Length / 32) + 1) * 1000000;
+            Fee += ((long)  (50000 * (Math.Floor(((double)MessageString.Length / 32)) + 1))  );
+               
         }
 
         internal long GetFee()
@@ -93,6 +92,7 @@ namespace CSharp2nem.Model.Transfer
 
         internal byte[] GetMessageBytes()
         {
+           
             return MessageBytes;
         }
 

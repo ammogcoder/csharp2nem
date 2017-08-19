@@ -40,11 +40,7 @@ namespace CSharp2nem.Model.MultiSig
 
         private void SetFee()
         {
-            var fee = (long) (Data.RelativeChange == 0
-                ? (10 + 6 * Data.Modifications.Count) * 1000000
-                : (10 + 6 * Data.Modifications.Count + 6) * 1000000);
-
-            UpdateFee(fee);
+            UpdateFee(TransactionFee.MultisigAggMod);
         }
 
         private void UpdateTransactionTypeAndVersion()

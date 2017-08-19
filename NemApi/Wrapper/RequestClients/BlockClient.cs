@@ -444,7 +444,7 @@ namespace CSharp2nem.RequestClients
         /// </example>
         public ManualAsyncResult BeginGetByHeight(Action<ResponseAccessor<BlockData.Block>> callback, int height)
         {
-            Console.WriteLine(JsonConvert.SerializeObject(new BlockData.BlockHeight { height = height }));
+         
             var asyncResult = new ManualAsyncResult
             {
                 Path = "/block/at/public/",               
