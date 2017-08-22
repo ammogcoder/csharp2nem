@@ -24,7 +24,6 @@ namespace CSharp2nem.PrepareHttpRequests
 
         private ManualAsyncResult SetUpHttpWebRequest(ManualAsyncResult result, string requestType, int timeout)
         {
-          
             var http = (HttpWebRequest)WebRequest.Create(Con.GetUri(result.Path, result.Query).Uri);
             http.Accept = "application/json";
             http.ContentType = "application/json";

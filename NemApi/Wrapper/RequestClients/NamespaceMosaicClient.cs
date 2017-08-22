@@ -94,8 +94,8 @@ namespace CSharp2nem.RequestClients
 
             var query = id == null && pageSize == 0
                 ? string.Concat("namespace=", namespaceId) : id != null && pageSize == 0
-                ? string.Concat("namespace=", namespaceId, "&id=", id)
-                : string.Concat("namespace=", namespaceId, "&id=", id, "&pageSize=", pageSize);
+                ? string.Concat("namespace=", namespaceId, "&name=", id)
+                : string.Concat("namespace=", namespaceId, "&name=", id, "&pageSize=", pageSize);
 
             return new HttpAsyncConnector(Connection).PrepareGetRequestAsync(callback, path, query);
         }
