@@ -425,7 +425,7 @@ namespace CSharp2nem.RequestClients
         /// }
         /// </code>
         /// </example>
-        public ManualAsyncResult GetUnconfirmedTransactions(Action<ResponseAccessor<Transactions.All>> callback,
+        public ManualAsyncResult BeginGetUnconfirmedTransactions(Action<ResponseAccessor<Transactions.All>> callback,
             string address)
         {
             if (address == null) throw new ArgumentException("address cannot be null");
