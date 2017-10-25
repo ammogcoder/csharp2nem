@@ -11,7 +11,7 @@ The CSharp2nem Api wrapper library is designed to simplify development on and us
 ## Usage
 
 Full documentation with code examples (you probably want to focus on the RequestClient & Connection classes) can be found at: 
-http://89.233.183.70/Help/Documentation
+http://pickledrick.ddns.net/Help/Documentation.html
 
 
 ## Features
