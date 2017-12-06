@@ -51,7 +51,7 @@
     </Reference>
     <Reference Include="Chaos.NaCl, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Bitbucket\OldWrapper(sha3)\WrapperRewrite\packages\Chaos.NaCl-master\Chaos.NaCl\bin\Debug\Chaos.NaCl.dll</HintPath>
+      <HintPath>lib\net40\Chaos.NaCl.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -63,7 +63,6 @@
   <ItemGroup>
     <Compile Include="CryptographicFunctions\Encryption.cs" />
     <Compile Include="CryptographicFunctions\PrivateKeyCreator.cs" />
-    <Compile Include="External\OpenSSL.cs" />
     <Compile Include="External\TweetNaCl.cs" />
     <Compile Include="Model\AccountSetup\Encoded.cs" />
     <Compile Include="Model\AccountSetup\PublicKey.cs" />
