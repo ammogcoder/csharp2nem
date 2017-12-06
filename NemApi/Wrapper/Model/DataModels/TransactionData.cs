@@ -50,7 +50,7 @@ namespace CSharp2nem.Model.DataModels
         /// <summary>
         /// Denotes whether the message should be encrypted.
         /// </summary>
-        internal bool Encrypted { get; set; }
+        public bool Encrypted { get; set; }
         /// <summary>
         /// The deadline by which the transfer should be sent.
         /// </summary>

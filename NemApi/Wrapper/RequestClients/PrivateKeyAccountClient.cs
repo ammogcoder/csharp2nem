@@ -51,10 +51,8 @@ namespace CSharp2nem.RequestClients
             if (!StringUtils.OnlyHexInString(privateKey.Raw) || privateKey.Raw.Length != 64 && privateKey.Raw.Length != 66)
                     throw new ArgumentException("invalid private key");
 
-            if (null == connection)
-                    throw new ArgumentNullException("Connection");
+          Connection = connection ?? throw new ArgumentNullException("Connection");
 
-            Connection = connection;
             PrivateKey = privateKey;
             PublicKey = new PublicKey(PublicKeyConversion.ToPublicKey(privateKey));
             Address = new Address(AddressEncoding.ToEncoded(Connection.GetNetworkVersion(), PublicKey));

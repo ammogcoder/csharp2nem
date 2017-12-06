@@ -70,7 +70,7 @@ namespace CSharp2nem.Model.Transfer.Mosaics
                         // check for business mosaic
                         if (s <= 10000 && d == 0)
                         {
-                            TotalFee += 1000000 / fractionOfWhole;
+                            TotalFee += 1000000;
                         }
                         // compute regular mosaic fee
                         else
@@ -91,10 +91,10 @@ namespace CSharp2nem.Model.Transfer.Mosaics
                             var supplyRelatedAdjustment = Math.Floor(0.8 * Math.Log(maxMosaicQuantity / totalMosaicQuantity)) * 1000000;
 
                             // get final individual mosaic fee
-                            var individualMosaicfee = (long)Math.Max(1, xemFee - supplyRelatedAdjustment);
+                            var individualMosaicfee = (long)Math.Max(1000000, xemFee - supplyRelatedAdjustment);
 
                             // add individual fee to total fee for all mosaics to be sent 
-                            TotalFee += individualMosaicfee / fractionOfWhole;  
+                            TotalFee += individualMosaicfee / 20;  
                         }
                         break;
                     }
@@ -105,8 +105,7 @@ namespace CSharp2nem.Model.Transfer.Mosaics
 
         internal long GetFee()
         {
-            // admittedly pure and utter hackery. no shame..
-            return TotalFee > 50000 ? Math.Max(TotalFee, 100000) - 50000 : 0;
+            return TotalFee;
         }
 
         /*

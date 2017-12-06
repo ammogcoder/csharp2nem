@@ -312,7 +312,7 @@ namespace CSharp2nem.RequestClients
         /// }
         /// </code>
         /// </example>
-        public ManualAsyncResult GetOutgoingTransactions(Action<ResponseAccessor<Transactions.All>> callback, string address, string hash = null, int id = 0)
+        public ManualAsyncResult BeginGetOutgoingTransactions(Action<ResponseAccessor<Transactions.All>> callback, string address, string hash = null, int id = 0)
         {
             if(address == null) throw  new ArgumentException("address cannot be null");
 
@@ -362,7 +362,7 @@ namespace CSharp2nem.RequestClients
         /// }
         /// </code>
         /// </example>
-        public ManualAsyncResult BeginGetOutgoinggTransactions(string address, string hash = null, int id = 0)
+        public ManualAsyncResult GetOutgoingTransactions(string address, string hash = null, int id = 0)
         {
             if (address == null) throw new ArgumentException("address cannot be null");
 

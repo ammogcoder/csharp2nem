@@ -38,8 +38,8 @@ namespace CSharp2nem.Model.Transfer.Mosaics
         internal int LengthOfMosaicIdStructure { get; set; }
         internal int LengthOfNameSpaceId { get; set; }
         internal int LengthOfMosaicName { get; set; }
-        internal string NameSpaceId { get; set; }
-        internal string MosaicName { get; set; }
-        internal long Quantity { get; set; }
+        public string NameSpaceId { get; set; }
+        public string MosaicName { get; set; }
+        public long Quantity { get; set; }
     }
 }

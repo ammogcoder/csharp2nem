@@ -594,8 +594,11 @@ namespace CSharp2nem.Connectivity
         {
             PreTrustedNodes = new List<string>
             {
-                "50.3.87.123",
+                
                 "23.228.67.85",
+                "13.70.154.110",
+                "150.95.145.157",
+                "37.120.188.83"
 
             };
 

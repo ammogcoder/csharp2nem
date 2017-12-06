@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using Chaos.NaCl;
 using CSharp2nem.Constants;
 using CSharp2nem.CryptographicFunctions;
 using CSharp2nem.Model.AccountSetup;
@@ -30,8 +31,6 @@ namespace CSharp2nem.Model.Transfer
         internal Message(Connectivity.Connection con, PrivateKey senderKey, string address, string message, bool encrypted)
 
         {
-           
-
             Encrypted = encrypted;
             
             MessageString = message;
@@ -42,9 +41,7 @@ namespace CSharp2nem.Model.Transfer
                 {
                     var a = new AccountClient(con).BeginGetAccountInfoFromAddress(body =>
                     {
-                        if (body.Content.Account.PublicKey == null) throw new Exception("recipient public key cannot be null for encryption");
-
-                        PublicKey = body.Content.Account.PublicKey;
+                        PublicKey = body.Content.Account.PublicKey ?? throw new Exception("recipient public key cannot be null for encryption");
                               
                     }, address);
 
@@ -55,7 +52,7 @@ namespace CSharp2nem.Model.Transfer
 
                     Sender = new PrivateKeyAccountClient(con, senderKey);
 
-                    MessageBytes = new Ed25519BlockCipher(Sender, PublicKey).Encrypt(Encoding.UTF8.GetBytes(MessageString));
+                    MessageBytes = CryptoBytes.FromHexString(Encryption.Encode(MessageString, senderKey, PublicKey));
                 }
                 else
                 {
@@ -78,11 +75,10 @@ namespace CSharp2nem.Model.Transfer
         private long Fee { get; set; }
         private PrivateKeyAccountClient Sender { get; } 
         private string PublicKey { get; set; }
+
         private void CalculateMessageFee()
-        {
-            
-            Fee += ((long)  (50000 * (Math.Floor(((double)MessageString.Length / 32)) + 1))  );
-               
+        {          
+            Fee += ((long)(50000 * (Math.Floor(((double)PayloadLengthInBytes / 32)) + 1))  );
         }
 
         internal long GetFee()

@@ -7,3 +7,4 @@ Example/.vs
 Example/Example/bin/
 Example/Example/obj
 NemApi/CSharpNemApi.sln.DotSettings.user
+NemApi/test/

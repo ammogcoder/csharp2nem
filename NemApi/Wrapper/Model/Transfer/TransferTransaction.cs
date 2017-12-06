@@ -74,20 +74,22 @@ namespace CSharp2nem.Model.Transfer
             if (Data.Message != null)
                 serializedMessage = SerializeMessagePart();
 
+
+            // get the fee for transfer amount
+            var transferFee = Math.Max(1, Math.Min((long)Math.Ceiling((decimal)Data.Amount / 1000000000), 25)) * 50000;
+
             // declare and serialize mosaics if not null
             MosaicList serializedMosaicList = null;
 
             if (Data.ListOfMosaics != null)
             {
                 serializedMosaicList = SerializeMosaicPart();
+                transferFee = 0;
             }
-
-            // get the fee for transfer amount
-            var transferFee = Math.Max(1, Math.Min((long)Math.Ceiling((decimal)Data.Amount / 1000000000), 25)) * 50000;
 
             // get the fee for message part, 0 if its null
             var messageFee = serializedMessage?.GetFee() ?? 0;
-
+           
             // get the fee for mosaic part, 0 if null
             var mosaicFee = serializedMosaicList?.GetFee() ?? 0;
            
