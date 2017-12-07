@@ -99,7 +99,7 @@ namespace CSharp2nem.CryptographicFunctions
                 aesAlg.IV = iv;
 
                 aesAlg.Mode = CipherMode.CBC;
-                aesAlg.Padding = PaddingMode.None;
+                aesAlg.Padding = PaddingMode.PKCS7;
 
                 ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
  
