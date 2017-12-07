@@ -9,7 +9,7 @@
 	<licenseUrl>https://raw.githubusercontent.com/NemProject/csharp2nem/master/LICENSE</licenseUrl>
 	<iconUrl>https://raw.githubusercontent.com/NemProject/nem-artwork/master/Nem%20logo%2050x50.png</iconUrl>
     <description>
-		A fully featured .NET2.0 compatible C# library for performing transactions on and interacting with the NEM blockchain. 
+		A fully featured .NET4.6 compatible C# library for performing transactions on and interacting with the NEM blockchain. 
     </description>
 
 	<references>
@@ -20,8 +20,8 @@
 	</references>
   </metadata>
   <files>
-	<file src="lib\net40\Base32Encoder.dll" target="lib\net452" />
-	<file src="lib\net40\BouncyCastle.Crypto.dll" target="lib\net452" />
-	<file src="lib\net40\Chaos.NaCl.dll" target="lib\net452" />
+	<file src="lib\net46\Base32Encoder.dll" target="lib\net46" />
+	<file src="lib\net46\BouncyCastle.Crypto.dll" target="lib\net446" />
+	<file src="lib\net46\Chaos.NaCl.dll" target="lib\net452" />
   </files>
 </package>
