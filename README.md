@@ -28,9 +28,8 @@ http://pickledrick.ddns.net/Help/Documentation.html
 
 ## Compatibility
 
-- .NET2.0 or greater
-- Unity3d
-- Mono
+- .NET4.6 or greater
+- Unity3d 2017.1 or greater
 - Windows Desktop
 - Android
 - IOS 
