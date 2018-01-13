@@ -630,7 +630,7 @@ namespace CSharp2nem.RequestClients
         ///  </summary>
         ///  <param name="callback">The action to perform upon completion of the request.</param>
         ///  <param name="address">The account address for which status information should be retrieved</param>
-        /// <param name="hash">The hash of the block up to which harvested blocks are returned.</param>
+        /// <param name="id">The id of the block up to which harvested blocks are returned.</param>
         /// <returns>A <see cref="ManualAsyncResult"/> for the reqeust</returns>
         ///  <example> 
         ///  This sample shows how to use the <see>
@@ -667,24 +667,11 @@ namespace CSharp2nem.RequestClients
         ///  }
         ///  </code>
         ///  </example>
-        public ManualAsyncResult BeginGetHarvestingInfo(Action<ResponseAccessor<HarvestingData.ListData>> callback, string address, string hash = null)
+        public ManualAsyncResult BeginGetHarvestingInfo(Action<ResponseAccessor<HarvestingData.ListData>> callback, string address, string id = null)
         {
-            if (null == hash)
-            {
-                var block = new BlockClient(Connection);
-
-                block.BeginGetLastBlock(blockResult => {
-                    hash = blockResult.Content.PrevBlockHash.Data;
-                }).AsyncWaitHandle.WaitOne();
-            }
-            if (null == hash)
-                throw new ArgumentException("invalid hash");
-            if (!StringUtils.OnlyHexInString(hash))
-                throw new ArgumentException("invalid hash");
-
             const string path = "/account/harvests";
 
-            var query = string.Concat("address=", StringUtils.GetResultsWithoutHyphen(address), "&hash=", hash);
+            var query =  id == null ? string.Concat("address=", StringUtils.GetResultsWithoutHyphen(address)) :  string.Concat("address=", StringUtils.GetResultsWithoutHyphen(address), "&id=", id);
 
             return new HttpAsyncConnector(Connection).PrepareGetRequestAsync(callback, path, query);
         }
