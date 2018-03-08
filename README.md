@@ -28,7 +28,7 @@ http://pickledrick.ddns.net/Help/Documentation.html
 
 ## Compatibility
 
-- .NET2.0 or greater
+- .NetStandard
 - Unity3d
 - Mono
 - Windows Desktop
