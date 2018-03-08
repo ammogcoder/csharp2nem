@@ -1,0 +1,24 @@
+<package>
+  <metadata>
+    <id>CSharp2nem</id>
+	<title>CSharp2nem</title>
+    <version>2.0.17.1</version>
+	<tags>Nem, Blockchain, Nis, Bitcoin</tags>
+	<projectUrl>https://github.com/NemProject/csharp2nem</projectUrl>
+    <authors>Kailin O'Donnell</authors>
+	<licenseUrl>https://raw.githubusercontent.com/NemProject/csharp2nem/master/LICENSE</licenseUrl>
+	<iconUrl>https://raw.githubusercontent.com/NemProject/nem-artwork/master/Nem%20logo%2050x50.png</iconUrl>
+    <description>
+		nexus. A fully featured .NET4.6 compatible C# library for performing transactions on and interacting with the NEM blockchain. 
+    </description>
+
+	<references>
+	  <reference file="Csharp2nem.dll" />
+	</references>
+  </metadata>
+  <files>
+	<file src="lib\net46\Base32Encoder.dll" target="lib\net46" />
+	<file src="lib\net46\BouncyCastle.Crypto.dll" target="lib\net46" />
+	<file src="lib\net46\Chaos.NaCl.dll" target="lib\net46" />
+  </files>
+</package>

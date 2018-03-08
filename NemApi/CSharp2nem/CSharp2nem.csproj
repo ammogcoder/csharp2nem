@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="lib\**" />
+    <EmbeddedResource Remove="lib\**" />
+    <None Remove="lib\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Base32Encoder">
+      <HintPath>lib\net46\Base32Encoder.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>lib\net46\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="Chaos.NaCl">
+      <HintPath>lib\net46\Chaos.NaCl.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

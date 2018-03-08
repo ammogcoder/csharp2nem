@@ -1,0 +1,10 @@
+diff a/WrapperRewrite/WrapperRewrite/Async/PrepareTransaction.cs b/WrapperRewrite/WrapperRewrite/Async/PrepareTransaction.cs	(rejected hunks)
+@@ -39,7 +39,7 @@
+                 throw new ArgumentNullException("Byte array cannot be null");
+ 
+            // Console.WriteLine(CryptoBytes.ToHexStringLower( bytes));
+-           new printData().printBytes(bytes); // TODO: remove when done
++           //new printData().printBytes(bytes); // TODO: remove when done
+            // Console.ReadKey();
+ 
+             AsyncConnector.PostAsync transaction = new AsyncConnector.PostAsync(Connection)
