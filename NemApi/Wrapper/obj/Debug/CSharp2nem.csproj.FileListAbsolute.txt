@@ -1,0 +1,13 @@
+C:\Users\kaili\Documents\github\CSharp2nem\NemApi\Wrapper\obj\Debug\CSharp2nem.Properties.Resources.resources
+C:\Users\kaili\Documents\github\CSharp2nem\NemApi\Wrapper\obj\Debug\CSharp2nem.csproj.GenerateResource.Cache
+C:\Users\kaili\Documents\github\CSharp2nem\NemApi\Wrapper\obj\Debug\CSharp2nem.csproj.CoreCompileInputs.cache
+C:\Users\kaili\Documents\github\CSharp2nem\NemApi\Wrapper\bin\Debug\CSharp2nem.dll
+C:\Users\kaili\Documents\github\CSharp2nem\NemApi\Wrapper\bin\Debug\CSharp2nem.pdb
+C:\Users\kaili\Documents\github\CSharp2nem\NemApi\Wrapper\bin\Debug\Base32Encoder.dll
+C:\Users\kaili\Documents\github\CSharp2nem\NemApi\Wrapper\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\kaili\Documents\github\CSharp2nem\NemApi\Wrapper\bin\Debug\Chaos.NaCl.dll
+C:\Users\kaili\Documents\github\CSharp2nem\NemApi\Wrapper\bin\Debug\Newtonsoft.Json.dll
+C:\Users\kaili\Documents\github\CSharp2nem\NemApi\Wrapper\bin\Debug\Newtonsoft.Json.xml
+C:\Users\kaili\Documents\github\CSharp2nem\NemApi\Wrapper\obj\Debug\CSharp2nem.dll
+C:\Users\kaili\Documents\github\CSharp2nem\NemApi\Wrapper\obj\Debug\CSharp2nem.pdb
+C:\Users\kaili\Documents\github\CSharp2nem\NemApi\Wrapper\obj\Debug\CSharp2nem.csprojResolveAssemblyReference.cache
