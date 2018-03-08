@@ -1,6 +1,5 @@
 .vs
 bin/
-obj/
 TestResults/
 TestApi/
 Example/.vs
@@ -8,3 +7,6 @@ Example/Example/bin/
 Example/Example/obj
 NemApi/CSharpNemApi.sln.DotSettings.user
 NemApi/test/
+NemApi/Wrapper/obj/Debug/*
+NemApi/Wrapper/obj/Release/*
+
