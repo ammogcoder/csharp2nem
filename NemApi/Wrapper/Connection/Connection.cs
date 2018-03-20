@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Threading.Tasks;
 using CSharp2nem.Model.DataModels;
 using CSharp2nem.RequestClients;
 
@@ -253,7 +254,7 @@ namespace CSharp2nem.Connectivity
         /// }
         /// </code>
         /// </example>
-        public void SetFastestHost()
+        public async Task SetFastestHost()
         {
 
             if (!CheckForInternetConnection())
@@ -333,11 +334,11 @@ namespace CSharp2nem.Connectivity
 
             if (!autoHost) return;
 
-            AsyncMethodCaller caller = SetFastestHost;
-
-            var result = caller.BeginInvoke(null, null);
-
-            if (!runAsync) caller.EndInvoke(result);
+            if (!runAsync)
+            {
+                SetFastestHost().RunSynchronously();
+            }
+            else SetFastestHost();
         }
 
         /// <summary>
@@ -373,12 +374,12 @@ namespace CSharp2nem.Connectivity
             SetLivenetPretrustedHostList();
 
             if (!autoHost) return;
-           
-            AsyncMethodCaller caller = SetFastestHost;
 
-            var result = caller.BeginInvoke(null, null);
-
-            if (!runAsync) caller.EndInvoke(result);
+            if (!runAsync)
+            {
+                SetFastestHost().RunSynchronously();
+            }
+            else SetFastestHost();
         }
 
         
@@ -387,12 +388,6 @@ namespace CSharp2nem.Connectivity
             NetworkVersion = 0x60;
 
             PreTrustedNodes = nodes;
-
-            if (!autoHost) return;
-
-            AsyncMethodCaller caller = SetFastestHost;
-
-            caller.BeginInvoke(null, null);
         }
 
         
@@ -401,12 +396,6 @@ namespace CSharp2nem.Connectivity
             NetworkVersion = 0x60;
 
             PreTrustedNodes = nodes;
-
-            if (!autoHost) return;
-
-            AsyncMethodCaller caller = SetFastestHost;
-
-            caller.BeginInvoke(null, null);
         }
 
         /// <summary>
@@ -443,11 +432,11 @@ namespace CSharp2nem.Connectivity
 
             if (!autoHost) return;
 
-            AsyncMethodCaller caller = SetFastestHost;
-
-            var result = caller.BeginInvoke(null, null);
-
-            if (!runAsync) caller.EndInvoke(result);
+            if (!runAsync)
+            {
+                SetFastestHost().RunSynchronously();
+            }
+            else SetFastestHost();
         }
 
         /// <summary>
