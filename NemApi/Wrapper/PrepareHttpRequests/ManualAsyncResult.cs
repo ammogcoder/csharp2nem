@@ -8,9 +8,6 @@ using System;
 using System.Diagnostics;
 using System.Net;
 using System.Threading;
-using CSharp2nem.RequestClients;
-using CSharp2nem.ResponseObjects;
-using CSharp2nem.ResponseObjects.Block;
 
 namespace CSharp2nem.PrepareHttpRequests
 {

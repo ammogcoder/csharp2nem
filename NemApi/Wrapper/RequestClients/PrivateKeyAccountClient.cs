@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text;
-using System.Threading;
 using CSharp2nem.Connectivity;
 using CSharp2nem.CryptographicFunctions;
 using CSharp2nem.Model.AccountSetup;
@@ -11,7 +10,6 @@ using CSharp2nem.Model.ProvisionNamespace;
 using CSharp2nem.Model.Transfer;
 using CSharp2nem.PrepareHttpRequests;
 using CSharp2nem.ResponseObjects;
-using CSharp2nem.ResponseObjects.Block;
 using CSharp2nem.Utils;
 using Newtonsoft.Json;
 

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CSharp2nem.Model.DataModels
+﻿namespace CSharp2nem.Model.DataModels
 {
     public class SupernodeStructures
     {

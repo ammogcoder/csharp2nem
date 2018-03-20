@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
+﻿using System.Security.Cryptography;
 using Chaos.NaCl;
 using CSharp2nem.Model.AccountSetup;
-using CSharp2nem.RequestClients;
 using CSharp2nem.Utils;
-using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Digests;
-using Org.BouncyCastle.Crypto.Generators;
-using Org.BouncyCastle.Security;
 
 namespace CSharp2nem.CryptographicFunctions
 {

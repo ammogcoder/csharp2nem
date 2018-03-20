@@ -1,14 +1,8 @@
 ﻿using CSharp2nem.Connectivity;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text;
-using System.Threading;
-using CSharp2nem.RequestClients;
-using CSharp2nem.ResponseObjects;
-using CSharp2nem.ResponseObjects.Block;
 using Newtonsoft.Json;
 
 namespace CSharp2nem.PrepareHttpRequests

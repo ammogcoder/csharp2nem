@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
-using System.Text;
-using CSharp2nem.Connectivity;
-using Newtonsoft.Json;
 
 namespace CSharp2nem.PrepareHttpRequests
 {

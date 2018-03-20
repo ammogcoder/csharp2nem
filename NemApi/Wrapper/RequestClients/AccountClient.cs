@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Threading;
 using CSharp2nem.Connectivity;
 using CSharp2nem.PrepareHttpRequests;
 using CSharp2nem.ResponseObjects.Account;
 using CSharp2nem.Utils;
-using Newtonsoft.Json;
 
 namespace CSharp2nem.RequestClients
 {

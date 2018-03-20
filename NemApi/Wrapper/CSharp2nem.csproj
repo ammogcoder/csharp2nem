@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.18</Version>
+    <Version>2.0.20</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,19 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BouncyCastle.NetCore" Version="1.8.1.3" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Base32Encoder">
-      <HintPath>lib\net46\Base32Encoder.dll</HintPath>
-    </Reference>
-    <Reference Include="BouncyCastle.Crypto">
-      <HintPath>lib\net46\BouncyCastle.Crypto.dll</HintPath>
-    </Reference>
-    <Reference Include="Chaos.NaCl">
-      <HintPath>lib\net46\Chaos.NaCl.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
