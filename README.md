@@ -54,7 +54,8 @@ Please refer to the NEM official documentation or whitepaper if you require more
 	
 ### Contact the developer
 
-	kailin.odonnell.it3@gmail.com
+	Email: kailin.odonnell.it3@gmail.com
+	Telegram: @kodtycoon
 	
 ### note:
 
