@@ -1,6 +1,4 @@
-NOTE: it is advicable for anyone starting a project to use the new nem1-sdk-csharp found here:  https://bitbucket.org/kod_5/nem1-sdk-csharp 
-The repository for nem1-sdk-csharp will soon migrate to github, therefore do not depend on it being available at the above location. This note will be updated when it has been migrated. Thank you.
-
+NOTE: it is advisable for anyone starting a project, or currently building on csharp2nem, to use the new nem1-sdk-csharp found here:  https://github.com/NemProject/nem1-sdk-csharp. Csharp2nem will not be maintained in future should any issues arise.
 
 # CSharp2nem
 
